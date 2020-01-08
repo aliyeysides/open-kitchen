@@ -60,7 +60,7 @@ $ npm run test:cov
 
 ## People
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
 - Website - [https://nestjs.com](https://nestjs.com/)
 
 ## Backers

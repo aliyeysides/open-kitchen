@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { FlavorsModule } from './flavors/flavors.module';
-import { IngredientsModule } from './ingredients/ingredients.module';
 
+// CONTROLLERS
 import { AppController } from './app.controller';
 
+// SERVICES
 import { AppService } from './app.service';
+
+// DOMAIN MODULES
+import { FlavorsModule } from './flavors/flavors.module';
+import { IngredientsModule } from './ingredients/ingredients.module';
 
 @Module({
   imports: [
@@ -15,5 +19,6 @@ import { AppService } from './app.service';
   ],
   controllers: [AppController],
   providers: [AppService],
+  exports: [MongooseModule],
 })
 export class AppModule {}

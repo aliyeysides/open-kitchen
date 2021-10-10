@@ -9,7 +9,9 @@ export class IngredientsResolver {
   constructor(private readonly ingredientsService: IngredientsService) {}
 
   @Mutation(() => Ingredient)
-  createIngredient(@Args('createIngredientInput') createIngredientInput: CreateIngredientInput) {
+  createIngredient(
+    @Args('createIngredientInput') createIngredientInput: CreateIngredientInput,
+  ) {
     return this.ingredientsService.create(createIngredientInput);
   }
 
@@ -24,8 +26,13 @@ export class IngredientsResolver {
   }
 
   @Mutation(() => Ingredient)
-  updateIngredient(@Args('updateIngredientInput') updateIngredientInput: UpdateIngredientInput) {
-    return this.ingredientsService.update(updateIngredientInput.id, updateIngredientInput);
+  updateIngredient(
+    @Args('updateIngredientInput') updateIngredientInput: UpdateIngredientInput,
+  ) {
+    return this.ingredientsService.update(
+      updateIngredientInput.id,
+      updateIngredientInput,
+    );
   }
 
   @Mutation(() => Ingredient)

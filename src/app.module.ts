@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
 // CONTROLLERS
@@ -13,6 +14,9 @@ import { IngredientsModule } from './ingredients/ingredients.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env.development',
+    }),
     MongooseModule.forRoot('mongodb://localhost/nest'),
     FlavorsModule,
     IngredientsModule,

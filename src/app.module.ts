@@ -17,7 +17,7 @@ import { IngredientsModule } from './ingredients/ingredients.module';
     ConfigModule.forRoot({
       envFilePath: '.env.development',
     }),
-    MongooseModule.forRoot('mongodb://localhost/nest'),
+    MongooseModule.forRoot('mongodb://localhost/test'),
     FlavorsModule,
     IngredientsModule,
   ],

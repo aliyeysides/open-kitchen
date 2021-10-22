@@ -1,0 +1,59 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Flavor {
+  """flavor name"""
+  name: String!
+
+  """updated at timestamp"""
+  updated: Timestamp!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type Ingredient {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Query {
+  flavors: [Flavor!]!
+  flavor(id: Int!): Flavor!
+  ingredients: [Ingredient!]!
+  ingredient(id: Int!): Ingredient!
+}
+
+type Mutation {
+  createFlavor(createFlavorInput: CreateFlavorInput!): Flavor!
+  updateFlavor(updateFlavorInput: UpdateFlavorInput!): Flavor!
+  removeFlavor(id: Int!): Flavor!
+  createIngredient(createIngredientInput: CreateIngredientInput!): Ingredient!
+  updateIngredient(updateIngredientInput: UpdateIngredientInput!): Ingredient!
+  removeIngredient(id: Int!): Ingredient!
+}
+
+input CreateFlavorInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateFlavorInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateIngredientInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateIngredientInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}

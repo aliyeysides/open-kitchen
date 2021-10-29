@@ -10,15 +10,20 @@ use('test');
 // The drop() command destroys all data from a collection.
 // Make sure you run it against the correct database and collection.
 db.flavors.drop();
+db.ingredients.drop();
 
 // Insert a few documents into the sales collection.
 db.flavors.insertMany([
-  { '_id': 1, 'name': 'Salty', 'updated': new Date() },
-  { '_id': 2, 'name': 'Sweet', 'updated': new Date() },
-  { '_id': 3, 'name': 'Sour', 'updated': new Date() },
-  { '_id': 4, 'name': 'Bitter', 'updated': new Date() },
-  { '_id': 5, 'name': 'Umami', 'updated': new Date() },
+  { '_id': ObjectId(), 'name': 'Salty', 'updated': new Date() },
+  { '_id': ObjectId(), 'name': 'Sweet', 'updated': new Date() },
+  { '_id': ObjectId(), 'name': 'Sour', 'updated': new Date() },
+  { '_id': ObjectId(), 'name': 'Bitter', 'updated': new Date() },
+  { '_id': ObjectId(), 'name': 'Umami', 'updated': new Date() },
 ]);
+
+db.ingredients.insertMany([
+  { '_id': ObjectId(), 'name': 'Tomato', 'updated': new Date() },
+])
 
 // Run a find command to view items sold on April 4th, 2014.
 // db.sales.find({ date: { $gte: new Date('2014-04-04'), $lt: new Date('2014-04-05') } });

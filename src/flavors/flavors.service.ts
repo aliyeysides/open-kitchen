@@ -20,8 +20,8 @@ export class FlavorsService {
     return this.flavorsModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} flavor`;
+  findOne(id: string) {
+    return this.flavorsModel.findOne({ _id: id }).exec();
   }
 
   update(id: number, updateFlavorInput: UpdateFlavorInput) {

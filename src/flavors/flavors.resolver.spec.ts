@@ -1,5 +1,7 @@
+import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { FlavorsResolver } from './flavors.resolver';
+import { Flavors } from './flavors.schema';
 import { FlavorsService } from './flavors.service';
 
 describe('FlavorsResolver', () => {
@@ -7,7 +9,14 @@ describe('FlavorsResolver', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [FlavorsResolver, FlavorsService],
+      providers: [
+        FlavorsResolver,
+        FlavorsService,
+        {
+          provide: getModelToken(Flavors.name),
+          useValue: {},
+        },
+      ],
     }).compile();
 
     resolver = module.get<FlavorsResolver>(FlavorsResolver);

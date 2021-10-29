@@ -16,15 +16,18 @@ type Flavor {
 scalar Timestamp
 
 type Ingredient {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """ingredient name"""
+  name: String!
+
+  """updated at timestamp"""
+  updated: Timestamp!
 }
 
 type Query {
   flavors: [Flavor!]!
-  flavor(id: Int!): Flavor!
+  flavor(id: String!): Flavor!
   ingredients: [Ingredient!]!
-  ingredient(id: Int!): Ingredient!
+  ingredient(id: String!): Ingredient!
 }
 
 type Mutation {

@@ -21,7 +21,7 @@ export class IngredientsResolver {
   }
 
   @Query(() => Ingredient, { name: 'ingredient' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id') id: string) {
     return this.ingredientsService.findOne(id);
   }
 

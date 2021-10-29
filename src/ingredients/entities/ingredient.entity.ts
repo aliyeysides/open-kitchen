@@ -1,7 +1,10 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, GraphQLTimestamp } from '@nestjs/graphql';
 
 @ObjectType()
 export class Ingredient {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field({ description: 'ingredient name' })
+  name: string;
+
+  @Field(() => GraphQLTimestamp, { description: 'updated at timestamp' })
+  updated: Date;
 }

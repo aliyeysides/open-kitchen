@@ -1,8 +1,8 @@
 import { ObjectType, Field, GraphQLTimestamp } from '@nestjs/graphql';
 
 @ObjectType()
-export class Flavor {
-  @Field({ description: 'flavor name' })
+export class Recipe {
+  @Field({ description: 'recipe name' })
   name: string;
 
   @Field(() => GraphQLTimestamp, { description: 'created at timestamp' })

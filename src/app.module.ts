@@ -13,6 +13,7 @@ import { AppService } from './app.service';
 // DOMAIN MODULES
 import { FlavorsModule } from './flavors/flavors.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
+import { RecipesModule } from './recipes/recipes.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { IngredientsModule } from './ingredients/ingredients.module';
     }),
     FlavorsModule,
     IngredientsModule,
+    RecipesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

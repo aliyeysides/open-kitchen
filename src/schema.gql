@@ -6,8 +6,11 @@ type Flavor {
   """flavor name"""
   name: String!
 
+  """created at timestamp"""
+  created_at: Timestamp!
+
   """updated at timestamp"""
-  updated: Timestamp!
+  updated_at: Timestamp!
 }
 
 """
@@ -26,11 +29,24 @@ type Ingredient {
   updated_at: Timestamp!
 }
 
+type Recipe {
+  """recipe name"""
+  name: String!
+
+  """created at timestamp"""
+  created_at: Timestamp!
+
+  """updated at timestamp"""
+  updated_at: Timestamp!
+}
+
 type Query {
   flavors: [Flavor!]!
   flavor(id: String!): Flavor!
   ingredients: [Ingredient!]!
   ingredient(id: String!): Ingredient!
+  recipes: [Recipe!]!
+  recipe(id: String!): Recipe!
 }
 
 type Mutation {
@@ -40,6 +56,9 @@ type Mutation {
   createIngredient(createIngredientInput: CreateIngredientInput!): Ingredient!
   updateIngredient(updateIngredientInput: UpdateIngredientInput!): Ingredient!
   removeIngredient(id: Int!): Ingredient!
+  createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
+  updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
+  removeRecipe(id: Int!): Recipe!
 }
 
 input CreateFlavorInput {
@@ -61,5 +80,16 @@ input CreateIngredientInput {
 input UpdateIngredientInput {
   """Ingredient name"""
   name: String
+  id: Int!
+}
+
+input CreateRecipeInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateRecipeInput {
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
 }

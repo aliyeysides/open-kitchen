@@ -3,13 +3,10 @@ import { Document } from 'mongoose';
 
 export type IngredientsDocument = Ingredients & Document;
 
-@Schema()
+@Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 export class Ingredients {
   @Prop({ required: true })
   name: string;
-
-  @Prop({ type: Date, required: true })
-  updated: Date;
 }
 
 export const IngredientsSchema = SchemaFactory.createForClass(Ingredients);

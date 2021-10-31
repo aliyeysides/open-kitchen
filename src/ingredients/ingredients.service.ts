@@ -13,7 +13,7 @@ export class IngredientsService {
   ) {}
 
   create(createIngredientInput: CreateIngredientInput) {
-    return 'This action adds a new ingredient';
+    return this.ingredientsModel.create(createIngredientInput);
   }
 
   findAll() {

@@ -25,6 +25,14 @@ db.ingredients.insertMany([
   { '_id': ObjectId(), 'name': 'Tomato', 'updated': new Date() },
 ])
 
+db.ingredients.insertMany([
+  { '_id': ObjectId(), 'name': 'Carrot' },
+])
+
+db.ingredients.insertOne(
+  { name: 'Carrot' }
+)
+
 // Run a find command to view items sold on April 4th, 2014.
 // db.sales.find({ date: { $gte: new Date('2014-04-04'), $lt: new Date('2014-04-05') } });
 

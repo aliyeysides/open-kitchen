@@ -19,8 +19,11 @@ type Ingredient {
   """ingredient name"""
   name: String!
 
+  """created at timestamp"""
+  created_at: Timestamp!
+
   """updated at timestamp"""
-  updated: Timestamp!
+  updated_at: Timestamp!
 }
 
 type Query {
@@ -51,12 +54,12 @@ input UpdateFlavorInput {
 }
 
 input CreateIngredientInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Ingredient name"""
+  name: String!
 }
 
 input UpdateIngredientInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """Ingredient name"""
+  name: String
   id: Int!
 }

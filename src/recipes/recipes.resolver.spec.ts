@@ -1,5 +1,7 @@
+import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { RecipesResolver } from './recipes.resolver';
+import { Recipes } from './recipes.schema';
 import { RecipesService } from './recipes.service';
 
 describe('RecipesResolver', () => {
@@ -7,7 +9,14 @@ describe('RecipesResolver', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RecipesResolver, RecipesService],
+      providers: [
+        RecipesResolver,
+        RecipesService,
+        {
+          provide: getModelToken(Recipes.name),
+          useValue: {},
+        },
+      ],
     }).compile();
 
     resolver = module.get<RecipesResolver>(RecipesResolver);

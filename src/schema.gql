@@ -66,7 +66,7 @@ type Mutation {
   createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
   updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
   removeRecipe(id: Int!): Recipe!
-  createVideoUpload(createVideoUploadInput: Upload!): VideoUpload!
+  createVideoUpload(file: Upload!): VideoUpload!
   updateVideoUpload(updateVideoUploadInput: UpdateVideoUploadInput!): VideoUpload!
   removeVideoUpload(id: Int!): VideoUpload!
 }

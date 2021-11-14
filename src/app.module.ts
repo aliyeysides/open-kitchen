@@ -14,7 +14,8 @@ import { AppService } from './app.service';
 import { FlavorsModule } from './flavors/flavors.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { RecipesModule } from './recipes/recipes.module';
-import { UploadsModule } from './uploads/uploads.module';
+import { VideoUploadsModule } from './video-uploads/video-uploads.module';
+import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { UploadsModule } from './uploads/uploads.module';
     FlavorsModule,
     IngredientsModule,
     RecipesModule,
-    UploadsModule,
+    VideoUploadsModule,
+    AwsS3UploaderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

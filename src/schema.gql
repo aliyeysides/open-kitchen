@@ -40,6 +40,11 @@ type Recipe {
   updated_at: Timestamp!
 }
 
+type VideoUpload {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   flavors: [Flavor!]!
   flavor(id: String!): Flavor!
@@ -47,6 +52,8 @@ type Query {
   ingredient(id: String!): Ingredient!
   recipes: [Recipe!]!
   recipe(id: String!): Recipe!
+  videoUploads: [VideoUpload!]!
+  videoUpload(id: Int!): VideoUpload!
 }
 
 type Mutation {
@@ -59,6 +66,9 @@ type Mutation {
   createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
   updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
   removeRecipe(id: Int!): Recipe!
+  createVideoUpload(createVideoUploadInput: Upload!): VideoUpload!
+  updateVideoUpload(updateVideoUploadInput: UpdateVideoUploadInput!): VideoUpload!
+  removeVideoUpload(id: Int!): VideoUpload!
 }
 
 input CreateFlavorInput {
@@ -89,6 +99,15 @@ input CreateRecipeInput {
 }
 
 input UpdateRecipeInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input UpdateVideoUploadInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!

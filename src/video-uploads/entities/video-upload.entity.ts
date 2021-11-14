@@ -1,7 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
-export class Upload {
+export class VideoUpload {
   @Field(() => Int, { description: 'Example field (placeholder)' })
   exampleField: number;
 }

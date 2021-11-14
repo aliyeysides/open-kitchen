@@ -14,6 +14,7 @@ import { AppService } from './app.service';
 import { FlavorsModule } from './flavors/flavors.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { RecipesModule } from './recipes/recipes.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RecipesModule } from './recipes/recipes.module';
     FlavorsModule,
     IngredientsModule,
     RecipesModule,
+    UploadsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

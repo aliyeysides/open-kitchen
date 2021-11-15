@@ -1,7 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { VideoUploadsService } from './video-uploads.service';
 import { VideoUpload } from './entities/video-upload.entity';
-import { GraphQLUpload, FileUpload } from 'graphql-upload';
+import { FileUpload } from 'graphql-upload';
+import GraphQLUpload from 'graphql-upload/public/GraphQLUpload.js';
 import { CreateVideoUploadInput } from './dto/create-video-upload.input';
 import { UpdateVideoUploadInput } from './dto/update-video-upload.input';
 import { AwsS3UploaderService } from 'src/aws-s3-uploader/aws-s3-uploader.service';
@@ -14,8 +15,8 @@ export class VideoUploadsResolver {
   ) {}
 
   @Mutation(() => VideoUpload)
-  async createVideoUpload(
-    @Args('file', { name: 'Upload', type: () => GraphQLUpload })
+  createVideoUpload(
+    @Args('file', { type: () => GraphQLUpload })
     file: FileUpload,
   ) {
     const { filename, createReadStream } = file;

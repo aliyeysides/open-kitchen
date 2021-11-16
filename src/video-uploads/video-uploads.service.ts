@@ -4,8 +4,11 @@ import { UpdateVideoUploadInput } from './dto/update-video-upload.input';
 
 @Injectable()
 export class VideoUploadsService {
+  constructor() // todo
+  {}
+
   create(createVideoUploadInput: CreateVideoUploadInput) {
-    return 'This action adds a new videoUpload';
+    // return this.
   }
 
   findAll() {

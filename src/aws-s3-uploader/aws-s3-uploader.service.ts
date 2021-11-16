@@ -19,7 +19,7 @@ export type File = {
   filename: string;
   mimetype: string;
   encoding: string;
-  stream?: ReadStream;
+  createReadStream(): ReadStream;
 };
 
 export type UploadedFileResponse = {
@@ -29,7 +29,7 @@ export type UploadedFileResponse = {
   url: string;
 };
 
-export interface IUploader {
+export interface Uploader {
   singleFileUploadResolver: ({
     file,
   }: {
@@ -38,7 +38,7 @@ export interface IUploader {
 }
 
 @Injectable()
-export class AwsS3UploaderService implements IUploader {
+export class AwsS3UploaderService implements Uploader {
   private readonly _s3: AWS.S3;
   public config: S3UploadConfig;
 
@@ -73,7 +73,7 @@ export class AwsS3UploaderService implements IUploader {
     mimetype: string,
     encoding: string,
   ): string {
-    return fileName;
+    return `${Date.now()}`;
   }
 
   async singleFileUploadResolver({
@@ -81,8 +81,9 @@ export class AwsS3UploaderService implements IUploader {
   }: {
     file: Promise<File>;
   }): Promise<UploadedFileResponse> {
-    // Todo next!
-    const { stream, filename, mimetype, encoding } = await file;
+    const { createReadStream, filename, mimetype, encoding } = await file;
+
+    const readStream = createReadStream();
 
     // Create the destination file path
     const filePath = this.createDestinationFilePath(
@@ -95,14 +96,18 @@ export class AwsS3UploaderService implements IUploader {
     const uploadStream = this.createUploadStream(filePath);
 
     // Pipe the file data into the upload stream
-    stream.pipe(uploadStream.writeStream);
+    readStream.pipe(uploadStream.writeStream);
 
     // Start the stream
     const result = await uploadStream.promise;
-    console.log('RESULT::::', result);
+
+    // Get the link representing the uploaded file
+    const link = result.Location;
+
+    console.log('RESULT::::', result, link);
     // Get the link representing the uploaded file
     // (optional) save it to our database
 
-    return { filename, mimetype, encoding, url: '' };
+    return { filename, mimetype, encoding, url: result.Location };
   }
 }

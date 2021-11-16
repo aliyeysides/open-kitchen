@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -17,6 +22,9 @@ import { RecipesModule } from './recipes/recipes.module';
 import { VideoUploadsModule } from './video-uploads/video-uploads.module';
 import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
 
+// MIDDLEWARE
+import LoggerMiddleware from './common/middleware/logger.middleware';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,6 +33,9 @@ import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
     MongooseModule.forRoot('mongodb://localhost/test'),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      buildSchemaOptions: {
+        fieldMiddleware: [LoggerMiddleware],
+      },
     }),
     FlavorsModule,
     IngredientsModule,
@@ -36,4 +47,10 @@ import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
   providers: [AppService],
   exports: [MongooseModule],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // consumer
+    //   .apply(LoggerMiddleware)
+    //   .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}

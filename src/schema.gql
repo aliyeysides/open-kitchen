@@ -41,8 +41,8 @@ type Recipe {
 }
 
 type VideoUpload {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """video upload file name"""
+  name: String!
 }
 
 type Query {
@@ -108,7 +108,7 @@ input UpdateRecipeInput {
 scalar Upload
 
 input UpdateVideoUploadInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """create video upload input"""
+  filename: String
   id: Int!
 }

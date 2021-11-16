@@ -8,9 +8,9 @@ import { AwsS3UploaderService } from './aws-s3-uploader.service';
     {
       provide: 'S3_UPLOAD_CONFIG',
       useValue: {
-        accessKeyId: 'process.env.AWS_ACCESS_KEY_ID',
-        secretAccessKey: 'process.env.AWS_SECRET_ACCESS_KEY',
-        destinationBucketName: 'videos',
+        accessKeyId: '',
+        secretAccessKey: '',
+        destinationBucketName: 'foyir-videos',
       },
     },
   ],
@@ -19,9 +19,9 @@ import { AwsS3UploaderService } from './aws-s3-uploader.service';
     {
       provide: 'S3_UPLOAD_CONFIG',
       useValue: {
-        accessKeyId: 'process.env.AWS_ACCESS_KEY_ID',
-        secretAccessKey: 'process.env.AWS_SECRET_ACCESS_KEY',
-        destinationBucketName: 'videos',
+        accessKeyId: '',
+        secretAccessKey: '',
+        destinationBucketName: 'foyir-videos',
       },
     },
   ],

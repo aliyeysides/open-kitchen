@@ -6,6 +6,6 @@ import { graphqlUploadExpress } from 'graphql-upload';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.use(graphqlUploadExpress());
-  await app.listen(3001);
+  await app.listen(8080);
 }
 bootstrap();

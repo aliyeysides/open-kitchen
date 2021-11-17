@@ -1,7 +1,7 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { IngredientsResolver } from './ingredients.resolver';
-import { Ingredients } from './ingredients.schema';
+import { Ingredients } from './entities/ingredients.schema';
 import { IngredientsService } from './ingredients.service';
 
 describe('IngredientsResolver', () => {

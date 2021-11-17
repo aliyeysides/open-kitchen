@@ -73,12 +73,12 @@ type Mutation {
 
 input CreateFlavorInput {
   """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
 }
 
 input UpdateFlavorInput {
   """Example field (placeholder)"""
-  exampleField: Int
+  name: String
   id: Int!
 }
 

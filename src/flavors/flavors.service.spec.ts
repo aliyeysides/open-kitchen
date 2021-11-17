@@ -1,6 +1,6 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Flavors } from './flavors.schema';
+import { Flavors } from './entities/flavors.schema';
 import { FlavorsService } from './flavors.service';
 
 type ObjectId = string & { _brand: 'objectId' };

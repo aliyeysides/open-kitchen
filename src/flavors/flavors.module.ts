@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { FlavorsService } from './flavors.service';
 import { FlavorsResolver } from './flavors.resolver';
-import { Flavors, FlavorsSchema } from './flavors.schema';
+import { Flavors, FlavorsSchema } from './entities/flavors.schema';
 
 @Module({
   imports: [

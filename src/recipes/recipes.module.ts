@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { RecipesResolver } from './recipes.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Recipes, RecipesSchema } from './recipes.schema';
+import { Recipes, RecipesSchema } from './entities/recipes.schema';
 
 @Module({
   imports: [

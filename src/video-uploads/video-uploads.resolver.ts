@@ -3,22 +3,17 @@ import { VideoUploadsService } from './video-uploads.service';
 import { VideoUpload } from './entities/video-upload.entity';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { UpdateVideoUploadInput } from './dto/update-video-upload.input';
-import { AwsS3UploaderService } from 'src/aws-s3-uploader/aws-s3-uploader.service';
 
 @Resolver(() => VideoUpload)
 export class VideoUploadsResolver {
-  constructor(
-    private readonly videoUploadsService: VideoUploadsService,
-    private readonly awsS3Uploader: AwsS3UploaderService,
-  ) {}
+  constructor(private readonly videoUploadsService: VideoUploadsService) {}
 
   @Mutation(() => VideoUpload)
   async createVideoUpload(
     @Args('file', { type: () => GraphQLUpload })
     file: Promise<FileUpload>,
   ) {
-    const upload = await this.awsS3Uploader.singleFileUploadResolver({ file });
-    return this.videoUploadsService.create(upload);
+    return this.videoUploadsService.create(file);
   }
 
   @Query(() => [VideoUpload], { name: 'videoUploads' })

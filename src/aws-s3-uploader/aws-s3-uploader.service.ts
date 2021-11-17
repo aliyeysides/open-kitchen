@@ -75,7 +75,7 @@ export class AwsS3UploaderService implements Uploader {
     mimetype: string,
     encoding: string,
   ): string {
-    return `${Date.now()}`;
+    return `${Date.now()}.mp4`;
   }
 
   async singleFileUploadResolver({
@@ -87,29 +87,20 @@ export class AwsS3UploaderService implements Uploader {
 
     const readStream = createReadStream();
 
-    // Create the destination file path
     const filePath = this.createDestinationFilePath(
       filename,
       mimetype,
       encoding,
     );
 
-    // Create an upload stream that goes to S3
     const uploadStream = this.createUploadStream(filePath);
 
-    // Pipe the file data into the upload stream
     readStream.pipe(uploadStream.writeStream);
 
-    // Start the stream
     const result = await uploadStream.promise;
-
-    // Get the link representing the uploaded file
+    console.log('result:::', result);
     const link = result.Location;
 
-    console.log('RESULT::::', result, link);
-    // Get the link representing the uploaded file
-    // (optional) save it to our database
-
-    return { filename, mimetype, encoding, url: result.Location };
+    return { filename, mimetype, encoding, url: link };
   }
 }

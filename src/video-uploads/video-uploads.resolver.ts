@@ -22,7 +22,7 @@ export class VideoUploadsResolver {
   }
 
   @Query(() => VideoUpload, { name: 'videoUpload' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id') id: string) {
     return this.videoUploadsService.findOne(id);
   }
 

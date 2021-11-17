@@ -7,6 +7,9 @@ export type VideoUploadsDocument = VideoUploads & Document;
 export class VideoUploads {
   @Prop({ required: true })
   name: string;
+
+  @Prop({ required: true, default: '' })
+  url: string;
 }
 
 export const VideoUploadsSchema = SchemaFactory.createForClass(VideoUploads);

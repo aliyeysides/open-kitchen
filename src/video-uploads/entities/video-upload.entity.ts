@@ -2,6 +2,12 @@ import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 export class VideoUpload {
-  @Field({ description: 'video upload file name' })
+  @Field()
+  _id: string;
+
+  @Field()
   name: string;
+
+  @Field()
+  url: string;
 }

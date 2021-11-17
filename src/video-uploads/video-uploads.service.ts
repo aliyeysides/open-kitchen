@@ -22,15 +22,16 @@ export class VideoUploadsService {
     const upload = await this.awsS3Uploader.singleFileUploadResolver({ file });
     return this.videoUploadsModel.create({
       name: upload.filename,
+      url: upload.url,
     });
   }
 
   findAll() {
-    return `This action returns all videoUploads`;
+    return this.videoUploadsModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} videoUpload`;
+  findOne(id: string) {
+    return this.videoUploadsModel.findOne({ _id: id }).exec();
   }
 
   update(id: number, updateVideoUploadInput: UpdateVideoUploadInput) {

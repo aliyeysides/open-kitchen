@@ -1,4 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import AWS from 'aws-sdk';
 import { ReadStream } from 'fs';
 import stream from 'stream';
@@ -42,7 +43,8 @@ export class AwsS3UploaderService implements Uploader {
   private readonly _s3: AWS.S3;
   public config: S3UploadConfig;
 
-  constructor(@Inject('S3_UPLOAD_CONFIG') config: S3UploadConfig) {
+  constructor(private readonly configService: ConfigService) {
+    const config = this.configService.get('awsS3');
     AWS.config = new AWS.Config();
     AWS.config.update({
       region: config.region || 'us-east-1',

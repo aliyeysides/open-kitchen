@@ -1,7 +1,7 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { RecipesResolver } from './recipes.resolver';
-import { Recipes } from './recipes.schema';
+import { Recipes } from './entities/recipes.schema';
 import { RecipesService } from './recipes.service';
 
 describe('RecipesResolver', () => {

@@ -3,12 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateRecipeInput } from './dto/create-recipe.input';
 import { UpdateRecipeInput } from './dto/update-recipe.input';
-import { Recipes, RecipesDocument } from './entities/recipes.schema';
+import { Recipe, RecipeDocument } from './entities/recipe.schema';
 
 @Injectable()
 export class RecipesService {
   constructor(
-    @InjectModel(Recipes.name) private recipesModel: Model<RecipesDocument>,
+    @InjectModel(Recipe.name) private recipesModel: Model<RecipeDocument>,
   ) {}
 
   create(createRecipeInput: CreateRecipeInput) {

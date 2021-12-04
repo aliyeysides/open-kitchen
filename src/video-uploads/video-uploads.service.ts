@@ -6,15 +6,15 @@ import { AwsS3UploaderService } from '../aws-s3-uploader/aws-s3-uploader.service
 import { CreateVideoUploadInput } from './dto/create-video-upload.input';
 import { UpdateVideoUploadInput } from './dto/update-video-upload.input';
 import {
-  VideoUploads,
-  VideoUploadsDocument,
-} from './entities/video-uploads.schema';
+  VideoUpload,
+  VideoUploadDocument,
+} from './entities/video-upload.schema';
 
 @Injectable()
 export class VideoUploadsService {
   constructor(
-    @InjectModel(VideoUploads.name)
-    private readonly videoUploadsModel: Model<VideoUploadsDocument>,
+    @InjectModel(VideoUpload.name)
+    private readonly videoUploadsModel: Model<VideoUploadDocument>,
     private readonly awsS3Uploader: AwsS3UploaderService,
   ) {}
 

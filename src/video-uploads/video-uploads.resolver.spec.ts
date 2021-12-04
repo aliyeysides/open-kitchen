@@ -5,7 +5,7 @@ import { VideoUploadsResolver } from './video-uploads.resolver';
 import { VideoUploadsService } from './video-uploads.service';
 import { AwsS3UploaderService } from '../aws-s3-uploader/aws-s3-uploader.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { VideoUploads } from './entities/video-uploads.schema';
+import { VideoUpload } from './entities/video-upload.schema';
 
 const mockAwsS3UploaderService = {
   provide: AwsS3UploaderService,
@@ -44,7 +44,7 @@ describe('VideoUploadsResolver', () => {
         mockAwsS3UploaderService,
         mockConfigService,
         {
-          provide: getModelToken(VideoUploads.name),
+          provide: getModelToken(VideoUpload.name),
           useValue: {},
         },
       ],

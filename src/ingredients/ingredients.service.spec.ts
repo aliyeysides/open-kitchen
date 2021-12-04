@@ -1,6 +1,6 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Ingredients } from './entities/ingredients.schema';
+import { Ingredient } from './entities/ingredient.schema';
 import { IngredientsService } from './ingredients.service';
 
 describe('IngredientsService', () => {
@@ -11,7 +11,7 @@ describe('IngredientsService', () => {
       providers: [
         IngredientsService,
         {
-          provide: getModelToken(Ingredients.name),
+          provide: getModelToken(Ingredient.name),
           useValue: {},
         },
       ],

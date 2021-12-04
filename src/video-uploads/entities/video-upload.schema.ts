@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type VideoUploadsDocument = VideoUploads & Document;
+export type VideoUploadDocument = VideoUpload & Document;
 
 @Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
-export class VideoUploads {
+export class VideoUpload {
   @Prop({ required: true })
   name: string;
 
@@ -12,4 +12,4 @@ export class VideoUploads {
   url: string;
 }
 
-export const VideoUploadsSchema = SchemaFactory.createForClass(VideoUploads);
+export const VideoUploadSchema = SchemaFactory.createForClass(VideoUpload);

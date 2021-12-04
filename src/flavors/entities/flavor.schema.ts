@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type IngredientsDocument = Ingredients & Document;
+export type FlavorDocument = Flavor & Document;
 
 @Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
-export class Ingredients {
+export class Flavor {
   @Prop({ required: true })
   name: string;
 }
 
-export const IngredientsSchema = SchemaFactory.createForClass(Ingredients);
+export const FlavorSchema = SchemaFactory.createForClass(Flavor);

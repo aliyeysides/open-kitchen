@@ -9,11 +9,6 @@ export class Recipe {
   @Prop({ required: true })
   name: string;
 
-  // video-uploads ref
-  // inside the class definition
-  // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Owner' })
-  // owner: Owner;
-
   @Prop({
     required: true,
     type: SchemaTypes.ObjectId,

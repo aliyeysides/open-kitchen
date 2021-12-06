@@ -35,10 +35,16 @@ type VideoUpload {
   url: String!
 }
 
+type RecipeStep {
+  order: Int!
+  instruction: String!
+}
+
 type Recipe {
   _id: String!
   name: String!
   video: VideoUpload!
+  steps: [RecipeStep!]!
   created_at: Timestamp!
   updated_at: Timestamp!
 }
@@ -91,11 +97,18 @@ input UpdateIngredientInput {
 
 input CreateRecipeInput {
   name: String!
+  steps: [RecipeStepInput!]!
   videoId: String!
+}
+
+input RecipeStepInput {
+  order: Int!
+  instruction: String!
 }
 
 input UpdateRecipeInput {
   name: String
+  steps: [RecipeStepInput!]
   videoId: String
   id: Int!
 }

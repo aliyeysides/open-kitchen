@@ -20,7 +20,7 @@ export class RecipesService {
   }
 
   findOne(id: string) {
-    return this.recipesModel.findOne({ _id: id }).exec();
+    return this.recipesModel.findOne({ _id: id }).populate('video').exec();
   }
 
   update(id: number, updateRecipeInput: UpdateRecipeInput) {

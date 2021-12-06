@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaTypes } from 'mongoose';
 import { VideoUpload } from '../../video-uploads/entities/video-upload.schema';
+import { RecipeStep } from './recipe-step.entity';
 
 export type RecipeDocument = Recipe & Document;
 
@@ -17,8 +18,10 @@ export class Recipe {
   video: VideoUpload;
 
   // steps[], ordered list
+  @Prop({ required: true })
+  steps: RecipeStep[];
 
-  // ingredients[]
+  // todo: ingredients[]
 }
 
 export const RecipeSchema = SchemaFactory.createForClass(Recipe);

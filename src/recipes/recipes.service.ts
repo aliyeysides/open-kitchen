@@ -16,7 +16,7 @@ export class RecipesService {
   }
 
   findAll() {
-    return this.recipesModel.find().populate('videoId').exec();
+    return this.recipesModel.find().populate('video').exec();
   }
 
   findOne(id: string) {

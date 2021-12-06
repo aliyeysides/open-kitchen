@@ -38,7 +38,7 @@ type VideoUpload {
 type Recipe {
   _id: String!
   name: String!
-  videoId: VideoUpload!
+  video: VideoUpload!
   created_at: Timestamp!
   updated_at: Timestamp!
 }

@@ -10,7 +10,7 @@ export class Recipe {
   name: string;
 
   @Field()
-  videoId: VideoUpload; // todo: might need to be a VideoUpload type
+  video: VideoUpload; // todo: might need to be a VideoUpload type
 
   @Field(() => GraphQLTimestamp)
   created_at: Date;

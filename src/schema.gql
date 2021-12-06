@@ -49,6 +49,11 @@ type Recipe {
   updated_at: Timestamp!
 }
 
+input RecipeStepInput {
+  order: Int!
+  instruction: String!
+}
+
 type Query {
   flavors: [Flavor!]!
   flavor(id: String!): Flavor!
@@ -99,11 +104,6 @@ input CreateRecipeInput {
   name: String!
   steps: [RecipeStepInput!]!
   videoId: String!
-}
-
-input RecipeStepInput {
-  order: Int!
-  instruction: String!
 }
 
 input UpdateRecipeInput {

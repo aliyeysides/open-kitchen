@@ -29,21 +29,18 @@ type Ingredient {
   updated_at: Timestamp!
 }
 
-type Recipe {
-  """recipe name"""
-  name: String!
-
-  """created at timestamp"""
-  created_at: Timestamp!
-
-  """updated at timestamp"""
-  updated_at: Timestamp!
-}
-
 type VideoUpload {
   _id: String!
   name: String!
   url: String!
+}
+
+type Recipe {
+  _id: String!
+  name: String!
+  videoId: VideoUpload!
+  created_at: Timestamp!
+  updated_at: Timestamp!
 }
 
 type Query {
@@ -73,12 +70,10 @@ type Mutation {
 }
 
 input CreateFlavorInput {
-  """Example field (placeholder)"""
   name: String!
 }
 
 input UpdateFlavorInput {
-  """Example field (placeholder)"""
   name: String
   id: Int!
 }
@@ -95,13 +90,13 @@ input UpdateIngredientInput {
 }
 
 input CreateRecipeInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  videoId: String!
 }
 
 input UpdateRecipeInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  name: String
+  videoId: String
   id: Int!
 }
 

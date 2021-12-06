@@ -1,5 +1,4 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { ObjectId } from 'mongoose';
 
 @InputType()
 export class CreateRecipeInput {
@@ -7,5 +6,5 @@ export class CreateRecipeInput {
   name: string;
 
   @Field()
-  video: ObjectId;
+  videoId: string;
 }

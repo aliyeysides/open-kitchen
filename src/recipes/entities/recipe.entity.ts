@@ -1,13 +1,20 @@
 import { ObjectType, Field, GraphQLTimestamp } from '@nestjs/graphql';
+import { VideoUpload } from '../../video-uploads/entities/video-upload.entity';
 
 @ObjectType()
 export class Recipe {
-  @Field({ description: 'recipe name' })
+  @Field()
+  _id: string;
+
+  @Field()
   name: string;
 
-  @Field(() => GraphQLTimestamp, { description: 'created at timestamp' })
+  @Field()
+  videoId: VideoUpload; // todo: might need to be a VideoUpload type
+
+  @Field(() => GraphQLTimestamp)
   created_at: Date;
 
-  @Field(() => GraphQLTimestamp, { description: 'updated at timestamp' })
+  @Field(() => GraphQLTimestamp)
   updated_at: Date;
 }

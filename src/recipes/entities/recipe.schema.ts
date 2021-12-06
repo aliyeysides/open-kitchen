@@ -14,7 +14,7 @@ export class Recipe {
     type: SchemaTypes.ObjectId,
     ref: 'VideoUpload',
   })
-  video: VideoUpload;
+  videoId: VideoUpload;
 
   // steps[], ordered list
 

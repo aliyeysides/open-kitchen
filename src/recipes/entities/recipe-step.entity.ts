@@ -6,6 +6,6 @@ export class RecipeStep {
   @Field(() => Int)
   order: number;
 
-  @Field()
+  @Field(() => String)
   instruction: string;
 }

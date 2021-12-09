@@ -1,27 +1,27 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, SchemaTypes } from 'mongoose';
-import { VideoUpload } from '../../video-uploads/entities/video-upload.schema';
-import { RecipeStep } from './recipe-step.entity';
+// import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+// import { Document, SchemaTypes } from 'mongoose';
+// import { VideoUpload } from '../../video-uploads/entities/video-upload.schema';
+// import { RecipeStep } from './recipe-step.entity';
 
-export type RecipeDocument = Recipe & Document;
+// export type RecipeDocument = Recipe & Document;
 
-@Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
-export class Recipe {
-  @Prop({ required: true })
-  name: string;
+// @Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
+// export class Recipe {
+//   @Prop({ required: true })
+//   name: string;
 
-  @Prop({
-    required: true,
-    type: SchemaTypes.ObjectId,
-    ref: 'VideoUpload',
-  })
-  video: VideoUpload;
+//   @Prop({
+//     required: true,
+//     type: SchemaTypes.ObjectId,
+//     ref: 'VideoUpload',
+//   })
+//   video: VideoUpload;
 
-  // steps[], ordered list
-  @Prop({ required: true })
-  steps: RecipeStep[];
+//   // steps[], ordered list
+//   @Prop({ required: true })
+//   steps: RecipeStep[];
 
-  // todo: ingredients[]
-}
+//   // todo: ingredients[]
+// }
 
-export const RecipeSchema = SchemaFactory.createForClass(Recipe);
+// export const RecipeSchema = SchemaFactory.createForClass(Recipe);

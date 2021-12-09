@@ -103,13 +103,13 @@ input UpdateIngredientInput {
 input CreateRecipeInput {
   name: String!
   steps: [RecipeStepInput!]!
-  videoId: String!
+  video: String!
 }
 
 input UpdateRecipeInput {
   name: String
   steps: [RecipeStepInput!]
-  videoId: String
+  video: String
   id: Int!
 }
 

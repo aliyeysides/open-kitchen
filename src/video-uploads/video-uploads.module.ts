@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { VideoUploadsService } from './video-uploads.service';
 import { VideoUploadsResolver } from './video-uploads.resolver';
 import { AwsS3UploaderService } from '../aws-s3-uploader/aws-s3-uploader.service';
-import { VideoUpload, VideoUploadSchema } from './entities/video-upload.schema';
+import { VideoUpload, VideoUploadSchema } from './entities/video-upload.entity';
 import { ConfigService } from '@nestjs/config';
 
 @Module({

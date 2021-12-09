@@ -1,7 +1,7 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AwsS3UploaderService } from '../aws-s3-uploader/aws-s3-uploader.service';
-import { VideoUpload } from './entities/video-upload.schema';
+import { VideoUpload } from './entities/video-upload.entity';
 import { VideoUploadsService } from './video-uploads.service';
 
 describe('VideoUploadsService', () => {

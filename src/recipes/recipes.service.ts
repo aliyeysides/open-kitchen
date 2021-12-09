@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateRecipeInput } from './dto/create-recipe.input';
 import { UpdateRecipeInput } from './dto/update-recipe.input';
-// import { Recipe, RecipeDocument } from './entities/recipe.schema';
 import { Recipe, RecipeDocument } from './entities/recipe.entity';
 
 @Injectable()

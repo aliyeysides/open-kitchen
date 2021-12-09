@@ -33,6 +33,8 @@ type VideoUpload {
   _id: String!
   name: String!
   url: String!
+  created_at: Timestamp!
+  updated_at: Timestamp!
 }
 
 type RecipeStep {
@@ -76,7 +78,6 @@ type Mutation {
   updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
   removeRecipe(id: Int!): Recipe!
   createVideoUpload(file: Upload!): VideoUpload!
-  updateVideoUpload(updateVideoUploadInput: UpdateVideoUploadInput!): VideoUpload!
   removeVideoUpload(id: Int!): VideoUpload!
 }
 
@@ -115,9 +116,3 @@ input UpdateRecipeInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
-
-input UpdateVideoUploadInput {
-  """create video upload input"""
-  filename: String
-  id: Int!
-}

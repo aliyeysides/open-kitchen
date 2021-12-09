@@ -1,14 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FileUpload } from 'graphql-upload';
 import { Model } from 'mongoose';
 import { AwsS3UploaderService } from '../aws-s3-uploader/aws-s3-uploader.service';
-import { CreateVideoUploadInput } from './dto/create-video-upload.input';
-import { UpdateVideoUploadInput } from './dto/update-video-upload.input';
+
 import {
   VideoUpload,
   VideoUploadDocument,
-} from './entities/video-upload.schema';
+} from './entities/video-upload.entity';
 
 @Injectable()
 export class VideoUploadsService {
@@ -32,10 +31,6 @@ export class VideoUploadsService {
 
   findOne(id: string) {
     return this.videoUploadsModel.findOne({ _id: id }).exec();
-  }
-
-  update(id: number, updateVideoUploadInput: UpdateVideoUploadInput) {
-    return `This action updates a #${id} videoUpload`;
   }
 
   remove(id: number) {

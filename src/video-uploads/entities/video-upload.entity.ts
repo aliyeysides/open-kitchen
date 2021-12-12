@@ -12,8 +12,8 @@ export class VideoUpload {
   @Prop()
   name: string;
 
-  @Field()
-  @Prop(() => String)
+  @Field(() => String)
+  @Prop()
   url: string;
 
   @Field(() => GraphQLTimestamp)

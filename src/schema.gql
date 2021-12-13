@@ -29,6 +29,14 @@ type Ingredient {
   updated_at: Timestamp!
 }
 
+type Thumbnail {
+  _id: String!
+  name: String!
+  url: String!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
 type VideoUpload {
   _id: String!
   name: String!
@@ -69,6 +77,8 @@ type Query {
   recipe(id: String!): Recipe!
   videoUploads: [VideoUpload!]!
   videoUpload(id: String!): VideoUpload!
+  thumbnails: [Thumbnail!]!
+  thumbnail(id: Int!): Thumbnail!
 }
 
 type Mutation {
@@ -83,6 +93,8 @@ type Mutation {
   removeRecipe(id: Int!): Recipe!
   createVideoUpload(file: Upload!): VideoUpload!
   removeVideoUpload(id: Int!): VideoUpload!
+  createThumbnail(file: Upload!): Thumbnail!
+  removeThumbnail(id: Int!): Thumbnail!
 }
 
 input CreateFlavorInput {
@@ -109,13 +121,13 @@ input CreateRecipeInput {
   name: String!
   steps: [RecipeStepInput!]!
   video: String!
-  thumbnail: Upload!
+  thumbnail: String!
 }
 
 input UpdateRecipeInput {
   name: String
   steps: [RecipeStepInput!]
   video: String
-  thumbnail: Upload
+  thumbnail: String
   id: Int!
 }

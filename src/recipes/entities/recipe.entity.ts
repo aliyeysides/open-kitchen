@@ -2,6 +2,7 @@ import { ObjectType, Field, GraphQLTimestamp } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { GraphQLUpload } from 'graphql-upload';
 import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Thumbnail } from 'src/thumbnails/entities/thumbnail.entity';
 import { VideoUpload } from '../../video-uploads/entities/video-upload.entity';
 import { RecipeStep } from './recipe-step.entity';
 
@@ -24,8 +25,12 @@ export class Recipe {
   video: VideoUpload | MongooseSchema.Types.ObjectId;
 
   @Field(() => GraphQLUpload)
-  @Prop()
-  thumbnail: MongooseSchema.Types.Buffer;
+  @Prop({
+    required: true,
+    type: MongooseSchema.Types.ObjectId,
+    ref: Thumbnail.name,
+  })
+  thumbnail: Thumbnail | MongooseSchema.Types.ObjectId;
 
   @Field(() => [RecipeStep])
   @Prop()

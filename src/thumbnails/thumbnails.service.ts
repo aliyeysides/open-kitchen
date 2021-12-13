@@ -4,17 +4,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { FileUpload } from 'graphql-upload';
 import { Model } from 'mongoose';
 import { AwsS3UploaderService } from '../aws-s3-uploader/aws-s3-uploader.service';
-
-import {
-  VideoUpload,
-  VideoUploadDocument,
-} from './entities/video-upload.entity';
+import { Thumbnail, ThumbnailDocument } from './entities/thumbnail.entity';
 
 @Injectable()
-export class VideoUploadsService {
+export class ThumbnailsService {
   constructor(
-    @InjectModel(VideoUpload.name)
-    private readonly videoUploadsModel: Model<VideoUploadDocument>,
+    @InjectModel(Thumbnail.name)
+    private readonly thumbnailsModel: Model<ThumbnailDocument>,
     private readonly awsS3Uploader: AwsS3UploaderService,
     private readonly configService: ConfigService,
   ) {}
@@ -23,23 +19,23 @@ export class VideoUploadsService {
     const config = this.configService.get('buckets');
     const upload = await this.awsS3Uploader.singleFileUploadResolver({
       file,
-      bucket: config.videos,
+      bucket: config.thumbnails,
     });
-    return this.videoUploadsModel.create({
+    return this.thumbnailsModel.create({
       name: upload.filename,
       url: upload.url,
     });
   }
 
   findAll() {
-    return this.videoUploadsModel.find().exec();
+    return `This action returns all thumbnails`;
   }
 
-  findOne(id: string) {
-    return this.videoUploadsModel.findOne({ _id: id }).exec();
+  findOne(id: number) {
+    return `This action returns a #${id} thumbnail`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} videoUpload`;
+    return `This action removes a #${id} thumbnail`;
   }
 }

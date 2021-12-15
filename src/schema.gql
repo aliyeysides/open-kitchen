@@ -29,14 +29,11 @@ type Ingredient {
   updated_at: Timestamp!
 }
 
-type Recipe {
-  """recipe name"""
+type Thumbnail {
+  _id: String!
   name: String!
-
-  """created at timestamp"""
+  url: String!
   created_at: Timestamp!
-
-  """updated at timestamp"""
   updated_at: Timestamp!
 }
 
@@ -44,6 +41,31 @@ type VideoUpload {
   _id: String!
   name: String!
   url: String!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+type RecipeStep {
+  order: Int!
+  instruction: String!
+}
+
+type Recipe {
+  _id: String!
+  name: String!
+  video: VideoUpload!
+  thumbnail: Upload!
+  steps: [RecipeStep!]!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input RecipeStepInput {
+  order: Int!
+  instruction: String!
 }
 
 type Query {
@@ -55,6 +77,8 @@ type Query {
   recipe(id: String!): Recipe!
   videoUploads: [VideoUpload!]!
   videoUpload(id: String!): VideoUpload!
+  thumbnails: [Thumbnail!]!
+  thumbnail(id: Int!): Thumbnail!
 }
 
 type Mutation {
@@ -68,17 +92,16 @@ type Mutation {
   updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
   removeRecipe(id: Int!): Recipe!
   createVideoUpload(file: Upload!): VideoUpload!
-  updateVideoUpload(updateVideoUploadInput: UpdateVideoUploadInput!): VideoUpload!
   removeVideoUpload(id: Int!): VideoUpload!
+  createThumbnail(file: Upload!): Thumbnail!
+  removeThumbnail(id: Int!): Thumbnail!
 }
 
 input CreateFlavorInput {
-  """Example field (placeholder)"""
   name: String!
 }
 
 input UpdateFlavorInput {
-  """Example field (placeholder)"""
   name: String
   id: Int!
 }
@@ -95,21 +118,16 @@ input UpdateIngredientInput {
 }
 
 input CreateRecipeInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  steps: [RecipeStepInput!]!
+  video: String!
+  thumbnail: String!
 }
 
 input UpdateRecipeInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
-
-input UpdateVideoUploadInput {
-  """create video upload input"""
-  filename: String
+  name: String
+  steps: [RecipeStepInput!]
+  video: String
+  thumbnail: String
   id: Int!
 }

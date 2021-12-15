@@ -3,12 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateRecipeInput } from './dto/create-recipe.input';
 import { UpdateRecipeInput } from './dto/update-recipe.input';
-import { Recipes, RecipesDocument } from './entities/recipes.schema';
+import { Recipe, RecipeDocument } from './entities/recipe.entity';
 
 @Injectable()
 export class RecipesService {
   constructor(
-    @InjectModel(Recipes.name) private recipesModel: Model<RecipesDocument>,
+    @InjectModel(Recipe.name) private recipesModel: Model<RecipeDocument>,
   ) {}
 
   create(createRecipeInput: CreateRecipeInput) {
@@ -16,11 +16,11 @@ export class RecipesService {
   }
 
   findAll() {
-    return this.recipesModel.find().exec();
+    return this.recipesModel.find().populate('video').exec();
   }
 
   findOne(id: string) {
-    return this.recipesModel.findOne({ _id: id }).exec();
+    return this.recipesModel.findOne({ _id: id }).populate('video').exec();
   }
 
   update(id: number, updateRecipeInput: UpdateRecipeInput) {

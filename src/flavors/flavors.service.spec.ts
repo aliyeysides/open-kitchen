@@ -1,6 +1,6 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Flavors } from './entities/flavors.schema';
+import { Flavor } from './entities/flavor.schema';
 import { FlavorsService } from './flavors.service';
 
 type ObjectId = string & { _brand: 'objectId' };
@@ -19,7 +19,7 @@ describe('FlavorsService', () => {
       providers: [
         FlavorsService,
         {
-          provide: getModelToken(Flavors.name),
+          provide: getModelToken(Flavor.name),
           useValue: mockFlavorModel,
         },
       ],

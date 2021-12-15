@@ -1,7 +1,7 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { IngredientsResolver } from './ingredients.resolver';
-import { Ingredients } from './entities/ingredients.schema';
+import { Ingredient } from './entities/ingredient.schema';
 import { IngredientsService } from './ingredients.service';
 
 describe('IngredientsResolver', () => {
@@ -13,7 +13,7 @@ describe('IngredientsResolver', () => {
         IngredientsResolver,
         IngredientsService,
         {
-          provide: getModelToken(Ingredients.name),
+          provide: getModelToken(Ingredient.name),
           useValue: {},
         },
       ],

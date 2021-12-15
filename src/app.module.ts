@@ -16,6 +16,7 @@ import { IngredientsModule } from './ingredients/ingredients.module';
 import { RecipesModule } from './recipes/recipes.module';
 import { VideoUploadsModule } from './video-uploads/video-uploads.module';
 import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
+import { ThumbnailsModule } from './thumbnails/thumbnails.module';
 import config from './config/config';
 
 // MIDDLEWARE
@@ -25,7 +26,6 @@ import LoggerMiddleware from './common/middleware/logger.middleware';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.aws'],
       load: [config],
     }),
     MongooseModule.forRoot('mongodb://localhost/test'),
@@ -40,6 +40,7 @@ import LoggerMiddleware from './common/middleware/logger.middleware';
     RecipesModule,
     VideoUploadsModule,
     AwsS3UploaderModule,
+    ThumbnailsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

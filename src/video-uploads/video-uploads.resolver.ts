@@ -2,7 +2,6 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { VideoUploadsService } from './video-uploads.service';
 import { VideoUpload } from './entities/video-upload.entity';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
-import { UpdateVideoUploadInput } from './dto/update-video-upload.input';
 
 @Resolver(() => VideoUpload)
 export class VideoUploadsResolver {
@@ -24,17 +23,6 @@ export class VideoUploadsResolver {
   @Query(() => VideoUpload, { name: 'videoUpload' })
   findOne(@Args('id') id: string) {
     return this.videoUploadsService.findOne(id);
-  }
-
-  @Mutation(() => VideoUpload)
-  updateVideoUpload(
-    @Args('updateVideoUploadInput')
-    updateVideoUploadInput: UpdateVideoUploadInput,
-  ) {
-    return this.videoUploadsService.update(
-      updateVideoUploadInput.id,
-      updateVideoUploadInput,
-    );
   }
 
   @Mutation(() => VideoUpload)

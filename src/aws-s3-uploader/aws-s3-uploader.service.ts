@@ -33,8 +33,10 @@ export type UploadedFileResponse = {
 export interface Uploader {
   singleFileUploadResolver: ({
     file,
+    bucket,
   }: {
     file: Promise<File>;
+    bucket: string;
   }) => Promise<UploadedFileResponse>;
 }
 
@@ -44,7 +46,7 @@ export class AwsS3UploaderService implements Uploader {
   public config: S3UploadConfig;
 
   constructor(private readonly configService: ConfigService) {
-    const config = this.configService.get('awsS3');
+    const config = this.configService.get('aws');
     AWS.config = new AWS.Config();
     AWS.config.update({
       region: config.region || 'us-east-1',
@@ -56,13 +58,13 @@ export class AwsS3UploaderService implements Uploader {
     this.config = config;
   }
 
-  private createUploadStream(key: string): S3UploadStream {
+  private createUploadStream(key: string, bucket: string): S3UploadStream {
     const pass = new stream.PassThrough();
     return {
       writeStream: pass,
       promise: this._s3
         .upload({
-          Bucket: this.config.destinationBucketName,
+          Bucket: bucket,
           Key: key,
           Body: pass,
         })
@@ -75,13 +77,15 @@ export class AwsS3UploaderService implements Uploader {
     mimetype: string,
     encoding: string,
   ): string {
-    return `${Date.now()}.mp4`;
+    return `${Date.now()}-${mimetype}-${encoding}-${fileName}`;
   }
 
   async singleFileUploadResolver({
     file,
+    bucket,
   }: {
     file: Promise<File>;
+    bucket: string;
   }): Promise<UploadedFileResponse> {
     const { createReadStream, filename, mimetype, encoding } = await file;
 
@@ -93,12 +97,11 @@ export class AwsS3UploaderService implements Uploader {
       encoding,
     );
 
-    const uploadStream = this.createUploadStream(filePath);
+    const uploadStream = this.createUploadStream(filePath, bucket);
 
     readStream.pipe(uploadStream.writeStream);
 
     const result = await uploadStream.promise;
-    console.log('result:::', result);
     const link = result.Location;
 
     return { filename, mimetype, encoding, url: link };

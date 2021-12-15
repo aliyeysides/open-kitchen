@@ -9,16 +9,10 @@ export class RecipesResolver {
   constructor(private readonly recipesService: RecipesService) {}
 
   @Mutation(() => Recipe)
-  async createRecipe(
+  createRecipe(
     @Args('createRecipeInput') createRecipeInput: CreateRecipeInput,
   ) {
-    console.log('createRecipeInput::', createRecipeInput);
-    const thumbnail = await createRecipeInput.thumbnail;
-    const input = {
-      ...createRecipeInput,
-      thumbnail,
-    };
-    return this.recipesService.create(input);
+    return this.recipesService.create(createRecipeInput);
   }
 
   @Query(() => [Recipe], { name: 'recipes' })

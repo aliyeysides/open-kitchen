@@ -1,0 +1,54 @@
+query {
+  videoUploads {
+    _id
+    name
+    url
+  }
+}
+
+query {
+  videoUpload(id: "61aa58d07ae32932833b6cd0") {
+    _id
+    name
+    url
+  }
+}
+
+query {
+  recipe(id: "61ae3511e277c8d122da69b4") {
+    _id
+    name
+    steps {
+      order
+      instruction
+    }
+    video {
+      _id
+      name
+      url
+    }
+  }
+}
+
+query {
+  recipes {
+    _id
+    name
+    video {
+      _id
+      name
+      url
+    }
+  }
+}
+
+mutation {
+  createRecipe(
+    createRecipeInput: {
+      name: "Test Recipe"
+      video: "61aa58d07ae32932833b6cd0"
+    }
+  ) {
+    name
+  }
+}

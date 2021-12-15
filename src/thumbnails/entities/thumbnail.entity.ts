@@ -4,7 +4,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 
 @ObjectType()
 @Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
-export class VideoUpload {
+export class Thumbnail {
   @Field(() => String)
   _id: MongooseSchema.Types.ObjectId;
 
@@ -25,6 +25,6 @@ export class VideoUpload {
   updated_at: Date;
 }
 
-export type VideoUploadDocument = VideoUpload & Document;
+export type ThumbnailDocument = Thumbnail & Document;
 
-export const VideoUploadSchema = SchemaFactory.createForClass(VideoUpload);
+export const ThumbnailSchema = SchemaFactory.createForClass(Thumbnail);

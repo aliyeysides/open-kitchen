@@ -3,16 +3,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { VideoUploadsService } from './video-uploads.service';
 import { VideoUploadsResolver } from './video-uploads.resolver';
 import { AwsS3UploaderService } from '../aws-s3-uploader/aws-s3-uploader.service';
-import {
-  VideoUploads,
-  VideoUploadsSchema,
-} from './entities/video-uploads.schema';
+import { VideoUpload, VideoUploadSchema } from './entities/video-upload.entity';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: VideoUploads.name, schema: VideoUploadsSchema },
+      { name: VideoUpload.name, schema: VideoUploadSchema },
     ]),
   ],
   providers: [

@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { IngredientsService } from './ingredients.service';
 import { IngredientsResolver } from './ingredients.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Ingredients, IngredientsSchema } from './entities/ingredients.schema';
+import { Ingredient, IngredientSchema } from './entities/ingredient.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Ingredients.name, schema: IngredientsSchema },
+      { name: Ingredient.name, schema: IngredientSchema },
     ]),
   ],
   providers: [IngredientsResolver, IngredientsService],

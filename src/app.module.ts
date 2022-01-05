@@ -2,6 +2,7 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
 // CONTROLLERS
@@ -34,6 +35,10 @@ import LoggerMiddleware from './common/middleware/logger.middleware';
       buildSchemaOptions: {
         fieldMiddleware: [LoggerMiddleware],
       },
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client/build'),
+      exclude: ['/graphql*'],
     }),
     FlavorsModule,
     IngredientsModule,

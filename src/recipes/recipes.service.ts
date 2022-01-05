@@ -16,7 +16,7 @@ export class RecipesService {
   }
 
   findAll() {
-    return this.recipesModel.find().populate('video').exec();
+    return this.recipesModel.find().populate(['video', 'thumbnail']).exec();
   }
 
   findOne(id: string) {

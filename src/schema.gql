@@ -54,14 +54,11 @@ type Recipe {
   _id: String!
   name: String!
   video: VideoUpload!
-  thumbnail: Upload!
+  thumbnail: Thumbnail!
   steps: [RecipeStep!]!
   created_at: Timestamp!
   updated_at: Timestamp!
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 input RecipeStepInput {
   order: Int!
@@ -131,3 +128,6 @@ input UpdateRecipeInput {
   thumbnail: String
   id: Int!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

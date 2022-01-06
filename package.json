@@ -5,8 +5,10 @@
     "node": "14.18.1"
   },
   "scripts": {
+    "clean": "lerna clean",
     "install": "lerna bootstrap",
     "build": "lerna run build",
+    "start": "npm run clean && npm run install && npm run build",
     "start:dev": "lerna run --parallel start:dev",
     "start:prod": "lerna run start:prod",
     "deploy": "eb deploy"

@@ -396,8 +396,9 @@ Temporary Items
 # Local
 .env
 .env.*
-dist
-build/
+packages/*/node_modules/
+packages/*/build/
+packages/*/dist/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

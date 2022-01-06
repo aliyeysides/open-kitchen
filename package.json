@@ -1,6 +1,16 @@
 {
   "name": "foyir-mono",
   "private": true,
+  "engines": {
+    "node": "14.18.1"
+  },
+  "scripts": {
+    "install": "lerna bootstrap",
+    "build": "lerna run build",
+    "start:dev": "lerna run --parallel start:dev",
+    "start:prod": "lerna run start:prod",
+    "deploy": "eb deploy"
+  },
   "devDependencies": {
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.8",

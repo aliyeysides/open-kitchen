@@ -37,7 +37,7 @@ import LoggerMiddleware from './common/middleware/logger.middleware';
       },
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client/build'),
+      rootPath: join(__dirname, '../../client', 'build'),
       exclude: ['/graphql*'],
     }),
     FlavorsModule,

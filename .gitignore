@@ -397,6 +397,7 @@ Temporary Items
 .env
 .env.*
 dist
+build/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

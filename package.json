@@ -5,13 +5,12 @@
     "node": "14.18.1"
   },
   "scripts": {
-    "clean": "lerna clean",
-    "install": "npm i && lerna bootstrap",
-    "build": "lerna run build",
-    "start": "npm run clean && npm run install && npm run build && npm run start:dev",
-    "start:dev": "lerna run --parallel start:dev",
-    "start:prod": "lerna run start:prod",
-    "deploy": "eb deploy"
+    "install": "npm i && npx lerna bootstrap",
+    "build": "npx lerna run build",
+    "start": "npm run build && npm run start:prod",
+    "start:dev": "npx lerna run --parallel start:dev",
+    "start:prod": "npx lerna run start:prod",
+    "deploy:dev": "eb deploy foyir-mono-development"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",

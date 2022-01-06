@@ -5,7 +5,7 @@
     "node": "14.18.1"
   },
   "scripts": {
-    "install": "npm i && npx lerna bootstrap",
+    "install": "npm i && npx lerna bootstrap --no-ci",
     "build": "npx lerna run build",
     "start": "npm run build && npm run start:prod",
     "start:dev": "npx lerna run --parallel start:dev",

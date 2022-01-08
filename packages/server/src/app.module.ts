@@ -40,7 +40,7 @@ import LoggerMiddleware from './common/middleware/logger.middleware';
     ServeStaticModule.forRoot({
       serveRoot: '',
       rootPath: join(__dirname, '../../client', 'build'),
-      // exclude: ['/graphql*'],
+      exclude: ['/graphql*'],
     }),
     FlavorsModule,
     IngredientsModule,

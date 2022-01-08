@@ -26,6 +26,7 @@ import LoggerMiddleware from './common/middleware/logger.middleware';
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: '../../.env',
       isGlobal: true,
       load: [config],
     }),
@@ -37,8 +38,9 @@ import LoggerMiddleware from './common/middleware/logger.middleware';
       },
     }),
     ServeStaticModule.forRoot({
+      serveRoot: '',
       rootPath: join(__dirname, '../../client', 'build'),
-      exclude: ['/graphql*'],
+      // exclude: ['/graphql*'],
     }),
     FlavorsModule,
     IngredientsModule,

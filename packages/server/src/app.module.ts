@@ -23,6 +23,8 @@ import config from './config/config';
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -36,6 +38,7 @@ import LoggerMiddleware from './common/middleware/logger.middleware';
       buildSchemaOptions: {
         fieldMiddleware: [LoggerMiddleware],
       },
+      // playground: isDev ? true : false,
     }),
     ServeStaticModule.forRoot({
       serveRoot: '',

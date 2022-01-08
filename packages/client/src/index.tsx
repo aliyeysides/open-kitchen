@@ -1,21 +1,27 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./index.scss";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme";
-import { createUploadLink } from "apollo-upload-client";
-import RecipePage from "./pages/recipes/Recipe";
-import RecipesPage from "./pages/recipes/Recipes";
-import RecipeUploadPage from "./pages/recipes/RecipeUpload";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './index.scss';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
+import { createUploadLink } from 'apollo-upload-client';
+import RecipePage from './pages/recipes/Recipe';
+import RecipesPage from './pages/recipes/Recipes';
+import RecipeUploadPage from './pages/recipes/RecipeUpload';
+
+console.log('PROCESS>ENV:::::::', process.env);
+
+const PORT = process.env.PORT || 8080;
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: createUploadLink({ uri: "http://localhost:8080/graphql" }),
+  link: createUploadLink({
+    uri: `http://localhost:${PORT}/graphql`,
+  }),
 });
 
 ReactDOM.render(
@@ -35,7 +41,7 @@ ReactDOM.render(
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

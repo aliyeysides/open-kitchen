@@ -6,9 +6,8 @@
   },
   "scripts": {
     "build": "npx lerna run build",
-    "start": "npm run build && npm run start:prod",
+    "start": "npx lerna run start:prod",
     "start:dev": "npx lerna run --parallel start:dev",
-    "start:prod": "npx lerna run start:prod",
     "deploy:dev": "eb deploy foyir-mono-development"
   },
   "devDependencies": {

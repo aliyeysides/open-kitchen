@@ -20,11 +20,20 @@ import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
 import { ThumbnailsModule } from './thumbnails/thumbnails.module';
 import config from './config/config';
 
+require('dotenv').config({
+  path: '../../.env',
+  debug: process.env.AWS_ACCESS_KEY_ID,
+});
+
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
 
 const isDev = process.env.NODE_ENV === 'development';
-
+const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+const localDb = 'mongodb://localhost/test';
+const testDb = `mongodb+srv://${awsAccessKeyId}:${awsSecretAccessKey}@test-cluster-1.jfbye.mongodb.net/test-cluster-1?authSource=%24external&authMechanism=MONGODB-AWS&retryWrites=true&w=majority`;
+const dbUri = isDev ? localDb : testDb;
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -32,7 +41,7 @@ const isDev = process.env.NODE_ENV === 'development';
       isGlobal: true,
       load: [config],
     }),
-    MongooseModule.forRoot('mongodb://localhost/test'),
+    MongooseModule.forRoot(dbUri),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       buildSchemaOptions: {

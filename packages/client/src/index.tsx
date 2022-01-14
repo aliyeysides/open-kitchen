@@ -15,17 +15,10 @@ import RecipeUploadPage from './pages/recipes/RecipeUpload';
 
 console.log('PROCESS>ENV:::::::', process.env);
 
-const isDev = process.env.NODE_ENV === 'development';
-const PORT = process.env.PORT || 8080;
-const localhost = `http://localhost:${PORT}/graphql`;
-const prodHost =
-  'http://foyir-mono-development.us-east-1.elasticbeanstalk.com/graphql';
-const host = isDev ? localhost : prodHost;
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: createUploadLink({
-    uri: host,
+    uri: '/graphql',
   }),
 });
 

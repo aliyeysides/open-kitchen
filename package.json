@@ -8,7 +8,8 @@
     "build": "npx lerna run build",
     "start": "npx lerna run start:prod",
     "start:dev": "npx lerna run --parallel start:dev",
-    "deploy:dev": "eb deploy foyir-mono-development"
+    "deploy:dev": "eb deploy foyir-mono-development",
+    "test": "lerna run test && lerna run test:e2e"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",

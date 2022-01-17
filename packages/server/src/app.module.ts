@@ -50,9 +50,7 @@ const dbUri = isDev ? localDb : testDb;
       // playground: isDev ? true : false,
     }),
     ServeStaticModule.forRoot({
-      serveRoot: '',
       rootPath: join(__dirname, '../../client', 'build'),
-      exclude: ['/graphql*'],
     }),
     FlavorsModule,
     IngredientsModule,

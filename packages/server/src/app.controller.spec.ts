@@ -12,7 +12,7 @@ describe('AppController', () => {
     }).compile();
   });
 
-  describe('getHealthCheck', () => {
+  describe('GET /healthcheck', () => {
     it('should return 200', () => {
       const appController = app.get<AppController>(AppController);
       expect(appController.healthCheck()).toBe(200);

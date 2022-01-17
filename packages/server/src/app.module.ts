@@ -22,13 +22,13 @@ import config from './config/config';
 
 require('dotenv').config({
   path: '../../.env',
-  debug: process.env.AWS_ACCESS_KEY_ID,
 });
 
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
 
 const isDev = process.env.NODE_ENV === 'development';
+console.log('IS_DEV?::::::', isDev);
 const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const localDb = 'mongodb://localhost/test';

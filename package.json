@@ -15,5 +15,8 @@
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.8",
     "lerna": "^4.0.0"
+  },
+  "dependencies": {
+    "express-basic-auth": "^1.2.1"
   }
 }

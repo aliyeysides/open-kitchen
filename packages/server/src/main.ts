@@ -8,14 +8,17 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const config = app.get(ConfigService);
   const PORT = config.get('port');
+  const NODE_ENV = config.get('node_env');
   const basicAuth = require('express-basic-auth');
 
-  app.use(
-    basicAuth({
-      users: { admin: 'girthelmurman' },
-      challenge: true,
-    }),
-  );
+  if (NODE_ENV === 'production') {
+    app.use(
+      basicAuth({
+        users: { admin: 'girthelmurman' },
+        challenge: true,
+      }),
+    );
+  }
 
   app.use(graphqlUploadExpress());
   await app.listen(PORT);

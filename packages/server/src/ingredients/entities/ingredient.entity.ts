@@ -13,7 +13,7 @@ export class Ingredient {
   name: string;
 
   @Field(() => String)
-  @Prop({ required: true })
+  @Prop()
   image: string;
 
   @Field(() => GraphQLTimestamp)

@@ -1,19 +1,26 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateGrocerInput } from './dto/create-grocer.input';
 import { UpdateGrocerInput } from './dto/update-grocer.input';
+import { Grocer, GrocerDocument } from './entities/grocer.entity';
 
 @Injectable()
 export class GrocersService {
+  constructor(
+    @InjectModel(Grocer.name) private grocersModel: Model<GrocerDocument>,
+  ) {}
+
   create(createGrocerInput: CreateGrocerInput) {
-    return 'This action adds a new grocer';
+    return this.grocersModel.create(createGrocerInput);
   }
 
   findAll() {
-    return `This action returns all grocers`;
+    return this.grocersModel.find().exec();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} grocer`;
+    return this.grocersModel.findOne({ _id: id }).exec();
   }
 
   update(id: number, updateGrocerInput: UpdateGrocerInput) {

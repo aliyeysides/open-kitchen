@@ -76,6 +76,7 @@ type Grocer {
   name: String!
   state: String!
   city: String!
+  zip_code: Int!
   address: String!
   created_at: Timestamp!
   updated_at: Timestamp!
@@ -143,12 +144,10 @@ input UpdateFlavorInput {
 }
 
 input CreateIngredientInput {
-  """Ingredient name"""
   name: String!
 }
 
 input UpdateIngredientInput {
-  """Ingredient name"""
   name: String
   id: Int!
 }
@@ -175,6 +174,7 @@ input CreateGrocerInput {
   name: String!
   state: String!
   city: String!
+  zip_code: Int!
   address: String!
 }
 
@@ -182,6 +182,7 @@ input UpdateGrocerInput {
   name: String
   state: String
   city: String
+  zip_code: Int
   address: String
   id: Int!
 }

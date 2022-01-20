@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Thumbnail } from '../../thumbnails/entities/thumbnail.entity';
 import { VideoUpload } from '../../video-uploads/entities/video-upload.entity';
+import { RecipeIngredient } from './recipe-ingredient.entity';
 import { RecipeStep } from './recipe-step.entity';
 
 @ObjectType()
@@ -34,6 +35,10 @@ export class Recipe {
   @Field(() => [RecipeStep])
   @Prop()
   steps: RecipeStep[];
+
+  @Field(() => [RecipeIngredient])
+  @Prop()
+  ingredients: RecipeIngredient[];
 
   @Field(() => GraphQLTimestamp)
   @Prop()

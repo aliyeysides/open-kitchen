@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { IngredientsService } from './ingredients.service';
 import { IngredientsResolver } from './ingredients.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Ingredient, IngredientSchema } from './entities/ingredient.schema';
+import { Ingredient, IngredientSchema } from './entities/ingredient.entity';
 
 @Module({
   imports: [

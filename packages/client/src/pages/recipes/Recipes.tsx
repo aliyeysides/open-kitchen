@@ -1,15 +1,15 @@
-import { useQuery } from "@apollo/client";
-import "video.js/dist/video-js.css";
-import { GET_RECIPES } from "./constants";
-import { Link } from "react-router-dom";
-import { Recipe } from "../../types";
-import Box from "@mui/material/Box";
-import { Carousel } from "@trendyol-js/react-carousel";
-import styles from "./recipes.module.scss";
-import SimpleSlider from "../../components/SimpleSlider";
-import { Typography } from "@mui/material";
-import ActionAreaCard from "../../components/ActionAreaCard";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useQuery } from '@apollo/client';
+import 'video.js/dist/video-js.css';
+import { GET_RECIPES } from './constants';
+import { Link } from 'react-router-dom';
+import { Recipe } from '../../types';
+import Box from '@mui/material/Box';
+import { Carousel } from '@trendyol-js/react-carousel';
+import styles from './recipes.module.scss';
+import SimpleSlider from '../../components/SimpleSlider';
+import { Typography } from '@mui/material';
+import ActionAreaCard from '../../components/ActionAreaCard';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 function ViewAllLink() {
   return (
@@ -28,13 +28,13 @@ export default function RecipesPage() {
 
   const recipes: Recipe[] = data?.recipes;
 
-  console.log("recipes:", recipes);
+  console.log('recipes:', recipes);
 
   return (
     <>
       <Box className={styles.section_header}>
         <Typography
-          sx={{ color: "#1de9b6", my: 2, cursor: "pointer" }}
+          sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
         >
           <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
@@ -48,20 +48,20 @@ export default function RecipesPage() {
           .slice(recipes.length - 4, recipes.length)
           .map((recipe: Recipe) => (
             <Box className={styles.section_item} key={recipe._id}>
-              {/* <Link to={`/recipes/${recipe._id}`}> */}
-              <img
-                className={styles.thumbnail}
-                src={recipe.thumbnail.url}
-                alt="test"
-              />
-              {/* </Link> */}
+              <Link to={`/recipes/${recipe._id}`}>
+                <img
+                  className={styles.thumbnail}
+                  src={recipe.thumbnail.url}
+                  alt="test"
+                />
+              </Link>
             </Box>
           ))}
       </Box>
 
       <Box className={styles.section_header}>
         <Typography
-          sx={{ color: "#1de9b6", my: 2, cursor: "pointer" }}
+          sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
         >
           <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
@@ -75,19 +75,19 @@ export default function RecipesPage() {
           .slice(recipes.length - 4, recipes.length)
           .map((recipe: Recipe) => (
             <Box className={styles.section_item} key={recipe._id}>
-              {/* <Link to={`/recipes/${recipe._id}`}> */}
-              <ActionAreaCard
-                title={recipe.name}
-                thumbnail={recipe.thumbnail.url}
-              />
-              {/* </Link> */}
+              <Link to={`/recipes/${recipe._id}`}>
+                <ActionAreaCard
+                  title={recipe.name}
+                  thumbnail={recipe.thumbnail.url}
+                />
+              </Link>
             </Box>
           ))}
       </Box>
 
       <Box className={styles.section_header}>
         <Typography
-          sx={{ color: "#1de9b6", my: 2, cursor: "pointer" }}
+          sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
         >
           <Link className={styles.view_all_link_text} to={`/recipes/upload`}>

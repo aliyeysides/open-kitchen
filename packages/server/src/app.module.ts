@@ -18,6 +18,7 @@ import { RecipesModule } from './recipes/recipes.module';
 import { VideoUploadsModule } from './video-uploads/video-uploads.module';
 import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
 import { ThumbnailsModule } from './thumbnails/thumbnails.module';
+import { GrocersModule } from './grocers/grocers.module';
 import config from './config/config';
 
 require('dotenv').config({
@@ -28,7 +29,6 @@ require('dotenv').config({
 import LoggerMiddleware from './common/middleware/logger.middleware';
 
 const isDev = process.env.NODE_ENV === 'development';
-console.log('IS_DEV?::::::', isDev);
 const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const localDb = 'mongodb://localhost/test';
@@ -58,6 +58,7 @@ const dbUri = isDev ? localDb : testDb;
     VideoUploadsModule,
     AwsS3UploaderModule,
     ThumbnailsModule,
+    GrocersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

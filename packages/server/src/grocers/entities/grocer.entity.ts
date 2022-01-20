@@ -1,4 +1,4 @@
-import { ObjectType, Field, GraphQLTimestamp } from '@nestjs/graphql';
+import { ObjectType, Field, GraphQLTimestamp, Int } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
@@ -19,6 +19,10 @@ export class Grocer {
   @Field(() => String)
   @Prop({ required: true })
   city: string;
+
+  @Field(() => Int)
+  @Prop({ required: true })
+  zip_code: number;
 
   @Field(() => String)
   @Prop({ required: true })

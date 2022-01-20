@@ -7,13 +7,9 @@ export class RecipeIngredient {
   @Field(() => String)
   ingredient_id: MongooseSchema.Types.ObjectId;
 
-  //   @Field(() => VideoUpload)
-  // @Prop({
-  //   required: true,
-  //   type: MongooseSchema.Types.ObjectId,
-  //   ref: VideoUpload.name,
-  // })
-  // video: VideoUpload | MongooseSchema.Types.ObjectId;
+  // TODO: move this to GrocerIngredient Model
+  // @Field(() => String)
+  // grocer_id: MongooseSchema.Types.ObjectId;
 
   @Field(() => String, {
     description: 'unit of measurement (ounces, clove, tablespoon)',

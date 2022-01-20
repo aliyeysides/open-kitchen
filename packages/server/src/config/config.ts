@@ -1,4 +1,5 @@
 export default () => ({
+  node_env: process.env.NODE_ENV,
   port: parseInt(process.env.PORT) || 8080,
   aws: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,

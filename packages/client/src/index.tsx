@@ -13,7 +13,7 @@ import RecipePage from './pages/recipes/Recipe';
 import RecipesPage from './pages/recipes/Recipes';
 import RecipeUploadPage from './pages/recipes/RecipeUpload';
 
-console.log('PROCESS>ENV:::::::', process.env);
+console.log('REACT NODE ENV', process.env.NODE_ENV);
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),

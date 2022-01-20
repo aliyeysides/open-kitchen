@@ -19,13 +19,10 @@ type Flavor {
 scalar Timestamp
 
 type Ingredient {
-  """ingredient name"""
+  _id: String!
   name: String!
-
-  """created at timestamp"""
+  image: String!
   created_at: Timestamp!
-
-  """updated at timestamp"""
   updated_at: Timestamp!
 }
 
@@ -45,6 +42,19 @@ type VideoUpload {
   updated_at: Timestamp!
 }
 
+type RecipeIngredient {
+  ingredient_id: String!
+
+  """unit of measurement (ounces, clove, tablespoon)"""
+  unit: String!
+
+  """count of units of measurement (quantity x tablespoon)"""
+  quantity: Int!
+
+  """process state (ground, minced, thawed)"""
+  state: String!
+}
+
 type RecipeStep {
   order: Int!
   instruction: String!
@@ -56,8 +66,32 @@ type Recipe {
   video: VideoUpload!
   thumbnail: Thumbnail!
   steps: [RecipeStep!]!
+  ingredients: [RecipeIngredient!]!
   created_at: Timestamp!
   updated_at: Timestamp!
+}
+
+type Grocer {
+  _id: String!
+  name: String!
+  state: String!
+  city: String!
+  address: String!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+input RecipeIngredientInput {
+  ingredient_id: String!
+
+  """unit of measurement (ounces, clove, tablespoon)"""
+  unit: String!
+
+  """count of units of measurement (quantity x tablespoon)"""
+  quantity: Int!
+
+  """process state (ground, minced, thawed)"""
+  state: String!
 }
 
 input RecipeStepInput {
@@ -76,6 +110,8 @@ type Query {
   videoUpload(id: String!): VideoUpload!
   thumbnails: [Thumbnail!]!
   thumbnail(id: Int!): Thumbnail!
+  grocers: [Grocer!]!
+  grocer(id: Int!): Grocer!
 }
 
 type Mutation {
@@ -92,6 +128,9 @@ type Mutation {
   removeVideoUpload(id: Int!): VideoUpload!
   createThumbnail(file: Upload!): Thumbnail!
   removeThumbnail(id: Int!): Thumbnail!
+  createGrocer(createGrocerInput: CreateGrocerInput!): Grocer!
+  updateGrocer(updateGrocerInput: UpdateGrocerInput!): Grocer!
+  removeGrocer(id: Int!): Grocer!
 }
 
 input CreateFlavorInput {
@@ -131,3 +170,18 @@ input UpdateRecipeInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+input CreateGrocerInput {
+  name: String!
+  state: String!
+  city: String!
+  address: String!
+}
+
+input UpdateGrocerInput {
+  name: String
+  state: String
+  city: String
+  address: String
+  id: Int!
+}

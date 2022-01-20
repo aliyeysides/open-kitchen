@@ -4,7 +4,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 
 @ObjectType()
 @Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
-export class Ingredient {
+export class Grocer {
   @Field(() => String)
   _id: MongooseSchema.Types.ObjectId;
 
@@ -14,7 +14,15 @@ export class Ingredient {
 
   @Field(() => String)
   @Prop({ required: true })
-  image: string;
+  state: string;
+
+  @Field(() => String)
+  @Prop({ required: true })
+  city: string;
+
+  @Field(() => String)
+  @Prop({ required: true })
+  address: string;
 
   @Field(() => GraphQLTimestamp)
   created_at: Date;
@@ -23,6 +31,6 @@ export class Ingredient {
   updated_at: Date;
 }
 
-export type IngredientDocument = Ingredient & Document;
+export type GrocerDocument = Grocer & Document;
 
-export const IngredientSchema = SchemaFactory.createForClass(Ingredient);
+export const GrocerSchema = SchemaFactory.createForClass(Grocer);

@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateIngredientInput } from './dto/create-ingredient.input';
 import { UpdateIngredientInput } from './dto/update-ingredient.input';
-import { Ingredient, IngredientDocument } from './entities/ingredient.schema';
+import { Ingredient, IngredientDocument } from './entities/ingredient.entity';
 
 @Injectable()
 export class IngredientsService {

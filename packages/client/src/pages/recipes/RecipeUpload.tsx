@@ -7,12 +7,11 @@ import {
 } from './constants';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { unset, omit } from 'lodash';
 import HorizontalLinearStepper from '../../components/HorizontalLinearStepper';
+import IngredientAutocomplete from '../../components/IngredientAutocomplete';
 
 type FormInput = { [key: string]: any };
 
@@ -141,7 +140,7 @@ export default function RecipeUploadPage() {
     setSteps([...steps].slice(0, steps.length - 1));
   };
 
-  const linearStepperSteps: [string, any][] = [
+  const linearStepperSteps: [string, JSX.Element][] = [
     ['Upload Video', VideoUploadStep()],
     ['Ingredients', AddIngredientsStep()],
     ['Details', AddInstructionsStep()],
@@ -168,7 +167,7 @@ export default function RecipeUploadPage() {
   }
 
   function AddIngredientsStep() {
-    return <>Ingredients step...</>;
+    return <IngredientAutocomplete />;
   }
 
   function ThumbnailUploadStep() {

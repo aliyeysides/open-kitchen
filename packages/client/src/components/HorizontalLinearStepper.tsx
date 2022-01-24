@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
-type StepTuple = [string, any][];
+type StepTuple = [string, JSX.Element][];
 
 interface HorizontalLinearStepperProps {
   steps: StepTuple;
@@ -19,7 +19,8 @@ export default function HorizontalLinearStepper({
   const [skipped, setSkipped] = useState(new Set());
 
   const isStepOptional = (step: number) => {
-    return step === 1;
+    // return step === 1;
+    return false;
   };
 
   const isStepSkipped = (step: number) => {
@@ -62,7 +63,7 @@ export default function HorizontalLinearStepper({
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={activeStep}>
+      <Stepper sx={{ marginBottom: '50px' }} activeStep={activeStep}>
         {steps.map(([label, el], index) => {
           const stepProps: StepProps = {};
           const labelProps: StepLabelProps = {};

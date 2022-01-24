@@ -7,10 +7,6 @@ export class RecipeIngredient {
   @Field(() => String)
   ingredient_id: MongooseSchema.Types.ObjectId;
 
-  // TODO: move this to GrocerIngredient Model
-  // @Field(() => String)
-  // grocer_id: MongooseSchema.Types.ObjectId;
-
   @Field(() => String, {
     description: 'unit of measurement (ounces, clove, tablespoon)',
   })

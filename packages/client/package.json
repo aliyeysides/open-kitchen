@@ -26,6 +26,7 @@
     "@types/react-slick": "^0.23.7",
     "@types/video.js": "^7.3.27",
     "apollo-upload-client": "^16.0.0",
+    "axios": "^0.25.0",
     "express": "^4.17.1",
     "graphql": "^16.0.0",
     "lodash": "^4.17.21",

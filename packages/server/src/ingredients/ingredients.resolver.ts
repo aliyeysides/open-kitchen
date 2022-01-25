@@ -3,6 +3,7 @@ import { IngredientsService } from './ingredients.service';
 import { Ingredient } from './entities/ingredient.entity';
 import { CreateIngredientInput } from './dto/create-ingredient.input';
 import { UpdateIngredientInput } from './dto/update-ingredient.input';
+import { FDCFood } from './entities/fdc-food.entity';
 
 @Resolver(() => Ingredient)
 export class IngredientsResolver {
@@ -23,6 +24,11 @@ export class IngredientsResolver {
   @Query(() => Ingredient, { name: 'ingredient' })
   findOne(@Args('id') id: string) {
     return this.ingredientsService.findOne(id);
+  }
+
+  @Query(() => [FDCFood])
+  search(@Args('query') q: string) {
+    return this.ingredientsService.search(q, 'Foundation');
   }
 
   @Mutation(() => Ingredient)

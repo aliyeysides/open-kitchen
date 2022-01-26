@@ -1,13 +1,13 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import Chip from "@mui/material/Chip";
-import LinkButton from "./LinkButton";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import Avatar from "@mui/material/Avatar";
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Chip from '@mui/material/Chip';
+import LinkButton from './LinkButton';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import Avatar from '@mui/material/Avatar';
 
 export default function TopAppBar() {
   return (
@@ -25,10 +25,10 @@ export default function TopAppBar() {
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <LinkButton to="/recipes">FoodTube</LinkButton>
-            <Chip label="Alpha v0.0.1" color="primary" variant="outlined" />
+            <Chip label="v1.3.0" color="primary" variant="outlined" />
           </Typography>
           <ShoppingCartOutlinedIcon
-            sx={{ m: 1, marginRight: 2, cursor: "pointer" }}
+            sx={{ m: 1, marginRight: 2, cursor: 'pointer' }}
           />
           <LinkButton color="primary" variant="outlined" to="/recipes/upload">
             Upload

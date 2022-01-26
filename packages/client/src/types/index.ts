@@ -27,3 +27,7 @@ export interface Ingredient {
   _id: string;
   name: string;
 }
+
+export interface FDCFood {
+  description: string;
+}

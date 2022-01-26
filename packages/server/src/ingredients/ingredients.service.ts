@@ -6,12 +6,18 @@ import { UpdateIngredientInput } from './dto/update-ingredient.input';
 import { Ingredient, IngredientDocument } from './entities/ingredient.entity';
 import axios from 'axios';
 import { FDCDataType } from './entities/fdc-food.entity';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class IngredientsService {
+  private readonly _config: { apiKey: string };
+
   constructor(
     @InjectModel(Ingredient.name)
     private ingredientsModel: Model<IngredientDocument>,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    this._config = this.configService.get('fdc');
+  }
 
   create(createIngredientInput: CreateIngredientInput) {
     return this.ingredientsModel.create(createIngredientInput);
@@ -25,11 +31,11 @@ export class IngredientsService {
     return this.ingredientsModel.findOne({ _id: id }).exec();
   }
 
-  async search(q: string, dataType: FDCDataType) {
+  async search(q: string, dataType: FDCDataType[]) {
     const {
       data: { foods },
     } = await axios(
-      `https://api.nal.usda.gov/fdc/v1/foods/search?query=${q}&dataType=${dataType}&api_key=${process.env.FDC_API_KEY}`,
+      `https://api.nal.usda.gov/fdc/v1/foods/search?query=${q}&dataType=${dataType}&api_key=${this._config.apiKey}`,
     );
     return foods;
   }

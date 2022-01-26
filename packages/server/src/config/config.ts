@@ -1,6 +1,7 @@
 export default () => ({
   fdc: {
     apiKey: process.env.FDC_API_KEY,
+    apiUrl: process.env.FDC_API_URL,
   },
   node_env: process.env.NODE_ENV,
   port: parseInt(process.env.PORT) || 8080,

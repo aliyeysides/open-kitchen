@@ -7,9 +7,11 @@ import { Ingredient, IngredientDocument } from './entities/ingredient.entity';
 import axios from 'axios';
 import { FDCDataType } from './entities/fdc-food.entity';
 import { ConfigService } from '@nestjs/config';
+
+type FDCConfig = { apiKey: string; apiUrl: string };
 @Injectable()
 export class IngredientsService {
-  private readonly _config: { apiKey: string };
+  private readonly _config: FDCConfig;
 
   constructor(
     @InjectModel(Ingredient.name)
@@ -35,7 +37,7 @@ export class IngredientsService {
     const {
       data: { foods },
     } = await axios(
-      `https://api.nal.usda.gov/fdc/v1/foods/search?query=${q}&dataType=${dataType}&api_key=${this._config.apiKey}`,
+      `${this._config.apiUrl}/v1/foods/search?query=${q}&dataType=${dataType}&api_key=${this._config.apiKey}`,
     );
     return foods;
   }

@@ -28,7 +28,7 @@ export class IngredientsResolver {
 
   @Query(() => [FDCFood])
   search(@Args('query') q: string) {
-    return this.ingredientsService.search(q, ['Foundation']);
+    return this.ingredientsService.search(q, ['Foundation', 'SR Legacy']);
   }
 
   @Mutation(() => Ingredient)

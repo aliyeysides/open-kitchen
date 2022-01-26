@@ -28,6 +28,10 @@ export interface Ingredient {
   name: string;
 }
 
+export type FDCDataType = 'Foundation' | 'Branded' | 'SR Legacy';
+
 export interface FDCFood {
+  fdcId: string;
   description: string;
+  dataType: FDCDataType;
 }

@@ -3,57 +3,65 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useLazyQuery, gql } from '@apollo/client';
-import throttle from 'lodash/throttle';
+import debounce from 'lodash/debounce';
+import uniqBy from 'lodash/unionBy';
 import { FDCFood } from '../types';
+import { omit } from 'lodash';
 
 const SEARCH_FOOD = gql`
   query Search($query: String!) {
     search(query: $query) {
+      fdcId
       description
+      dataType
     }
   }
 `;
 
-export default function IngredientAutocomplete() {
-  const [active, setActive] = useState<boolean>(false);
+interface IngredientAutocompleteProps {
+  onSelect: (newValue: FDCFood) => void;
+}
+
+export default function IngredientAutocomplete({
+  onSelect,
+}: IngredientAutocompleteProps) {
   const [value, setValue] = useState<FDCFood | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<any>([]);
-  const [searchFood, { loading }] = useLazyQuery(SEARCH_FOOD, {
-    onCompleted: (data: any) => {
-      console.log('completed:', data);
-      if (active) {
-        setOptions(data.search);
-      }
-    },
-  });
+  const [searchFood, { loading, error, data }] = useLazyQuery(SEARCH_FOOD);
 
-  const throttledSearchFood = useMemo(() => throttle(searchFood, 200), []);
+  const throttledSearchFood = useMemo(() => debounce(searchFood, 200), []);
 
   useEffect(() => {
-    setActive(true);
+    let active = true;
 
     if (loading) {
       return undefined;
     }
 
     if (inputValue === '') {
-      console.log("value when input === ''", value);
       setOptions(value ? [value] : []);
       return undefined;
     }
 
-    throttledSearchFood({
-      variables: {
-        query: inputValue,
-      },
-    });
+    if (active) {
+      throttledSearchFood({
+        variables: {
+          query: inputValue,
+        },
+      });
+    }
+
+    if (data && !error) {
+      const search = uniqBy(data.search, 'description');
+      setOptions(search);
+    }
 
     return () => {
-      setActive(false);
+      active = false;
     };
-  }, [inputValue]);
+  }, [loading, data, error, inputValue, value, throttledSearchFood]);
 
   useEffect(() => {
     if (!open) {
@@ -74,8 +82,7 @@ export default function IngredientAutocomplete() {
         inputValue={inputValue}
         open={open}
         onChange={(event, newValue: FDCFood | null) => {
-          console.log('onChangeValue', newValue);
-          setValue(newValue);
+          if (newValue !== null) onSelect(newValue);
         }}
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);

@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { unset, omit } from 'lodash';
 import HorizontalLinearStepper from '../../components/HorizontalLinearStepper';
 import IngredientAutocomplete from '../../components/IngredientAutocomplete';
+import { FDCFood } from '../../types';
 
 type FormInput = { [key: string]: any };
 
@@ -44,6 +45,7 @@ export default function RecipeUploadPage() {
   ];
 
   const [steps, setSteps] = useState(initialStepField);
+  const [ingredients, setIngredients] = useState<FDCFood[]>([]);
   const [formInput, setFormInput] = useState<FormInput>({});
 
   const stepCount = useRef(3);
@@ -84,6 +86,11 @@ export default function RecipeUploadPage() {
     }
   };
 
+  const handleIngredientSelect = (newValue: FDCFood) => {
+    const value = omit(newValue, ['__typename']) as FDCFood;
+    setIngredients([...ingredients, value]);
+  };
+
   const getSteps = () => {
     const steps = omit(formInput, ['recipe-name']);
     const stepsInput = [];
@@ -114,6 +121,7 @@ export default function RecipeUploadPage() {
             steps: stepsInput,
             video: videoData.createVideoUpload._id,
             thumbnail: thumbnailData.createThumbnail._id,
+            ingredients: ingredients,
           },
         },
       });
@@ -167,7 +175,16 @@ export default function RecipeUploadPage() {
   }
 
   function AddIngredientsStep() {
-    return <IngredientAutocomplete />;
+    return (
+      <>
+        <IngredientAutocomplete onSelect={handleIngredientSelect} />
+        <ul>
+          {ingredients.map((d) => {
+            return <li>{d.description}</li>;
+          })}
+        </ul>
+      </>
+    );
   }
 
   function ThumbnailUploadStep() {
@@ -223,73 +240,6 @@ export default function RecipeUploadPage() {
   return (
     <main>
       <HorizontalLinearStepper steps={linearStepperSteps} />
-      {/* <Box
-        component="form"
-        sx={{
-          display: 'flex',
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <Container maxWidth="sm">
-          <Stack sx={{ alignItems: 'center' }} spacing={2}>
-            <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-              Create a Recipe
-            </Typography>
-            <TextField
-              id="recipe-name"
-              label="Recipe Name"
-              name="recipe-name"
-              variant="outlined"
-              onChange={handleInputChange}
-              required
-            />
-            {steps}
-            <Button variant="outlined" onClick={handleAddStep}>
-              Add Step
-            </Button>
-            <Button variant="outlined" onClick={handleRemoveStep} color="error">
-              Remove Step
-            </Button>
-            <Button onClick={handleVideoUploadBtnClick}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Add Video
-              </Typography>
-              <Box sx={{ display: 'none' }}>
-                <input
-                  ref={videoInputRef}
-                  type="file"
-                  onChange={handleVideoUpload}
-                  required
-                />
-              </Box>
-            </Button>
-            <Button onClick={handleThumbnailUploadBtnClick}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Add Thumbnail
-              </Typography>
-              <Box sx={{ display: 'none' }}>
-                <input
-                  ref={thumbnailInputRef}
-                  type="file"
-                  onChange={handleThumbnailUpload}
-                  required
-                />
-              </Box>
-            </Button>
-            <Button
-              onClick={onUploadRecipe}
-              variant="contained"
-              color="primary"
-            >
-              <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-                Upload Recipe
-              </Typography>
-            </Button>
-          </Stack>
-        </Container>
-      </Box> */}
     </main>
   );
 }

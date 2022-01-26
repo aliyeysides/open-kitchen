@@ -1,6 +1,7 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { RecipeStep } from '../entities/recipe-step.entity';
 import { Schema as MongooseSchema } from 'mongoose';
+import { RecipeIngredient } from '../entities/recipe-ingredient.entity';
 
 @InputType()
 export class CreateRecipeInput {
@@ -15,4 +16,7 @@ export class CreateRecipeInput {
 
   @Field(() => String)
   thumbnail: MongooseSchema.Types.ObjectId;
+
+  @Field(() => [RecipeIngredient])
+  ingredients: RecipeIngredient[];
 }

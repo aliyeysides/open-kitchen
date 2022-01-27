@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,8 +9,19 @@ import Chip from '@mui/material/Chip';
 import LinkButton from './LinkButton';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Avatar from '@mui/material/Avatar';
+import axios from 'axios';
 
 export default function TopAppBar() {
+  const [version, setVersion] = useState<string>('');
+
+  useEffect(() => {
+    async function fetchVersion() {
+      const { data } = await axios('/version');
+      setVersion(data);
+    }
+    fetchVersion();
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
@@ -25,7 +37,7 @@ export default function TopAppBar() {
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <LinkButton to="/recipes">FoodTube</LinkButton>
-            <Chip label="v1.3.0" color="primary" variant="outlined" />
+            <Chip label={`v${version}`} color="primary" variant="outlined" />
           </Typography>
           <ShoppingCartOutlinedIcon
             sx={{ m: 1, marginRight: 2, cursor: 'pointer' }}

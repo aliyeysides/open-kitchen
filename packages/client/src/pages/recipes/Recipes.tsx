@@ -28,8 +28,6 @@ export default function RecipesPage() {
 
   const recipes: Recipe[] = data?.recipes;
 
-  console.log('recipes:', recipes);
-
   return (
     <>
       <Box className={styles.section_header}>

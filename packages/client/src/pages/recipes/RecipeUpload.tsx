@@ -9,12 +9,16 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 import { unset, omit } from 'lodash';
 import HorizontalLinearStepper from '../../components/HorizontalLinearStepper';
 import IngredientAutocomplete from '../../components/IngredientAutocomplete';
-import { FDCFood } from '../../types';
+import { FDCFood, RecipeStep } from '../../types';
 
-type FormInput = { [key: string]: any };
+interface FormInput {
+  recipeName: string;
+  [key: string]: string; // recipe-step-{n}
+}
 
 function stepAttr(order: number) {
   return {
@@ -46,12 +50,13 @@ export default function RecipeUploadPage() {
 
   const [steps, setSteps] = useState(initialStepField);
   const [ingredients, setIngredients] = useState<FDCFood[]>([]);
-  const [formInput, setFormInput] = useState<FormInput>({});
+  const [formInput, setFormInput] = useState<FormInput>({ recipeName: '' });
 
   const stepCount = useRef(3);
 
   const videoInputRef = useRef<HTMLInputElement>(null);
   const thumbnailInputRef = useRef<HTMLInputElement>(null);
+  const thumbnailPreviewRef = useRef<HTMLImageElement>(null);
 
   const incrementStepCount = () => stepCount.current++;
   const decrementStepCount = () => stepCount.current--;
@@ -80,9 +85,16 @@ export default function RecipeUploadPage() {
     },
   }: any) => {
     if (validity.valid && file) {
-      createThumbnail({ variables: { file } });
+      createThumbnail({
+        variables: { file },
+        onCompleted: (data) => {
+          if (thumbnailPreviewRef.current) {
+            thumbnailPreviewRef.current.src = data.createThumbnail.url;
+          }
+        },
+      });
     } else {
-      console.log('Error uploading thumbnail');
+      console.error('Error uploading thumbnail'); // TODO: handle this
     }
   };
 
@@ -91,8 +103,8 @@ export default function RecipeUploadPage() {
     setIngredients([...ingredients, value]);
   };
 
-  const getSteps = () => {
-    const steps = omit(formInput, ['recipe-name']);
+  const getSteps = (): RecipeStep[] => {
+    const steps = omit(formInput, ['recipeName']);
     const stepsInput = [];
     for (const step in steps) {
       const order: number = +step.split('-')[2];
@@ -104,20 +116,20 @@ export default function RecipeUploadPage() {
     return stepsInput;
   };
 
+  const done = (result: MutationResult): boolean =>
+    !result.error && !result.loading && result.data;
+
   const onUploadRecipe = () => {
     const { data: videoData } = createVideoUploadVars;
     const { data: thumbnailData } = createThumbnailVars;
     const stepsInput = getSteps();
 
-    const done = (result: MutationResult): boolean =>
-      !result.error && !result.loading && result.data;
-
     if (done(createVideoUploadVars) && done(createThumbnailVars)) {
-      // todo: handle this with a loading mask if video upload mutation doesn't finish in time
+      // TODO: handle this with a loading mask if video upload mutation doesn't finish in time
       createRecipe({
         variables: {
           createRecipeInput: {
-            name: formInput['recipe-name'],
+            name: formInput.recipeName,
             steps: stepsInput,
             video: videoData.createVideoUpload._id,
             thumbnail: thumbnailData.createThumbnail._id,
@@ -189,29 +201,36 @@ export default function RecipeUploadPage() {
 
   function ThumbnailUploadStep() {
     return (
-      <Button onClick={handleThumbnailUploadBtnClick}>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Add Thumbnail
-        </Typography>
-        <Box sx={{ display: 'none' }}>
-          <input
-            ref={thumbnailInputRef}
-            type="file"
-            onChange={handleThumbnailUpload}
-            required
-          />
+      <>
+        <Box
+          sx={{ height: '500px', width: '500px', border: '1px dashed teal' }}
+        >
+          <img ref={thumbnailPreviewRef} alt="thumbnail-preview" />
+          <Button variant="outlined" onClick={handleThumbnailUploadBtnClick}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Add Thumbnail
+            </Typography>
+            <Box sx={{ display: 'none' }}>
+              <input
+                ref={thumbnailInputRef}
+                type="file"
+                onChange={handleThumbnailUpload}
+                required
+              />
+            </Box>
+          </Button>
         </Box>
-      </Button>
+      </>
     );
   }
 
   function AddInstructionsStep() {
     return (
-      <>
+      <Stack spacing={2}>
         <TextField
           id="recipe-name"
           label="Recipe Name"
-          name="recipe-name"
+          name="recipeName"
           variant="outlined"
           onChange={handleInputChange}
           required
@@ -223,23 +242,34 @@ export default function RecipeUploadPage() {
         <Button variant="outlined" onClick={handleRemoveStep} color="error">
           Remove Step
         </Button>
-      </>
+      </Stack>
     );
   }
 
   function ReviewAndPublishStep() {
+    const { data } = createThumbnailVars;
     return (
-      <Button onClick={onUploadRecipe} variant="contained" color="primary">
-        <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-          Upload Recipe
-        </Typography>
-      </Button>
+      <Stack spacing={2}>
+        <Box>{formInput.recipeName}</Box>
+        <Box>
+          <img src={data?.createThumbnail.url} alt="thumbnail-preview" />
+        </Box>
+        {ingredients.map((ingrd) => {
+          return <Box>{ingrd.description}</Box>;
+        })}
+        {getSteps().map((step) => {
+          return <Box>{step.instruction}</Box>;
+        })}
+      </Stack>
     );
   }
 
   return (
     <main>
-      <HorizontalLinearStepper steps={linearStepperSteps} />
+      <HorizontalLinearStepper
+        steps={linearStepperSteps}
+        handleFinish={onUploadRecipe}
+      />
     </main>
   );
 }

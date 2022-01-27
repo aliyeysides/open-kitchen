@@ -1,27 +1,27 @@
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepContent from "@mui/material/StepContent";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import StepButton from "@mui/material/StepButton";
-import { useState } from "react";
+import Box from '@mui/material/Box';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepContent from '@mui/material/StepContent';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import StepButton from '@mui/material/StepButton';
+import { useState } from 'react';
 
 const steps = [
   {
-    label: "Select campaign settings",
+    label: 'Select campaign settings',
     description: `For each ad campaign that you create, you can control how much
               you're willing to spend on clicks and conversions, which networks
               and geographical locations you want your ads to show on, and more.`,
   },
   {
-    label: "Create an ad group",
+    label: 'Create an ad group',
     description:
-      "An ad group contains one or more ads which target a shared set of keywords.",
+      'An ad group contains one or more ads which target a shared set of keywords.',
   },
   {
-    label: "Create an ad",
+    label: 'Create an ad',
     description: `Try out different ad text to see what brings in the most customers,
               and learn how to enhance your ads using features like ad extensions.
               If you run into any problems with your ads, find out how to tell if
@@ -51,7 +51,6 @@ export default function VerticalLinearStepper() {
   return (
     <Box sx={{ maxWidth: 400 }}>
       <Stepper nonLinear activeStep={activeStep} orientation="vertical">
-        {console.log("steps:", steps)}
         {steps.map((step, index) => (
           <Step key={step.label}>
             <StepButton
@@ -73,7 +72,7 @@ export default function VerticalLinearStepper() {
                     onClick={handleNext}
                     sx={{ mt: 1, mr: 1 }}
                   >
-                    {index === steps.length - 1 ? "Finish" : "Continue"}
+                    {index === steps.length - 1 ? 'Finish' : 'Continue'}
                   </Button>
                   <Button
                     disabled={index === 0}

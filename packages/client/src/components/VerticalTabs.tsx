@@ -1,10 +1,10 @@
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import { useState } from "react";
-import { Recipe, RecipeStep } from "../types";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import { useState } from 'react';
+import { Recipe, RecipeStep } from '../types';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -37,7 +37,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
   };
 }
 
@@ -92,10 +92,8 @@ interface VerticalTabsProps {
 
 export default function VerticalTabs({ recipe }: VerticalTabsProps) {
   const [value, setValue] = useState(0);
-  console.log("recipe", recipe);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log("handleChange");
     setValue(newValue);
   };
 
@@ -103,9 +101,9 @@ export default function VerticalTabs({ recipe }: VerticalTabsProps) {
     <Box
       sx={{
         flexGrow: 1,
-        bgcolor: "background.paper",
-        display: "flex",
-        height: "auto",
+        bgcolor: 'background.paper',
+        display: 'flex',
+        height: 'auto',
       }}
     >
       <Tabs
@@ -116,8 +114,8 @@ export default function VerticalTabs({ recipe }: VerticalTabsProps) {
         aria-label="Recipe Instructions"
         sx={{
           borderRight: 1,
-          borderColor: "divider",
-          overflow: "visible",
+          borderColor: 'divider',
+          overflow: 'visible',
         }}
       >
         {renderStepTabs(recipe.steps)}

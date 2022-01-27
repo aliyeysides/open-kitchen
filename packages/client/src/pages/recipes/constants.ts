@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_VIDEO_UPLOADS = gql`
   query {
@@ -32,7 +32,8 @@ export const CREATE_VIDEO_UPLOAD = gql`
 export const CREATE_THUMBNAIL = gql`
   mutation CreateThumbnail($file: Upload!) {
     createThumbnail(file: $file) {
-      _id
+      name
+      url
     }
   }
 `;

@@ -10,10 +10,12 @@ type StepTuple = [string, JSX.Element][];
 
 interface HorizontalLinearStepperProps {
   steps: StepTuple;
+  handleFinish: () => void;
 }
 
 export default function HorizontalLinearStepper({
   steps,
+  handleFinish,
 }: HorizontalLinearStepperProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
@@ -25,6 +27,10 @@ export default function HorizontalLinearStepper({
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
+  };
+
+  const isLastStep = (step: number) => {
+    return step === steps.length - 1;
   };
 
   const handleNext = () => {
@@ -85,7 +91,7 @@ export default function HorizontalLinearStepper({
       {activeStep === steps.length ? (
         <>
           <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+            Recipe Uploaded - view it here ...
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
@@ -111,9 +117,15 @@ export default function HorizontalLinearStepper({
               </Button>
             )}
 
-            <Button onClick={handleNext}>
+            {/* <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
+            </Button> */}
+
+            {isLastStep(activeStep) ? (
+              <Button onClick={handleFinish}>Create Recipe</Button>
+            ) : (
+              <Button onClick={handleNext}>Next</Button>
+            )}
           </Box>
         </>
       )}

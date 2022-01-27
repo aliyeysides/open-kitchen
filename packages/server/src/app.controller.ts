@@ -9,4 +9,9 @@ export class AppController {
   healthCheck(): number {
     return this.appService.healthCheck();
   }
+
+  @Get('/version')
+  getVersion(): string {
+    return this.appService.getVersion();
+  }
 }

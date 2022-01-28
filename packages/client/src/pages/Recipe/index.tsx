@@ -5,12 +5,11 @@ import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import VideoJS from '../../components/VideoJS';
 import { Recipe, VideoUpload } from '../../types';
-import { GET_RECIPE } from '../Recipes/constants';
+import { GET_RECIPE } from './constants';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import VerticalTabs from '../../components/VerticalTabs';
 // import VerticalLinearStepper from "../../components/VerticalLinearStepper";
-import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 
 interface RecipePageProps {
   previewId?: string;

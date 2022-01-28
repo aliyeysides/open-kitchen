@@ -4,7 +4,7 @@ import {
   CREATE_RECIPE,
   CREATE_VIDEO_UPLOAD,
   CREATE_THUMBNAIL,
-} from '../Recipes/constants';
+} from './constants';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';

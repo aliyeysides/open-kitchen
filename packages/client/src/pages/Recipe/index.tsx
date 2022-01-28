@@ -1,22 +1,26 @@
-import { useQuery } from "@apollo/client";
-import { Button } from "@mui/material";
-import { useParams } from "react-router-dom";
-import videojs from "video.js";
-import "video.js/dist/video-js.css";
-import VideoJS from "../../components/VideoJS";
-import { Recipe, VideoUpload } from "../../types";
-import { GET_RECIPE } from "./constants";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import VerticalTabs from "../../components/VerticalTabs";
+import { useQuery } from '@apollo/client';
+import { Button } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+import VideoJS from '../../components/VideoJS';
+import { Recipe, VideoUpload } from '../../types';
+import { GET_RECIPE } from '../Recipes/constants';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import VerticalTabs from '../../components/VerticalTabs';
 // import VerticalLinearStepper from "../../components/VerticalLinearStepper";
-import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
+import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 
-export default function RecipePage() {
+interface RecipePageProps {
+  previewId?: string;
+}
+
+export default function RecipePage({ previewId }: RecipePageProps) {
   const params = useParams();
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
-      id: params.recipeId,
+      id: previewId ? previewId : params.recipeId,
     },
   });
 
@@ -35,27 +39,27 @@ export default function RecipePage() {
     sources: [
       {
         src: videoUpload.url,
-        type: "video/mp4",
+        type: 'video/mp4',
       },
     ],
   };
 
   const handlePlayerReady = () => {
-    videojs.log("Your player is ready!");
+    videojs.log('Your player is ready!');
   };
 
   return (
     <main>
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "flex-start",
+          display: 'flex',
+          justifyContent: 'flex-start',
         }}
       >
         <Container disableGutters>
           <Box
             sx={{
-              display: "grid",
+              display: 'grid',
               height: 500,
             }}
           >
@@ -63,9 +67,9 @@ export default function RecipePage() {
           </Box>
           <Box
             sx={{
-              display: "flex",
+              display: 'flex',
               my: 2,
-              fontWeight: "bold",
+              fontWeight: 'bold',
               fontSize: 18,
             }}
           >
@@ -73,9 +77,9 @@ export default function RecipePage() {
           </Box>
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
             }}
           >
             <Box sx={{ ml: 3 }}>$5 per serving</Box>

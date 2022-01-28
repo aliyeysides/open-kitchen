@@ -9,9 +9,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import { createUploadLink } from 'apollo-upload-client';
-import RecipePage from './pages/recipes/Recipe';
-import RecipesPage from './pages/recipes/Recipes';
-import RecipeUploadPage from './pages/recipes/RecipeUpload';
+import RecipePage from './pages/Recipe';
+import RecipesPage from './pages/Recipes';
+import RecipeUploadPage from './pages/RecipeUpload';
 
 console.log('REACT NODE ENV', process.env.NODE_ENV);
 

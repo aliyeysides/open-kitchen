@@ -6,7 +6,6 @@ import { useLazyQuery, gql } from '@apollo/client';
 import debounce from 'lodash/debounce';
 import uniqBy from 'lodash/unionBy';
 import { FDCFood } from '../types';
-import { omit } from 'lodash';
 
 const SEARCH_FOOD = gql`
   query Search($query: String!) {

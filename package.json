@@ -8,7 +8,7 @@
     "build": "npx lerna run build",
     "start": "npx lerna run start:prod --stream",
     "start:dev": "npx lerna run --parallel start:dev",
-    "deploy:dev": "eb deploy foyir-mono-development",
+    "deploy:dev": "npm run build && eb deploy foyir-mono-development",
     "test": "lerna run test && lerna run test:e2e"
   },
   "devDependencies": {

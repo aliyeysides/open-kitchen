@@ -4,16 +4,18 @@ import {
   CREATE_RECIPE,
   CREATE_VIDEO_UPLOAD,
   CREATE_THUMBNAIL,
-} from './constants';
+} from '../Recipes/constants';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import { unset, omit } from 'lodash';
 import HorizontalLinearStepper from '../../components/HorizontalLinearStepper';
-import IngredientAutocomplete from '../../components/IngredientAutocomplete';
 import { FDCFood, RecipeStep } from '../../types';
+import RecipePage from '../Recipe';
+import AddIngredientsStep from './AddIngredientsStep';
+import VideoUploadStep from './VideoUploadStep';
+import ThumbnailUploadStep from './ThumbnailUploadStep';
 
 interface FormInput {
   recipeName: string;
@@ -42,28 +44,33 @@ export default function RecipeUploadPage() {
   const handleInputChange = ({ target: { validity, value, name } }: any) =>
     setFormInput((prevState) => ({ ...prevState, [name]: value }));
 
+  const [formInput, setFormInput] = useState<FormInput>({ recipeName: '' });
+
   const initialStepField = [
-    <TextField {...stepAttr(1)} onChange={handleInputChange} />,
-    <TextField {...stepAttr(2)} onChange={handleInputChange} />,
-    <TextField {...stepAttr(3)} onChange={handleInputChange} />,
+    <TextField
+      {...stepAttr(1)}
+      onChange={handleInputChange}
+      value={formInput[`recipe-step-${1}`]}
+    />,
+    <TextField
+      {...stepAttr(2)}
+      onChange={handleInputChange}
+      value={formInput[`recipe-step-${1}`]}
+    />,
+    <TextField
+      {...stepAttr(3)}
+      onChange={handleInputChange}
+      value={formInput[`recipe-step-${1}`]}
+    />,
   ];
 
   const [steps, setSteps] = useState(initialStepField);
   const [ingredients, setIngredients] = useState<FDCFood[]>([]);
-  const [formInput, setFormInput] = useState<FormInput>({ recipeName: '' });
 
   const stepCount = useRef(3);
 
-  const videoInputRef = useRef<HTMLInputElement>(null);
-  const thumbnailInputRef = useRef<HTMLInputElement>(null);
-  const thumbnailPreviewRef = useRef<HTMLImageElement>(null);
-
   const incrementStepCount = () => stepCount.current++;
   const decrementStepCount = () => stepCount.current--;
-
-  const handleVideoUploadBtnClick = () => videoInputRef.current?.click();
-  const handleThumbnailUploadBtnClick = () =>
-    thumbnailInputRef.current?.click();
 
   const handleVideoUpload = ({
     target: {
@@ -88,9 +95,9 @@ export default function RecipeUploadPage() {
       createThumbnail({
         variables: { file },
         onCompleted: (data) => {
-          if (thumbnailPreviewRef.current) {
-            thumbnailPreviewRef.current.src = data.createThumbnail.url;
-          }
+          // if (thumbnailPreviewRef.current) { // TODO: create separate component to handle preview
+          //   thumbnailPreviewRef.current.src = data.createThumbnail.url;
+          // }
         },
       });
     } else {
@@ -161,68 +168,18 @@ export default function RecipeUploadPage() {
   };
 
   const linearStepperSteps: [string, JSX.Element][] = [
-    ['Upload Video', VideoUploadStep()],
-    ['Ingredients', AddIngredientsStep()],
+    ['Upload Video', <VideoUploadStep onChange={handleVideoUpload} />],
+    [
+      'Ingredients',
+      <AddIngredientsStep
+        ingredients={ingredients}
+        onSelect={handleIngredientSelect}
+      />,
+    ],
     ['Details', AddInstructionsStep()],
-    ['Add thumbnail', ThumbnailUploadStep()],
+    ['Add thumbnail', <ThumbnailUploadStep onChange={handleThumbnailUpload} />],
     ['Review & Publish', ReviewAndPublishStep()],
   ];
-
-  function VideoUploadStep() {
-    return (
-      <Button onClick={handleVideoUploadBtnClick}>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Add Video
-        </Typography>
-        <Box sx={{ display: 'none' }}>
-          <input
-            ref={videoInputRef}
-            type="file"
-            onChange={handleVideoUpload}
-            required
-          />
-        </Box>
-      </Button>
-    );
-  }
-
-  function AddIngredientsStep() {
-    return (
-      <>
-        <IngredientAutocomplete onSelect={handleIngredientSelect} />
-        <ul>
-          {ingredients.map((d) => {
-            return <li>{d.description}</li>;
-          })}
-        </ul>
-      </>
-    );
-  }
-
-  function ThumbnailUploadStep() {
-    return (
-      <>
-        <Box
-          sx={{ height: '500px', width: '500px', border: '1px dashed teal' }}
-        >
-          <img ref={thumbnailPreviewRef} alt="thumbnail-preview" />
-          <Button variant="outlined" onClick={handleThumbnailUploadBtnClick}>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Add Thumbnail
-            </Typography>
-            <Box sx={{ display: 'none' }}>
-              <input
-                ref={thumbnailInputRef}
-                type="file"
-                onChange={handleThumbnailUpload}
-                required
-              />
-            </Box>
-          </Button>
-        </Box>
-      </>
-    );
-  }
 
   function AddInstructionsStep() {
     return (
@@ -233,6 +190,7 @@ export default function RecipeUploadPage() {
           name="recipeName"
           variant="outlined"
           onChange={handleInputChange}
+          value={formInput.recipeName}
           required
         />
         {steps}
@@ -262,6 +220,7 @@ export default function RecipeUploadPage() {
         })}
       </Stack>
     );
+    // return <RecipePage previewId="test" />; // TODO: reuse recipe page component
   }
 
   return (

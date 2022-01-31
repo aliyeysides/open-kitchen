@@ -8,6 +8,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import IconButton from '@mui/material/IconButton';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 type RecipeStep = Omit<RS, 'order'> & { key: number };
 type EventHandler = (step: RecipeStep, e: SyntheticEvent) => void;
@@ -57,7 +58,7 @@ function RecipeStepsTable({ steps, onDelete, onEdit }: RecipeStepsTableProps) {
             index={idx}
             editMode={currentlyEditing === step.key}
             onEdit={onEdit}
-            render={(step: RecipeStep) => (
+            renderControls={(step: RecipeStep) => (
               <RecipeStepItemControls
                 step={step}
                 onDelete={onDelete}
@@ -77,7 +78,7 @@ interface RecipeStepItemProps {
   step: RecipeStep;
   editMode: boolean;
   onEdit: EventHandler;
-  render: (step: RecipeStep) => void;
+  renderControls: (step: RecipeStep) => void;
 }
 
 function RecipeStepItem({
@@ -85,23 +86,25 @@ function RecipeStepItem({
   index,
   editMode,
   onEdit,
-  render,
+  renderControls,
 }: RecipeStepItemProps) {
   const [showControls, setShowControls] = useState<boolean>(false);
-  const handleHover = () => setShowControls(!showControls);
   const editModeEl = (
-    <TextField
-      sx={{ width: '100%' }}
-      key={step.key}
-      defaultValue={step.instruction}
-      onChange={(e) => onEdit(step, e)}
-    />
+    <>
+      <TextField
+        sx={{ width: '100%' }}
+        key={step.key}
+        defaultValue={step.instruction}
+        onChange={(e) => onEdit(step, e)}
+      />
+      {renderControls(step)}
+    </>
   );
 
   return (
     <Box
-      onMouseEnter={handleHover}
-      onMouseLeave={handleHover}
+      onMouseEnter={() => setShowControls(true)}
+      onMouseLeave={() => setShowControls(false)}
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -109,12 +112,11 @@ function RecipeStepItem({
         border: '1px solid teal',
         borderRadius: '4px',
         padding: '14px',
-        cursor: 'pointer',
         height: '70px',
       }}
     >
-      {editMode ? editModeEl : `${index + 1}: ${step.instruction}`}
-      {showControls ? render(step) : null}
+      {editMode ? editModeEl : `step ${index + 1}: ${step.instruction}`}
+      {showControls && !editMode ? renderControls(step) : null}
     </Box>
   );
 }
@@ -141,23 +143,23 @@ export function RecipeStepItemControls({
       }}
     >
       {editMode ? (
-        <>
+        <ButtonGroup>
           <IconButton onClick={(e) => onEdit(step, e)}>
             <CheckIcon />
           </IconButton>
           <IconButton onClick={(e) => onDelete(step, e)}>
             <DeleteForeverIcon />
           </IconButton>
-        </>
+        </ButtonGroup>
       ) : (
-        <>
+        <ButtonGroup>
           <IconButton onClick={(e) => onEdit(step, e)}>
             <EditIcon />
           </IconButton>
           <IconButton onClick={(e) => onDelete(step, e)}>
             <DeleteForeverIcon />
           </IconButton>
-        </>
+        </ButtonGroup>
       )}
     </Box>
   );

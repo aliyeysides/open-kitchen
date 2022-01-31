@@ -1,39 +1,21 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { MutationResult, useMutation } from '@apollo/client';
 import {
   CREATE_RECIPE,
   CREATE_VIDEO_UPLOAD,
   CREATE_THUMBNAIL,
 } from './constants';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import { unset, omit } from 'lodash';
+import { omit } from 'lodash';
 import HorizontalLinearStepper from '../../components/HorizontalLinearStepper';
-import { FDCFood, RecipeStep } from '../../types';
-import RecipePage from '../Recipe';
+import { FDCFood, RecipeStep as RS } from '../../types';
 import AddIngredientsStep from './AddIngredientsStep';
 import VideoUploadStep from './VideoUploadStep';
 import ThumbnailUploadStep from './ThumbnailUploadStep';
+import AddRecipeDetailsForm, {
+  AddRecipeDetailsFormProps,
+} from './AddRecipeDetailsForm';
 
-interface FormInput {
-  recipeName: string;
-  [key: string]: string; // recipe-step-{n}
-}
-
-function stepAttr(order: number) {
-  return {
-    id: `recipe-step-${order}`,
-    label: `Recipe Step ${order}`,
-    variant: 'outlined' as 'outlined',
-    name: `recipe-step-${order}`,
-    key: `${order}`,
-    rows: 4,
-    multiline: true,
-    required: true,
-  };
-}
+type RecipeStep = Omit<RS, 'order'> & { key: number };
 
 export default function RecipeUploadPage() {
   const [createVideoUpload, createVideoUploadVars] =
@@ -41,36 +23,18 @@ export default function RecipeUploadPage() {
   const [createThumbnail, createThumbnailVars] = useMutation(CREATE_THUMBNAIL);
   const [createRecipe] = useMutation(CREATE_RECIPE);
 
-  const handleInputChange = ({ target: { validity, value, name } }: any) =>
+  const handleInputChange = ({ target: { value, name } }: any) =>
     setFormInput((prevState) => ({ ...prevState, [name]: value }));
 
-  const [formInput, setFormInput] = useState<FormInput>({ recipeName: '' });
+  type FormData = Pick<AddRecipeDetailsFormProps, 'name' | 'newInputValue'>;
 
-  const initialStepField = [
-    <TextField
-      {...stepAttr(1)}
-      onChange={handleInputChange}
-      value={formInput[`recipe-step-${1}`]}
-    />,
-    <TextField
-      {...stepAttr(2)}
-      onChange={handleInputChange}
-      value={formInput[`recipe-step-${1}`]}
-    />,
-    <TextField
-      {...stepAttr(3)}
-      onChange={handleInputChange}
-      value={formInput[`recipe-step-${1}`]}
-    />,
-  ];
+  const [formInput, setFormInput] = useState<FormData>({
+    name: '',
+    newInputValue: '',
+  });
 
-  const [steps, setSteps] = useState(initialStepField);
+  const [steps, setSteps] = useState<RecipeStep[]>([]);
   const [ingredients, setIngredients] = useState<FDCFood[]>([]);
-
-  const stepCount = useRef(3);
-
-  const incrementStepCount = () => stepCount.current++;
-  const decrementStepCount = () => stepCount.current--;
 
   const handleVideoUpload = ({
     target: {
@@ -110,34 +74,20 @@ export default function RecipeUploadPage() {
     setIngredients([...ingredients, value]);
   };
 
-  const getSteps = (): RecipeStep[] => {
-    const steps = omit(formInput, ['recipeName']);
-    const stepsInput = [];
-    for (const step in steps) {
-      const order: number = +step.split('-')[2];
-      stepsInput.push({
-        order,
-        instruction: steps[step],
-      });
-    }
-    return stepsInput;
-  };
-
   const done = (result: MutationResult): boolean =>
     !result.error && !result.loading && result.data;
 
   const onUploadRecipe = () => {
     const { data: videoData } = createVideoUploadVars;
     const { data: thumbnailData } = createThumbnailVars;
-    const stepsInput = getSteps();
 
     if (done(createVideoUploadVars) && done(createThumbnailVars)) {
       // TODO: handle this with a loading mask if video upload mutation doesn't finish in time
       createRecipe({
         variables: {
           createRecipeInput: {
-            name: formInput.recipeName,
-            steps: stepsInput,
+            name: formInput.name,
+            steps: steps,
             video: videoData.createVideoUpload._id,
             thumbnail: thumbnailData.createThumbnail._id,
             ingredients: ingredients,
@@ -148,23 +98,29 @@ export default function RecipeUploadPage() {
   };
 
   const handleAddStep = () => {
-    incrementStepCount();
-    const newStepField = (
-      <TextField
-        {...stepAttr(stepCount.current)}
-        onChange={handleInputChange}
-      />
-    );
-    setSteps([...steps, newStepField]);
+    const newValue: RecipeStep = {
+      instruction: formInput.newInputValue,
+      key: Date.now(),
+    };
+    setSteps((prevState) => [...prevState, newValue]);
+    setFormInput((prevState) => ({ name: prevState.name, newInputValue: '' }));
   };
 
-  const handleRemoveStep = () => {
-    const key = `recipe-step-${stepCount.current}`;
-    const input = Object.assign({}, formInput);
-    unset(input, key);
-    setFormInput(input);
-    decrementStepCount();
-    setSteps([...steps].slice(0, steps.length - 1));
+  const handleDeleteStep = (step: RecipeStep) => {
+    const selectedStep = step;
+    const newSteps = steps.filter((step) => step.key !== selectedStep.key);
+    setSteps(newSteps);
+  };
+
+  const handleEditStep = (step: RecipeStep, { target: { value } }: any) => {
+    const selectedStep = step;
+    const newSteps = steps.map((step) => {
+      if (step.key === selectedStep.key) {
+        step.instruction = value;
+      }
+      return step;
+    });
+    setSteps(newSteps);
   };
 
   const linearStepperSteps: [string, JSX.Element][] = [
@@ -176,52 +132,39 @@ export default function RecipeUploadPage() {
         onSelect={handleIngredientSelect}
       />,
     ],
-    ['Details', AddInstructionsStep()],
+    [
+      'Details',
+      <AddRecipeDetailsForm
+        {...formInput}
+        steps={steps}
+        onChange={handleInputChange}
+        onClick={handleAddStep}
+        onDelete={handleDeleteStep}
+        onEdit={handleEditStep}
+      />,
+    ],
     ['Add thumbnail', <ThumbnailUploadStep onChange={handleThumbnailUpload} />],
-    ['Review & Publish', ReviewAndPublishStep()],
+    // ['Review & Publish', ReviewAndPublishStep()],
   ];
 
-  function AddInstructionsStep() {
-    return (
-      <Stack spacing={2}>
-        <TextField
-          id="recipe-name"
-          label="Recipe Name"
-          name="recipeName"
-          variant="outlined"
-          onChange={handleInputChange}
-          value={formInput.recipeName}
-          required
-        />
-        {steps}
-        <Button variant="outlined" onClick={handleAddStep}>
-          Add Step
-        </Button>
-        <Button variant="outlined" onClick={handleRemoveStep} color="error">
-          Remove Step
-        </Button>
-      </Stack>
-    );
-  }
-
-  function ReviewAndPublishStep() {
-    const { data } = createThumbnailVars;
-    return (
-      <Stack spacing={2}>
-        <Box>{formInput.recipeName}</Box>
-        <Box>
-          <img src={data?.createThumbnail.url} alt="thumbnail-preview" />
-        </Box>
-        {ingredients.map((ingrd) => {
-          return <Box>{ingrd.description}</Box>;
-        })}
-        {getSteps().map((step) => {
-          return <Box>{step.instruction}</Box>;
-        })}
-      </Stack>
-    );
-    // return <RecipePage previewId="test" />; // TODO: reuse recipe page component
-  }
+  // function ReviewAndPublishStep() {
+  //   const { data } = createThumbnailVars;
+  //   return (
+  //     <Stack spacing={2}>
+  //       <Box>{formInput.recipeName}</Box>
+  //       <Box>
+  //         <img src={data?.createThumbnail.url} alt="thumbnail-preview" />
+  //       </Box>
+  //       {ingredients.map((ingrd) => {
+  //         return <Box>{ingrd.description}</Box>;
+  //       })}
+  //       {getSteps().map((step) => {
+  //         return <Box>{step.instruction}</Box>;
+  //       })}
+  //     </Stack>
+  //   );
+  //   // return <RecipePage previewId="test" />; // TODO: reuse recipe page component
+  // }
 
   return (
     <main>

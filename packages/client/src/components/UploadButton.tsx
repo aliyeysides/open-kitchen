@@ -21,7 +21,7 @@ export default function UploadButton({ label, onChange }: UploadButtonProps) {
   };
 
   return (
-    <Button variant="outlined" onClick={handleOnClick}>
+    <Button variant="contained" onClick={handleOnClick}>
       <Typography component="div" sx={{ flexGrow: 1 }}>
         {label}
       </Typography>

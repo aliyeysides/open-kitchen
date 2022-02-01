@@ -8,12 +8,12 @@ import {
 import { omit } from 'lodash';
 import HorizontalLinearStepper from '../../components/HorizontalLinearStepper';
 import { FDCFood, RecipeStep as RS } from '../../types';
-import AddIngredientsStep from './AddIngredientsStep';
 import VideoUploadStep from './VideoUploadStep';
 import ThumbnailUploadStep from './ThumbnailUploadStep';
 import AddRecipeDetailsForm, {
   AddRecipeDetailsFormProps,
 } from './AddRecipeDetailsForm';
+import AddRecipeIngredientsForm from './AddRecipeIngredientsForm';
 
 type RecipeStep = Omit<RS, 'order'> & { key: number };
 
@@ -127,7 +127,7 @@ export default function RecipeUploadPage() {
     ['Upload Video', <VideoUploadStep onChange={handleVideoUpload} />],
     [
       'Ingredients',
-      <AddIngredientsStep
+      <AddRecipeIngredientsForm
         ingredients={ingredients}
         onSelect={handleIngredientSelect}
       />,

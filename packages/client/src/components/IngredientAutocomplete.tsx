@@ -69,56 +69,48 @@ export default function IngredientAutocomplete({
   }, [open]);
 
   return (
-    <>
-      <div>{`value: ${
-        value !== null ? `'${value.description}'` : 'null'
-      }`}</div>
-      <div>{`inputValue: '${inputValue}'`}</div>
-      <Autocomplete
-        id="asynchronous-demo"
-        sx={{ width: 300 }}
-        value={value}
-        inputValue={inputValue}
-        open={open}
-        onChange={(event, newValue: FDCFood | null) => {
-          if (newValue !== null) onSelect(newValue);
-        }}
-        onInputChange={(event, newInputValue) => {
-          setInputValue(newInputValue);
-        }}
-        onOpen={() => {
-          setOpen(true);
-        }}
-        onClose={() => {
-          setOpen(false);
-        }}
-        isOptionEqualToValue={(option, value) =>
-          option.description === value.description
-        }
-        filterOptions={(x) => x}
-        getOptionLabel={(option: string | { description: string }) =>
-          typeof option === 'string' ? option : option.description
-        }
-        options={options}
-        loading={loading}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Asynchronous"
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <>
-                  {loading ? (
-                    <CircularProgress color="inherit" size={20} />
-                  ) : null}
-                  {params.InputProps.endAdornment}
-                </>
-              ),
-            }}
-          />
-        )}
-      />
-    </>
+    <Autocomplete
+      value={value}
+      inputValue={inputValue}
+      open={open}
+      onChange={(event, newValue: FDCFood | null) => {
+        if (newValue !== null) onSelect(newValue);
+      }}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
+      onOpen={() => {
+        setOpen(true);
+      }}
+      onClose={() => {
+        setOpen(false);
+      }}
+      isOptionEqualToValue={(option, value) =>
+        option.description === value.description
+      }
+      filterOptions={(x) => x}
+      getOptionLabel={(option: string | { description: string }) =>
+        typeof option === 'string' ? option : option.description
+      }
+      options={options}
+      loading={loading}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="search ingredient..."
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
+                {/* {params.InputProps.endAdornment} */}
+              </>
+            ),
+          }}
+        />
+      )}
+    />
   );
 }

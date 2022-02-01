@@ -1,23 +1,24 @@
 import IngredientAutocomplete from '../../components/IngredientAutocomplete';
+import Stack from '@mui/material/Stack';
 import { FDCFood } from '../../types';
 
-interface AddIngredientsStepProps {
+interface AddRecipeIngredientsFormProps {
   ingredients: FDCFood[];
   onSelect: (newValue: FDCFood) => void;
 }
 
-export default function AddIngredientsStep({
+export default function AddRecipeIngredientsForm({
   ingredients,
   onSelect,
-}: AddIngredientsStepProps) {
+}: AddRecipeIngredientsFormProps) {
   return (
-    <>
+    <Stack spacing={2}>
       <IngredientAutocomplete onSelect={onSelect} />
       <ul>
         {ingredients.map((d) => {
           return <li>{d.description}</li>;
         })}
       </ul>
-    </>
+    </Stack>
   );
 }

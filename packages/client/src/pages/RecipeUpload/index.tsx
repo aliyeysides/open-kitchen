@@ -8,12 +8,12 @@ import {
 import { omit } from 'lodash';
 import HorizontalLinearStepper from '../../components/HorizontalLinearStepper';
 import { FDCFood, RecipeStep as RS } from '../../types';
-import VideoUploadStep from './VideoUploadStep';
-import ThumbnailUploadStep from './ThumbnailUploadStep';
 import AddRecipeDetailsForm, {
   AddRecipeDetailsFormProps,
 } from './AddRecipeDetailsForm';
 import AddRecipeIngredientsForm from './AddRecipeIngredientsForm';
+import VideoUploadForm from './VideoUploadForm';
+import ThumbnailUploadForm from './ThumbnailUploadForm';
 
 type RecipeStep = Omit<RS, 'order'> & { key: number };
 
@@ -124,7 +124,7 @@ export default function RecipeUploadPage() {
   };
 
   const linearStepperSteps: [string, JSX.Element][] = [
-    ['Upload Video', <VideoUploadStep onChange={handleVideoUpload} />],
+    ['Upload Video', <VideoUploadForm onChange={handleVideoUpload} />],
     [
       'Ingredients',
       <AddRecipeIngredientsForm
@@ -143,7 +143,7 @@ export default function RecipeUploadPage() {
         onEdit={handleEditStep}
       />,
     ],
-    ['Add thumbnail', <ThumbnailUploadStep onChange={handleThumbnailUpload} />],
+    ['Add thumbnail', <ThumbnailUploadForm onChange={handleThumbnailUpload} />],
     // ['Review & Publish', ReviewAndPublishStep()],
   ];
 
@@ -169,6 +169,7 @@ export default function RecipeUploadPage() {
   return (
     <main>
       <HorizontalLinearStepper
+        sx={{ width: 'auto', mx: 20 }}
         steps={linearStepperSteps}
         handleFinish={onUploadRecipe}
       />

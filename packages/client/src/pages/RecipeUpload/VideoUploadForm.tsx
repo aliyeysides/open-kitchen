@@ -1,6 +1,6 @@
 import UploadButton from '../../components/UploadButton';
 
-interface VideoUploadStepProps {
+interface VideoUploadFormProps {
   onChange: ({
     target: {
       validity,
@@ -9,6 +9,6 @@ interface VideoUploadStepProps {
   }: any) => void;
 }
 
-export default function VideoUploadStep({ onChange }: VideoUploadStepProps) {
+export default function VideoUploadForm({ onChange }: VideoUploadFormProps) {
   return <UploadButton label="Add Video" onChange={onChange} />;
 }

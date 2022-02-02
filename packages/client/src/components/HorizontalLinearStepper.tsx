@@ -5,20 +5,25 @@ import StepLabel, { StepLabelProps } from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
+import { SxProps } from '@mui/system';
 
 type StepTuple = [string, JSX.Element][];
 
 interface HorizontalLinearStepperProps {
   steps: StepTuple;
   handleFinish: () => void;
+  sx?: SxProps;
 }
 
 export default function HorizontalLinearStepper({
   steps,
   handleFinish,
+  sx,
 }: HorizontalLinearStepperProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
+
+  const defaultStyle = { width: 'auto', mx: 20 };
 
   const isStepOptional = (step: number) => {
     // return step === 1;
@@ -68,7 +73,7 @@ export default function HorizontalLinearStepper({
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={sx ? sx : { ...defaultStyle }}>
       <Stepper sx={{ marginBottom: '50px' }} activeStep={activeStep}>
         {steps.map(([label, el], index) => {
           const stepProps: StepProps = {};
@@ -100,7 +105,11 @@ export default function HorizontalLinearStepper({
         </>
       ) : (
         <>
-          <>{steps[activeStep][1]}</>
+          <Box
+            sx={{ display: 'flex', justifyContent: 'center', width: 'auto' }}
+          >
+            {steps[activeStep][1]}
+          </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"

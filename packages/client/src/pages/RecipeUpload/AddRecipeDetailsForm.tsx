@@ -9,6 +9,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import IconButton from '@mui/material/IconButton';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { TransitionGroup } from 'react-transition-group';
+import Collapse from '@mui/material/Collapse';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Tooltip from '@mui/material/Tooltip';
 
 type RecipeStep = Omit<RS, 'order'> & { key: number };
 type EventHandler = (step: RecipeStep, e: SyntheticEvent) => void;
@@ -49,27 +54,29 @@ function RecipeStepsTable({ steps, onDelete, onEdit }: RecipeStepsTableProps) {
   };
 
   return (
-    <>
-      {steps.map((step, idx) => {
-        return (
-          <RecipeStepItem
-            key={step.key}
-            step={step}
-            index={idx}
-            editMode={currentlyEditing === step.key}
-            onEdit={onEdit}
-            renderControls={(step: RecipeStep) => (
-              <RecipeStepItemControls
-                step={step}
-                onDelete={onDelete}
-                onEdit={() => toggleEditMode(step)}
-                editMode={currentlyEditing === step.key}
-              />
-            )}
-          />
-        );
-      })}
-    </>
+    <List>
+      <TransitionGroup>
+        {steps.map((step, idx) => (
+          <Collapse sx={{ mt: 1 }} key={step.key}>
+            <RecipeStepItem
+              key={step.key}
+              step={step}
+              index={idx}
+              editMode={currentlyEditing === step.key}
+              onEdit={onEdit}
+              renderControls={(step: RecipeStep) => (
+                <RecipeStepItemControls
+                  step={step}
+                  onDelete={onDelete}
+                  onEdit={() => toggleEditMode(step)}
+                  editMode={currentlyEditing === step.key}
+                />
+              )}
+            />
+          </Collapse>
+        ))}
+      </TransitionGroup>
+    </List>
   );
 }
 
@@ -90,15 +97,16 @@ function RecipeStepItem({
 }: RecipeStepItemProps) {
   const [showControls, setShowControls] = useState<boolean>(false);
   const editModeEl = (
-    <>
+    <ListItem key={step.key} disablePadding>
       <TextField
+        multiline
         sx={{ width: '100%' }}
         key={step.key}
         defaultValue={step.instruction}
         onChange={(e) => onEdit(step, e)}
       />
       {renderControls(step)}
-    </>
+    </ListItem>
   );
 
   return (
@@ -109,10 +117,10 @@ function RecipeStepItem({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        border: '1px solid teal',
         borderRadius: '4px',
         padding: '14px',
-        height: '70px',
+        height: 'auto',
+        minHeight: '70px',
       }}
     >
       {editMode ? editModeEl : `step ${index + 1}: ${step.instruction}`}
@@ -143,22 +151,23 @@ export function RecipeStepItemControls({
       }}
     >
       {editMode ? (
-        <ButtonGroup>
-          <IconButton onClick={(e) => onEdit(step, e)}>
+        <Tooltip title="Confirm">
+          <IconButton sx={{ marginLeft: 1 }} onClick={(e) => onEdit(step, e)}>
             <CheckIcon />
           </IconButton>
-          <IconButton onClick={(e) => onDelete(step, e)}>
-            <DeleteForeverIcon />
-          </IconButton>
-        </ButtonGroup>
+        </Tooltip>
       ) : (
         <ButtonGroup>
-          <IconButton onClick={(e) => onEdit(step, e)}>
-            <EditIcon />
-          </IconButton>
-          <IconButton onClick={(e) => onDelete(step, e)}>
-            <DeleteForeverIcon />
-          </IconButton>
+          <Tooltip title="Edit">
+            <IconButton onClick={(e) => onEdit(step, e)}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton onClick={(e) => onDelete(step, e)}>
+              <DeleteForeverIcon />
+            </IconButton>
+          </Tooltip>
         </ButtonGroup>
       )}
     </Box>
@@ -236,7 +245,7 @@ export default function AddRecipeDetailsForm({
   onEdit,
 }: AddRecipeDetailsFormProps) {
   return (
-    <Stack spacing={2}>
+    <Stack sx={{ width: '600px' }} spacing={2}>
       <RecipeNameInput value={name} onChange={onChange} />
       <RecipeStepsTable steps={steps} onDelete={onDelete} onEdit={onEdit} />
       <AddRecipeStepControls

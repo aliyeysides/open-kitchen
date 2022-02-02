@@ -1,6 +1,6 @@
 import UploadButton from '../../components/UploadButton';
 
-interface ThumbnailUploadStepProps {
+interface ThumbnailUploadFormProps {
   onChange: ({
     target: {
       validity,
@@ -9,8 +9,8 @@ interface ThumbnailUploadStepProps {
   }: any) => void;
 }
 
-export default function ThumbnailUploadStep({
+export default function ThumbnailUploadForm({
   onChange,
-}: ThumbnailUploadStepProps) {
+}: ThumbnailUploadFormProps) {
   return <UploadButton label="Add Thumbnail" onChange={onChange} />;
 }

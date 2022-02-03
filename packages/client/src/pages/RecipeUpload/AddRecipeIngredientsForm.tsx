@@ -1,7 +1,7 @@
 import IngredientAutocomplete from '../../components/IngredientAutocomplete';
 import Stack from '@mui/material/Stack';
 import { FDCFood } from '../../types';
-
+import NativeSelectDropdown from '../../components/NativeSelect';
 interface IngredientsTableProps {
   ingredients: FDCFood[];
 }
@@ -9,10 +9,25 @@ interface IngredientsTableProps {
 function IngredientsTable({ ingredients }: IngredientsTableProps) {
   return (
     <ul>
-      {ingredients.map((d) => (
-        <li>{d.description}</li>
+      {ingredients.map((ingredient) => (
+        <IngredientTableItem ingredient={ingredient} />
       ))}
     </ul>
+  );
+}
+
+interface IngredientTableItemProps {
+  ingredient: FDCFood;
+}
+
+function IngredientTableItem({ ingredient }: IngredientTableItemProps) {
+  return <li>{ingredient.description}</li>;
+}
+
+function UnitSelectDropdown() {
+  const options = [{ value: 'tablespoon', label: 'tablespoon' }];
+  return (
+    <NativeSelectDropdown label={'unit of measurement'} options={options} />
   );
 }
 
@@ -27,8 +42,9 @@ export default function AddRecipeIngredientsForm({
 }: AddRecipeIngredientsFormProps) {
   return (
     <Stack sx={{ width: '600px' }} spacing={2}>
-      <IngredientAutocomplete onSelect={onSelect} />
+      <UnitSelectDropdown />
       <IngredientsTable ingredients={ingredients} />
+      <IngredientAutocomplete onSelect={onSelect} />
     </Stack>
   );
 }

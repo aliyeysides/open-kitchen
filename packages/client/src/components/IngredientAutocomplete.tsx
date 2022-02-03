@@ -30,7 +30,10 @@ export default function IngredientAutocomplete({
   const [options, setOptions] = useState<any>([]);
   const [searchFood, { loading, error, data }] = useLazyQuery(SEARCH_FOOD);
 
-  const throttledSearchFood = useMemo(() => debounce(searchFood, 200), []);
+  const throttledSearchFood = useMemo(
+    () => debounce(searchFood, 200),
+    [searchFood],
+  );
 
   useEffect(() => {
     let active = true;
@@ -94,6 +97,7 @@ export default function IngredientAutocomplete({
       }
       options={options}
       loading={loading}
+      blurOnSelect
       renderInput={(params) => (
         <TextField
           {...params}

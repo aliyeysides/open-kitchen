@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Chip from '@mui/material/Chip';
 import LinkButton from './LinkButton';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import KitchenIcon from '@mui/icons-material/Kitchen';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 
@@ -26,7 +26,7 @@ export default function TopAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -34,14 +34,14 @@ export default function TopAppBar() {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <LinkButton to="/recipes">FoodTube</LinkButton>
+            <LinkButton to="/recipes" color="primary">
+              <Box sx={{ marginRight: 1 }}>Open Kitchen </Box>
+              <KitchenIcon sx={{ marginRight: 1 }} color="primary" />
+            </LinkButton>
             <Chip label={`v${version}`} color="primary" variant="outlined" />
           </Typography>
-          <ShoppingCartOutlinedIcon
-            sx={{ m: 1, marginRight: 2, cursor: 'pointer' }}
-          />
           <LinkButton color="primary" variant="outlined" to="/recipes/upload">
             Upload
           </LinkButton>

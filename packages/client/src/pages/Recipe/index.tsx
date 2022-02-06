@@ -1,14 +1,18 @@
 import { useQuery } from '@apollo/client';
 import { Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
-// import VideoJS from '../../components/VideoJS'; TODO: implement our own playback
-import { Recipe, VideoUpload } from '../../types';
+import { Recipe } from '../../types';
 import { GET_RECIPE } from './constants';
 import Box from '@mui/material/Box';
 import VerticalTabs from '../../components/VerticalTabs';
-// import VerticalLinearStepper from "../../components/VerticalLinearStepper"; // TODO: A/B test best "stepper"
+
+// TODO: implement our own playback
+// import VideoJS from '../../components/VideoJS';
+// import videojs from 'video.js';
+
+// TODO: A/B test best "stepper"
+// import VerticalLinearStepper from "../../components/VerticalLinearStepper";
 
 interface RecipePageProps {
   previewId?: string;

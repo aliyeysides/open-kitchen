@@ -4,12 +4,9 @@ import { GET_RECIPES } from './constants';
 import { Link } from 'react-router-dom';
 import { Recipe } from '../../types';
 import Box from '@mui/material/Box';
-import { Carousel } from '@trendyol-js/react-carousel';
 import styles from './recipes.module.scss';
-import SimpleSlider from '../../components/SimpleSlider';
 import { Typography } from '@mui/material';
 import ActionAreaCard from '../../components/ActionAreaCard';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 function ViewAllLink() {
   return (
@@ -111,19 +108,3 @@ export default function RecipesPage() {
     </>
   );
 }
-
-// {
-//   /* <Carousel className={styles.carousel} show={3} slide={2} responsive>
-//           {recipes.map((recipe: Recipe) => (
-//             <Box className={styles.section_item} key={recipe._id}>
-//               <Link to={`/recipes/${recipe._id}`}>
-//                 <img
-//                   className={styles.thumbnail}
-//                   src={recipe.thumbnail.url}
-//                   alt="test"
-//                 />
-//               </Link>
-//             </Box>
-//           ))}
-//         </Carousel> */
-// }

@@ -24,7 +24,8 @@ interface IngredientAutocompleteProps {
 export default function IngredientAutocomplete({
   onSelect,
 }: IngredientAutocompleteProps) {
-  const [value, setValue] = useState<FDCFood | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [value, setValue] = useState<FDCFood | null>(null); // TODO: Determine if we even need this and remove eslint disable
   const [inputValue, setInputValue] = useState('');
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<any>([]);

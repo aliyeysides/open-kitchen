@@ -3,7 +3,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { Recipe, RecipeStep } from '../types';
 
 interface TabPanelProps {
@@ -42,8 +42,12 @@ function a11yProps(index: number) {
 }
 
 function renderStepTabs(steps: RecipeStep[]) {
+  const handleClick = (step: RecipeStep, e: SyntheticEvent) => {
+    console.log('clicked step:', step); // TODO: skip to assigned chapter withib video on click
+  };
   return steps.map((step) => (
     <Tab
+      onClick={(e) => handleClick(step, e)}
       label={`${step.order}`}
       key={`${step.order}`}
       {...a11yProps(step.order - 1)}

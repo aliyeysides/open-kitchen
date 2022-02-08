@@ -64,7 +64,9 @@ export default function RecipePage({ previewId }: RecipePageProps) {
           <iframe
             width="1024"
             height="576"
-            src="https://www.youtube.com/embed/FP6E3JtmsCE"
+            src={`https://www.youtube.com/embed/FP6E3JtmsCE?enablejsapi=1&origin=${
+              window.location.href
+            }&autoplay=${1}&start=${17}`}
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -78,8 +80,7 @@ export default function RecipePage({ previewId }: RecipePageProps) {
               fontSize: 18,
             }}
           >
-            {/* {recipe.name} */}
-            Spicy Sausage Rice by Gordon Ramsay
+            {recipe.name}
           </Box>
           <Box
             sx={{

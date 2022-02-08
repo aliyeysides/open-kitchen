@@ -1,5 +1,7 @@
-import YouTube, { YouTubeProps } from 'react-youtube';
+import YouTube, { Options, YouTubeProps } from 'react-youtube';
 
-export default function YouTubePlayer(props: YouTubeProps) {
+export type YouTubeOptions = Options;
+
+export default function YouTubePlayer(props: YouTubeProps): JSX.Element {
   return <YouTube {...props} />;
 }

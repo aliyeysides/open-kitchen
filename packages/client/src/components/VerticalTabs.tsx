@@ -3,11 +3,11 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { SyntheticEvent, useState } from 'react';
+import { ReactNode, SyntheticEvent, useState } from 'react';
 import { Recipe, RecipeStep } from '../types';
 
 interface TabPanelProps {
-  children?: React.ReactNode;
+  children: ReactNode;
   index: number;
   value: number;
 }
@@ -41,13 +41,10 @@ function a11yProps(index: number) {
   };
 }
 
-function renderStepTabs(steps: RecipeStep[]) {
-  const handleClick = (step: RecipeStep, e: SyntheticEvent) => {
-    console.log('clicked step:', step); // TODO: skip to assigned chapter withib video on click
-  };
+function renderStepTabs(steps: RecipeStep[], onClick: VerticalTabsOnClick) {
   return steps.map((step) => (
     <Tab
-      onClick={(e) => handleClick(step, e)}
+      onClick={(e) => onClick(step, e)}
       label={`${step.order}`}
       key={`${step.order}`}
       {...a11yProps(step.order - 1)}
@@ -90,14 +87,17 @@ function StepTabPanels({ steps, value }: StepTabPanelsProps) {
   );
 }
 
+export type VerticalTabsOnClick = (step: RecipeStep, e: SyntheticEvent) => void;
+
 interface VerticalTabsProps {
   recipe: Recipe;
+  onClick: VerticalTabsOnClick;
 }
 
-export default function VerticalTabs({ recipe }: VerticalTabsProps) {
+export default function VerticalTabs({ recipe, onClick }: VerticalTabsProps) {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (e: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -122,7 +122,7 @@ export default function VerticalTabs({ recipe }: VerticalTabsProps) {
           overflow: 'visible',
         }}
       >
-        {renderStepTabs(recipe.steps)}
+        {renderStepTabs(recipe.steps, onClick)}
       </Tabs>
       <StepTabPanels value={value} steps={recipe.steps} />
     </Box>

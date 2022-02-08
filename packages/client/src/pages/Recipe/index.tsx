@@ -6,6 +6,7 @@ import { Recipe } from '../../types';
 import { GET_RECIPE } from './constants';
 import Box from '@mui/material/Box';
 import VerticalTabs from '../../components/VerticalTabs';
+import YouTube from 'react-youtube';
 
 // TODO: implement our own playback
 // import VideoJS from '../../components/VideoJS';
@@ -52,6 +53,16 @@ export default function RecipePage({ previewId }: RecipePageProps) {
   //   videojs.log('Your player is ready!');
   // };
 
+  const gordan_ramsay_spicy_sausage_id = 'FP6E3JtmsCE';
+  const options = {
+    width: '1024',
+    height: '576',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+    },
+  };
+
   return (
     <main>
       <Box
@@ -61,7 +72,8 @@ export default function RecipePage({ previewId }: RecipePageProps) {
         }}
       >
         <Box>
-          <iframe
+          <YouTube videoId={gordan_ramsay_spicy_sausage_id} opts={options} />
+          {/* <iframe
             width="1024"
             height="576"
             src={`https://www.youtube.com/embed/FP6E3JtmsCE?enablejsapi=1&origin=${
@@ -71,7 +83,7 @@ export default function RecipePage({ previewId }: RecipePageProps) {
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-          ></iframe>
+          ></iframe> */}
           <Box
             sx={{
               display: 'flex',

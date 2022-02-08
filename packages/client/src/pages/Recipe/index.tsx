@@ -5,8 +5,10 @@ import 'video.js/dist/video-js.css';
 import { Recipe } from '../../types';
 import { GET_RECIPE } from './constants';
 import Box from '@mui/material/Box';
-import VerticalTabs from '../../components/VerticalTabs';
-import YouTube from 'react-youtube';
+import VerticalTabs, {
+  VerticalTabsOnClick,
+} from '../../components/VerticalTabs';
+import YouTubePlayer, { YouTubeOptions } from '../../components/YouTubePlayer';
 
 // TODO: implement our own playback
 // import VideoJS from '../../components/VideoJS';
@@ -53,13 +55,19 @@ export default function RecipePage({ previewId }: RecipePageProps) {
   //   videojs.log('Your player is ready!');
   // };
 
+  const handleTabClick: VerticalTabsOnClick = (step, e) => {
+    console.log('step::', step);
+  };
+
   const gordan_ramsay_spicy_sausage_id = 'FP6E3JtmsCE';
-  const options = {
+  const options: YouTubeOptions = {
     width: '1024',
     height: '576',
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
+      start: 17,
+      end: 30,
     },
   };
 
@@ -72,7 +80,10 @@ export default function RecipePage({ previewId }: RecipePageProps) {
         }}
       >
         <Box>
-          <YouTube videoId={gordan_ramsay_spicy_sausage_id} opts={options} />
+          <YouTubePlayer
+            videoId={gordan_ramsay_spicy_sausage_id}
+            opts={options}
+          />
           {/* <iframe
             width="1024"
             height="576"
@@ -108,7 +119,7 @@ export default function RecipePage({ previewId }: RecipePageProps) {
             </Button>
           </Box>
         </Box>
-        <VerticalTabs recipe={recipe} />
+        <VerticalTabs onClick={handleTabClick} recipe={recipe} />
       </Box>
     </main>
   );

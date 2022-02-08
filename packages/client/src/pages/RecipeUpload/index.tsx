@@ -15,8 +15,6 @@ import AddRecipeIngredientsForm from './AddRecipeIngredientsForm';
 import VideoUploadForm from './VideoUploadForm';
 import ThumbnailUploadForm from './ThumbnailUploadForm';
 
-type RecipeStep = Omit<RS, 'order'> & { key: number };
-
 export default function RecipeUploadPage() {
   const [createVideoUpload, createVideoUploadVars] =
     useMutation(CREATE_VIDEO_UPLOAD);
@@ -26,6 +24,7 @@ export default function RecipeUploadPage() {
   const handleInputChange = ({ target: { value, name } }: any) =>
     setFormInput((prevState) => ({ ...prevState, [name]: value }));
 
+  type RecipeStep = Omit<RS, 'order'> & { key: number };
   type FormData = Pick<AddRecipeDetailsFormProps, 'name' | 'newInputValue'>;
 
   const [formInput, setFormInput] = useState<FormData>({

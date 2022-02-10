@@ -24,7 +24,6 @@ import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
 import { ThumbnailsModule } from './thumbnails/thumbnails.module';
 import { GrocersModule } from './grocers/grocers.module';
 import config from './config/config';
-import { SeederModule } from './seeder/seeder.module';
 
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
@@ -52,7 +51,6 @@ const dbUri = isDev ? localDb : testDb;
       },
       // playground: isDev ? true : false, // TODO: uncommment when going live
     }),
-    SeederModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../client', 'build'),
     }),

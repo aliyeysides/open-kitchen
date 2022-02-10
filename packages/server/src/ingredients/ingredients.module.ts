@@ -17,6 +17,6 @@ import seed from '../seeder/data/ingredients';
     }),
   ],
   providers: [IngredientsResolver, IngredientsService],
-  exports: [MongooseModule],
+  exports: [],
 })
 export class IngredientsModule {}

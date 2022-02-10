@@ -1,22 +1,8 @@
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import SeederService from './seeder/seeder.service';
-import IngredientsSeedData from './seeder/data/ingredients';
-import RecipesSeedData from './seeder/data/recipes';
-@Injectable()
-export class AppService implements OnApplicationBootstrap {
-  constructor(
-    // private readonly seederService: SeederService,
-    private readonly config: ConfigService,
-  ) {}
+import { Injectable } from '@nestjs/common';
 
-  async onApplicationBootstrap() {
-    // const isDev = this.config.get('node_env') === 'development';
-    // if (isDev) {
-    //   await this.seederService.seed('ingredients', IngredientsSeedData);
-    //   // await this.seederService.seed('recipes', RecipesSeedData);
-    // }
-  }
+@Injectable()
+export class AppService {
+  constructor() {}
 
   healthCheck(): number {
     return 200;

@@ -12,28 +12,34 @@ export default class SeederService {
     @Inject(COLLECTION_SEED_DATA) private readonly seedData: any[],
     private readonly config: ConfigService,
   ) {
-    (async () => {
-      try {
+    try {
+      (async () => {
         await this.seed();
-      } catch (e) {
-        if (e instanceof Error) {
-          throw new Error(e.message);
-        } else {
-          throw new Error('Seeding Error: ' + e);
-        }
-      }
-    })();
+      })();
+    } catch (e) {
+      throw e;
+    }
   }
 
   async seed() {
     try {
       const isDev = this.config.get('node_env') === 'development'; // DO NOT REMOVE OR YOU WILL DROP PROD DB
 
+      const models = this.connection.modelNames();
+
+      if (!models.includes(this.modelName)) {
+        throw new Error(
+          `The Model name "${this.modelName}" does not exist. Possible values are: ${models}`,
+        );
+      }
+
       const model = this.connection.model(this.modelName);
       const collectionName = model.collection.name;
       const collection = this.connection.collection(collectionName);
+
       if (isDev && collection)
         await this.connection.dropCollection(collectionName);
+
       const seededItems = await model.insertMany(this.seedData);
 
       console.log(

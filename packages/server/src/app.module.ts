@@ -5,6 +5,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
+require('dotenv').config({
+  path: '../../.env',
+});
+
 // CONTROLLERS
 import { AppController } from './app.controller';
 
@@ -21,16 +25,14 @@ import { ThumbnailsModule } from './thumbnails/thumbnails.module';
 import { GrocersModule } from './grocers/grocers.module';
 import config from './config/config';
 
-require('dotenv').config({
-  path: '../../.env',
-});
-
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
 
 const isDev = process.env.NODE_ENV === 'development';
 const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+
+// TODO: Clean up below using dynamic module providers
 const localDb = 'mongodb://localhost/test';
 const testDb = `mongodb+srv://${awsAccessKeyId}:${awsSecretAccessKey}@test-cluster-1.jfbye.mongodb.net/test-cluster-1?authSource=%24external&authMechanism=MONGODB-AWS&retryWrites=true&w=majority`;
 const dbUri = isDev ? localDb : testDb;
@@ -47,7 +49,7 @@ const dbUri = isDev ? localDb : testDb;
       buildSchemaOptions: {
         fieldMiddleware: [LoggerMiddleware],
       },
-      // playground: isDev ? true : false,
+      // playground: isDev ? true : false, // TODO: uncommment when going live
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../client', 'build'),

@@ -13,7 +13,7 @@ export class Recipe {
   _id: MongooseSchema.Types.ObjectId;
 
   @Field(() => String)
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
   @Field(() => VideoUpload)
@@ -33,11 +33,11 @@ export class Recipe {
   thumbnail: Thumbnail | MongooseSchema.Types.ObjectId;
 
   @Field(() => [RecipeStep])
-  @Prop()
+  @Prop({ required: true })
   steps: RecipeStep[];
 
   @Field(() => [RecipeIngredient])
-  @Prop()
+  @Prop({ required: true })
   ingredients: RecipeIngredient[];
 
   @Field(() => GraphQLTimestamp)

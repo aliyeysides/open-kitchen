@@ -1,7 +1,7 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { FlavorsResolver } from './flavors.resolver';
-import { Flavor } from './entities/flavor.schema';
+import { Flavor } from './entities/flavor.entity';
 import { FlavorsService } from './flavors.service';
 
 describe('FlavorsResolver', () => {

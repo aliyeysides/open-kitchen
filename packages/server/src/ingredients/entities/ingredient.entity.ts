@@ -17,9 +17,11 @@ export class Ingredient {
   image: string;
 
   @Field(() => GraphQLTimestamp)
+  @Prop()
   created_at: Date;
 
   @Field(() => GraphQLTimestamp)
+  @Prop()
   updated_at: Date;
 }
 

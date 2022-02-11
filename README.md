@@ -20,7 +20,7 @@ npm i
 Once you have lerna, you can install the dependencies for all apps that live in the `packages` directory **(server & client)**:
 
 ```
-lerna boostrap
+lerna bootstrap
 ```
 
 ## Environment Variables

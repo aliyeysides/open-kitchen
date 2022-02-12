@@ -9,7 +9,7 @@
     "deploy:dev": "npm run build && eb deploy foyir-mono-development",
     "start": "npm run build && npx lerna run start:prod --stream",
     "start:dev": "npx lerna run --parallel start:dev",
-    "test": "lerna run test && lerna run test:e2e"
+    "test": "npx lerna run --parallel test && lerna run test:e2e"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",

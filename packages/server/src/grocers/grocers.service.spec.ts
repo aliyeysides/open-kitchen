@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { useMock } from '../../test/utils';
 import { GrocersService } from './grocers.service';
 
 describe('GrocersService', () => {
@@ -6,7 +7,7 @@ describe('GrocersService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [GrocersService],
+      providers: [useMock({ provide: GrocersService })],
     }).compile();
 
     service = module.get<GrocersService>(GrocersService);

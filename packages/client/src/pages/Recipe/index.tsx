@@ -11,13 +11,6 @@ import VerticalTabs, {
 import YouTubePlayer, { YouTubeOptions } from '../../components/YouTubePlayer';
 import { useState } from 'react';
 
-// TODO: implement our own playback
-// import VideoJS from '../../components/VideoJS';
-// import videojs from 'video.js';
-
-// TODO: A/B test best "stepper"
-// import VerticalLinearStepper from "../../components/VerticalLinearStepper";
-
 export default function RecipePage() {
   const params = useParams();
   const [YTOptions, setYTOptions] = useState<YouTubeOptions>({
@@ -41,27 +34,6 @@ export default function RecipePage() {
 
   const recipe: Recipe = data?.recipe;
 
-  // Commented code below is for custom VideoJS playback
-  // const videoUpload: VideoUpload = data?.recipe.video;
-
-  // const videoJsOptions: videojs.PlayerOptions = {
-  //   autoplay: true,
-  //   controls: true,
-  //   responsive: true,
-  //   fluid: false,
-  //   fill: true,
-  //   sources: [
-  //     {
-  //       src: videoUpload.url,
-  //       type: 'video/mp4',
-  //     },
-  //   ],
-  // };
-
-  // const handlePlayerReady = () => {
-  //   videojs.log('Your player is ready!');
-  // };
-
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
     console.log('step::', step);
     setYTOptions({
@@ -76,16 +48,6 @@ export default function RecipePage() {
   };
 
   const gordan_ramsay_spicy_sausage_id = 'FP6E3JtmsCE';
-  // const options: YouTubeOptions = {
-  //   width: '1024',
-  //   height: '576',
-  //   playerVars: {
-  //     // https://developers.google.com/youtube/player_parameters
-  //     autoplay: 1,
-  //     start: 17,
-  //     end: 30,
-  //   },
-  // };
 
   return (
     <main>
@@ -100,17 +62,6 @@ export default function RecipePage() {
             videoId={gordan_ramsay_spicy_sausage_id}
             opts={YTOptions}
           />
-          {/* <iframe
-            width="1024"
-            height="576"
-            src={`https://www.youtube.com/embed/FP6E3JtmsCE?enablejsapi=1&origin=${
-              window.location.href
-            }&autoplay=${1}&start=${17}`}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe> */}
           <Box
             sx={{
               display: 'flex',

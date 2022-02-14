@@ -2,7 +2,11 @@ import { Injectable, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
-import { COLLECTION_SEED_DATA, SEED_MODEL_NAME } from './constants';
+import {
+  COLLECTION_SEED_DATA,
+  SEED_DB_NAME,
+  SEED_MODEL_NAME,
+} from './constants';
 
 @Injectable()
 export default class SeederService {
@@ -10,21 +14,19 @@ export default class SeederService {
     @InjectConnection() private readonly connection: Connection,
     @Inject(SEED_MODEL_NAME) private readonly modelName: string,
     @Inject(COLLECTION_SEED_DATA) private readonly seedData: any[],
-    private readonly config: ConfigService,
+    @Inject(SEED_DB_NAME) private readonly dbName: string,
   ) {
     try {
       (async () => {
-        await this.seed();
+        await this.seed(this.dbName);
       })();
     } catch (e) {
       throw e;
     }
   }
 
-  async seed() {
+  async seed(dbName: string) {
     try {
-      const isDev = this.config.get('node_env') === 'development'; // DO NOT REMOVE OR YOU WILL DROP PROD DB
-
       const models = this.connection.modelNames();
 
       if (!models.includes(this.modelName)) {
@@ -35,15 +37,23 @@ export default class SeederService {
 
       const model = this.connection.model(this.modelName);
       const collectionName = model.collection.name;
-      const collection = this.connection.collection(collectionName);
 
-      if (isDev && collection)
-        await this.connection.dropCollection(collectionName);
+      console.log('dbName::::', dbName);
+      console.log('client::::', this.connection.getClient());
+      const client = this.connection.getClient().db(dbName);
+      if (dbName !== client.databaseName)
+        throw new Error(`Attempting to drop ${client.databaseName}, bailing..`);
+
+      console.log('client.databaseName', client.databaseName);
+
+      await client.dropCollection(collectionName);
 
       const seededItems = await model.insertMany(this.seedData);
 
       console.log(
-        `Successfully Seeded Collection ${collectionName.toUpperCase()}: ${seededItems}`,
+        `Successfully Seeded Collection ${collectionName.toUpperCase()} in ${
+          client.databaseName
+        }: ${seededItems}`,
       );
     } catch (e) {
       throw e;

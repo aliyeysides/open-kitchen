@@ -1,13 +1,12 @@
-import { ConfigService } from '@nestjs/config';
+import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { useMock } from '../../test/utils';
-import { COLLECTION_SEED_DATA, SEED_MODEL_NAME } from './constants';
+import {
+  COLLECTION_SEED_DATA,
+  SEED_DB_NAME,
+  SEED_MODEL_NAME,
+} from './constants';
 import SeederService from './seeder.service';
-
-// @InjectConnection() private readonly connection: Connection,
-// @Inject(SEED_MODEL_NAME) private readonly modelName: string,
-// @Inject(COLLECTION_SEED_DATA) private readonly seedData: any[],
-// private readonly config: ConfigService,
 
 describe('Seeder Service', () => {
   let service: SeederService;
@@ -15,10 +14,11 @@ describe('Seeder Service', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        { provide: getConnectionToken(), useValue: 'test' },
         useMock({ provide: SeederService }),
         useMock({ model: { name: SEED_MODEL_NAME } }),
         useMock({ provide: COLLECTION_SEED_DATA }),
-        useMock({ provide: ConfigService }),
+        useMock({ provide: SEED_DB_NAME, val: 'test' }),
       ],
     }).compile();
 

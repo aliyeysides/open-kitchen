@@ -9,11 +9,14 @@ export const GET_RECIPE = gql`
         order
         instruction
       }
-      video {
-        _id
+      ingredients {
         name
-        url
       }
+      # video {
+      #   _id
+      #   name
+      #   url
+      # }
     }
   }
 `;

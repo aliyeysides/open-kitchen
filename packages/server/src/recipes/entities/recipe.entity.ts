@@ -16,21 +16,21 @@ export class Recipe {
   @Prop({ required: true })
   name: string;
 
-  @Field(() => VideoUpload)
-  @Prop({
-    required: true,
-    type: MongooseSchema.Types.ObjectId,
-    ref: VideoUpload.name,
-  })
-  video: VideoUpload | MongooseSchema.Types.ObjectId;
+  // @Field(() => VideoUpload)
+  // @Prop({
+  //   required: true,
+  //   type: MongooseSchema.Types.ObjectId,
+  //   ref: VideoUpload.name,
+  // })
+  // video: VideoUpload | MongooseSchema.Types.ObjectId;
 
-  @Field(() => Thumbnail)
-  @Prop({
-    required: true,
-    type: MongooseSchema.Types.ObjectId,
-    ref: Thumbnail.name,
-  })
-  thumbnail: Thumbnail | MongooseSchema.Types.ObjectId;
+  // @Field(() => Thumbnail)
+  // @Prop({
+  //   required: true,
+  //   type: MongooseSchema.Types.ObjectId,
+  //   ref: Thumbnail.name,
+  // })
+  // thumbnail: Thumbnail | MongooseSchema.Types.ObjectId;
 
   @Field(() => [RecipeStep])
   @Prop({ required: true })

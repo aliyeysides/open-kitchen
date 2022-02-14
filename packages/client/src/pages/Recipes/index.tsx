@@ -44,11 +44,11 @@ export default function RecipesPage() {
           .map((recipe: Recipe) => (
             <Box className={styles.section_item} key={recipe._id}>
               <Link to={`/recipes/${recipe._id}`}>
-                <img
+                {/* <img
                   className={styles.thumbnail}
                   src={recipe.thumbnail.url}
                   alt="test"
-                />
+                /> */}
               </Link>
             </Box>
           ))}
@@ -71,10 +71,10 @@ export default function RecipesPage() {
           .map((recipe: Recipe) => (
             <Box className={styles.section_item} key={recipe._id}>
               <Link to={`/recipes/${recipe._id}`}>
-                <ActionAreaCard
+                {/* <ActionAreaCard
                   title={recipe.name}
                   thumbnail={recipe.thumbnail.url}
-                />
+                /> */}
               </Link>
             </Box>
           ))}
@@ -97,10 +97,10 @@ export default function RecipesPage() {
           .map((recipe: Recipe) => (
             <Box className={styles.section_item} key={recipe._id}>
               <Link to={`/recipes/${recipe._id}`}>
-                <ActionAreaCard
+                {/* <ActionAreaCard
                   title={recipe.name}
                   thumbnail={recipe.thumbnail.url}
-                />
+                /> */}
               </Link>
             </Box>
           ))}

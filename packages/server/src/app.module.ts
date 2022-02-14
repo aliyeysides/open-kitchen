@@ -28,14 +28,15 @@ import config from './config/config';
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev =
+  process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 // TODO: Clean up below using dynamic module providers
-const localDb = 'mongodb://localhost/test';
-const testDb = `mongodb+srv://${awsAccessKeyId}:${awsSecretAccessKey}@test-cluster-1.jfbye.mongodb.net/test-cluster-1?authSource=%24external&authMechanism=MONGODB-AWS&retryWrites=true&w=majority`;
-const dbUri = isDev ? localDb : testDb;
+const devDb = 'mongodb://localhost/development';
+const stagingDb = `mongodb+srv://${awsAccessKeyId}:${awsSecretAccessKey}@test-cluster-1.jfbye.mongodb.net/test-cluster-1?authSource=%24external&authMechanism=MONGODB-AWS&retryWrites=true&w=majority`;
+const dbUri = isDev ? devDb : stagingDb;
 @Module({
   imports: [
     ConfigModule.forRoot({

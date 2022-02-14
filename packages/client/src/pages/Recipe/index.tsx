@@ -9,6 +9,7 @@ import VerticalTabs, {
   VerticalTabsOnClick,
 } from '../../components/VerticalTabs';
 import YouTubePlayer, { YouTubeOptions } from '../../components/YouTubePlayer';
+import { useState } from 'react';
 
 // TODO: implement our own playback
 // import VideoJS from '../../components/VideoJS';
@@ -23,9 +24,20 @@ interface RecipePageProps {
 
 export default function RecipePage({ previewId }: RecipePageProps) {
   const params = useParams();
+  const [YTOptions, setYTOptions] = useState<YouTubeOptions>({
+    width: '1024',
+    height: '576',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+      start: 17,
+      end: 30,
+    },
+  });
+
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
-      id: previewId ? previewId : params.recipeId,
+      id: params.recipeId,
     },
   });
 
@@ -57,19 +69,29 @@ export default function RecipePage({ previewId }: RecipePageProps) {
 
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
     console.log('step::', step);
+    setYTOptions({
+      width: '1024',
+      height: '576',
+      playerVars: {
+        // https://developers.google.com/youtube/player_parameters
+        autoplay: 1,
+        start: step.startTime,
+        end: 30,
+      },
+    });
   };
 
   const gordan_ramsay_spicy_sausage_id = 'FP6E3JtmsCE';
-  const options: YouTubeOptions = {
-    width: '1024',
-    height: '576',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-      start: 17,
-      end: 30,
-    },
-  };
+  // const options: YouTubeOptions = {
+  //   width: '1024',
+  //   height: '576',
+  //   playerVars: {
+  //     // https://developers.google.com/youtube/player_parameters
+  //     autoplay: 1,
+  //     start: 17,
+  //     end: 30,
+  //   },
+  // };
 
   return (
     <main>
@@ -82,7 +104,7 @@ export default function RecipePage({ previewId }: RecipePageProps) {
         <Box>
           <YouTubePlayer
             videoId={gordan_ramsay_spicy_sausage_id}
-            opts={options}
+            opts={YTOptions}
           />
           {/* <iframe
             width="1024"

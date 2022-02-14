@@ -8,6 +8,7 @@ export const GET_RECIPE = gql`
       steps {
         order
         instruction
+        startTime
       }
       ingredients {
         name

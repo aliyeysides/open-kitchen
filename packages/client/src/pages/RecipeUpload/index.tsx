@@ -24,7 +24,7 @@ export default function RecipeUploadPage() {
   const handleInputChange = ({ target: { value, name } }: any) =>
     setFormInput((prevState) => ({ ...prevState, [name]: value }));
 
-  type RecipeStep = Omit<RS, 'order'> & { key: number };
+  type RecipeStep = Omit<RS, 'order' | 'startTime'> & { key: number };
   type FormData = Pick<AddRecipeDetailsFormProps, 'name' | 'newInputValue'>;
 
   const [formInput, setFormInput] = useState<FormData>({

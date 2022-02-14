@@ -18,11 +18,7 @@ import { useState } from 'react';
 // TODO: A/B test best "stepper"
 // import VerticalLinearStepper from "../../components/VerticalLinearStepper";
 
-interface RecipePageProps {
-  previewId?: string;
-}
-
-export default function RecipePage({ previewId }: RecipePageProps) {
+export default function RecipePage() {
   const params = useParams();
   const [YTOptions, setYTOptions] = useState<YouTubeOptions>({
     width: '1024',
@@ -30,8 +26,7 @@ export default function RecipePage({ previewId }: RecipePageProps) {
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
-      start: 17,
-      end: 30,
+      start: 1,
     },
   });
 
@@ -76,7 +71,6 @@ export default function RecipePage({ previewId }: RecipePageProps) {
         // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
         start: step.startTime,
-        end: 30,
       },
     });
   };

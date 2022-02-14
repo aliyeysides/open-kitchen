@@ -13,11 +13,6 @@ export const GET_RECIPE = gql`
       ingredients {
         name
       }
-      # video {
-      #   _id
-      #   name
-      #   url
-      # }
     }
   }
 `;

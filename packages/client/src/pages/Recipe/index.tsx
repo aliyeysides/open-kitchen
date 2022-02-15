@@ -2,27 +2,38 @@ import { useQuery } from '@apollo/client';
 import { Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import 'video.js/dist/video-js.css';
-import { Recipe } from '../../types';
+import { Recipe, RecipeStep } from '../../types';
 import { GET_RECIPE } from './constants';
 import Box from '@mui/material/Box';
 import VerticalTabs, {
   VerticalTabsOnClick,
 } from '../../components/VerticalTabs';
 import YouTubePlayer, { YouTubeOptions } from '../../components/YouTubePlayer';
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-export default function RecipePage() {
-  const params = useParams();
-
-  // below: https://developers.google.com/youtube/player_parameters
-  const [YTOptions, setYTOptions] = useState<YouTubeOptions>({
+function ytattrs(start: number): YouTubeOptions {
+  return {
     width: '1024',
     height: '576',
     playerVars: {
       autoplay: 1,
-      start: 1,
+      start,
+      origin: 'http://localhost:3000',
     },
+  };
+}
+
+type Step = Pick<RecipeStep, 'order' | 'startTime'>;
+
+export default function RecipePage() {
+  const params = useParams();
+  const [currentStep, setCurrentStep] = useState<Step>({
+    order: 0,
+    startTime: 0,
   });
+  const playerRef = useRef<any>({});
+
+  const [YTOptions, setYTOptions] = useState<YouTubeOptions>({ ...ytattrs(0) });
 
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
@@ -30,22 +41,25 @@ export default function RecipePage() {
     },
   });
 
+  const handleTabClick: VerticalTabsOnClick = (step, e) => {
+    setCurrentStep({
+      order: step.order,
+      startTime: step.startTime,
+    });
+    setYTOptions({
+      ...ytattrs(step.startTime),
+    });
+    playerRef.current.seekTo(step.startTime);
+  };
+
+  const handleReady = (e: any) => {
+    playerRef.current = e.target;
+  };
+
   if (loading) return <div>"Loading..."</div>;
   if (error) return <div>`Error! ${error.message}`</div>;
 
   const recipe: Recipe = data?.recipe;
-
-  const handleTabClick: VerticalTabsOnClick = (step, e) => {
-    setYTOptions({
-      width: '1024',
-      height: '576',
-      playerVars: {
-        autoplay: 1,
-        start: step.startTime,
-        origin: 'http://localhost:3000',
-      },
-    });
-  };
 
   return (
     <main>
@@ -57,7 +71,12 @@ export default function RecipePage() {
       >
         <Box>
           {recipe.ytId ? (
-            <YouTubePlayer videoId={recipe.ytId} opts={YTOptions} />
+            <YouTubePlayer
+              videoId={recipe.ytId}
+              opts={YTOptions}
+              onReady={handleReady}
+              {...ytattrs(currentStep.startTime)}
+            />
           ) : null}
           <Box
             sx={{

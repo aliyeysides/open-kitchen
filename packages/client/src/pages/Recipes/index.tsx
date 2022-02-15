@@ -16,6 +16,30 @@ function ViewAllLink() {
   );
 }
 
+interface RecipesSectionProps {
+  recipes: Recipe[];
+}
+
+function RecipesSection({ recipes }: RecipesSectionProps) {
+  return (
+    <Box className={styles.section_container}>
+      {recipes
+        .slice(recipes.length - 4, recipes.length)
+        .map((recipe: Recipe) => (
+          <Box
+            className={styles.section_item}
+            key={recipe._id}
+            sx={{ cursor: 'pointer' }}
+          >
+            <Link to={`/recipes/${recipe._id}`}>
+              <img src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`} />
+            </Link>
+          </Box>
+        ))}
+    </Box>
+  );
+}
+
 export default function RecipesPage() {
   const { loading, error, data } = useQuery(GET_RECIPES);
   if (loading) return <div>"Loading..."</div>;
@@ -36,25 +60,7 @@ export default function RecipesPage() {
         </Typography>
         <ViewAllLink />
       </Box>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <Box className={styles.section_container}>
-          {recipes
-            .slice(recipes.length - 4, recipes.length)
-            .map((recipe: Recipe) => (
-              <Box
-                className={styles.section_item}
-                key={recipe._id}
-                sx={{ cursor: 'pointer' }}
-              >
-                <Link to={`/recipes/${recipe._id}`}>
-                  <img src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`} />
-                </Link>
-              </Box>
-            ))}
-        </Box>
-      )}
+      {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
 
       <Box className={styles.section_header}>
         <Typography
@@ -67,25 +73,7 @@ export default function RecipesPage() {
         </Typography>
         <ViewAllLink />
       </Box>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <Box className={styles.section_container}>
-          {recipes
-            .slice(recipes.length - 4, recipes.length)
-            .map((recipe: Recipe) => (
-              <Box
-                className={styles.section_item}
-                key={recipe._id}
-                sx={{ cursor: 'pointer' }}
-              >
-                <Link to={`/recipes/${recipe._id}`}>
-                  <img src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`} />
-                </Link>
-              </Box>
-            ))}
-        </Box>
-      )}
+      {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
 
       <Box className={styles.section_header}>
         <Typography
@@ -98,25 +86,7 @@ export default function RecipesPage() {
         </Typography>
         <ViewAllLink />
       </Box>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <Box className={styles.section_container}>
-          {recipes
-            .slice(recipes.length - 4, recipes.length)
-            .map((recipe: Recipe) => (
-              <Box
-                className={styles.section_item}
-                key={recipe._id}
-                sx={{ cursor: 'pointer' }}
-              >
-                <Link to={`/recipes/${recipe._id}`}>
-                  <img src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`} />
-                </Link>
-              </Box>
-            ))}
-        </Box>
-      )}
+      {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
     </>
   );
 }

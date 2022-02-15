@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const GET_ALL = gql`
   query GetAll {
@@ -35,6 +35,7 @@ export const GET_FLAVOR = gql`
     }
   }
 `;
+
 export const GET_INGREDIENTS = gql`
   query Ingredients {
     ingredients {

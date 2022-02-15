@@ -16,11 +16,13 @@ export class RecipesService {
   }
 
   findAll() {
-    return this.recipesModel.find().populate(['video', 'thumbnail']).exec();
+    // return this.recipesModel.find().populate(['video', 'thumbnail']).exec();
+    return this.recipesModel.find();
   }
 
   findOne(id: string) {
-    return this.recipesModel.findOne({ _id: id }).populate('video').exec();
+    // return this.recipesModel.findOne({ _id: id }).populate('video').exec();
+    return this.recipesModel.findOne({ _id: id });
   }
 
   update(id: number, updateRecipeInput: UpdateRecipeInput) {

@@ -1,5 +1,4 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import {
@@ -26,25 +25,38 @@ export default class SeederService {
   }
 
   async seed(dbName: string) {
+    const logPrefix = `SeederService::${dbName}::${this.modelName}`;
+
     try {
       const models = this.connection.modelNames();
 
       if (!models.includes(this.modelName)) {
         throw new Error(
-          `The Model name "${this.modelName}" does not exist. Possible values are: ${models}`,
+          `${logPrefix} The Model name "${this.modelName}" does not exist. Possible values are: ${models}`,
         );
       }
 
       const model = this.connection.model(this.modelName);
       const collectionName = model.collection.name;
 
-      console.log('dbName::::', dbName);
-      console.log('client::::', this.connection.getClient());
       const client = this.connection.getClient().db(dbName);
       if (dbName !== client.databaseName)
-        throw new Error(`Attempting to drop ${client.databaseName}, bailing..`);
+        throw new Error(
+          `${logPrefix} Attempting to drop ${client.databaseName} instead of ${dbName}, exiting seeder..`,
+        );
 
-      console.log('client.databaseName', client.databaseName);
+      const existingDocCount = await client
+        .collection(collectionName)
+        .countDocuments();
+
+      const notEmpty: boolean = existingDocCount > 0;
+
+      if (notEmpty) {
+        console.log(
+          `${logPrefix} Collection already contains documents, exiting seeder...`,
+        );
+        return;
+      }
 
       await client.dropCollection(collectionName);
 

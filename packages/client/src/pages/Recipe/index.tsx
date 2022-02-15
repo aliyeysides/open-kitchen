@@ -9,7 +9,7 @@ import VerticalTabs, {
   VerticalTabsOnClick,
 } from '../../components/VerticalTabs';
 import YouTubePlayer, { YouTubeOptions } from '../../components/YouTubePlayer';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 function ytattrs(start: number): YouTubeOptions {
   return {
@@ -33,8 +33,6 @@ export default function RecipePage() {
   });
   const playerRef = useRef<any>({});
 
-  const [YTOptions, setYTOptions] = useState<YouTubeOptions>({ ...ytattrs(0) });
-
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
       id: params.recipeId,
@@ -45,9 +43,6 @@ export default function RecipePage() {
     setCurrentStep({
       order: step.order,
       startTime: step.startTime,
-    });
-    setYTOptions({
-      ...ytattrs(step.startTime),
     });
     playerRef.current.seekTo(step.startTime);
   };
@@ -73,9 +68,8 @@ export default function RecipePage() {
           {recipe.ytId ? (
             <YouTubePlayer
               videoId={recipe.ytId}
-              opts={YTOptions}
+              opts={{ ...ytattrs(currentStep.startTime) }}
               onReady={handleReady}
-              {...ytattrs(currentStep.startTime)}
             />
           ) : null}
           <Box

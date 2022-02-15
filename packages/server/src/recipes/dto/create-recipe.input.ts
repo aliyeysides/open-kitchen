@@ -8,6 +8,7 @@ export class CreateRecipeInput extends PickType(Recipe, [
   'name',
   'steps',
   'ingredients',
+  'ytId',
 ]) {
   @Field(() => String)
   name: string;
@@ -17,4 +18,7 @@ export class CreateRecipeInput extends PickType(Recipe, [
 
   @Field(() => [RecipeIngredient])
   ingredients: RecipeIngredient[];
+
+  @Field(() => String)
+  ytId: string;
 }

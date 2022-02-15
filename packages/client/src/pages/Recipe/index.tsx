@@ -13,11 +13,12 @@ import { useState } from 'react';
 
 export default function RecipePage() {
   const params = useParams();
+
+  // below: https://developers.google.com/youtube/player_parameters
   const [YTOptions, setYTOptions] = useState<YouTubeOptions>({
     width: '1024',
     height: '576',
     playerVars: {
-      // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
       start: 1,
     },
@@ -35,19 +36,16 @@ export default function RecipePage() {
   const recipe: Recipe = data?.recipe;
 
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
-    console.log('step::', step);
     setYTOptions({
       width: '1024',
       height: '576',
       playerVars: {
-        // https://developers.google.com/youtube/player_parameters
         autoplay: 1,
         start: step.startTime,
+        origin: 'http://localhost:3000',
       },
     });
   };
-
-  const gordan_ramsay_spicy_sausage_id = 'FP6E3JtmsCE';
 
   return (
     <main>
@@ -58,10 +56,9 @@ export default function RecipePage() {
         }}
       >
         <Box>
-          <YouTubePlayer
-            videoId={gordan_ramsay_spicy_sausage_id}
-            opts={YTOptions}
-          />
+          {recipe.ytId ? (
+            <YouTubePlayer videoId={recipe.ytId} opts={YTOptions} />
+          ) : null}
           <Box
             sx={{
               display: 'flex',

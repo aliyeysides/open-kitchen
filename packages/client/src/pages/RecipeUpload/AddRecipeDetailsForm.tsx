@@ -15,7 +15,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Tooltip from '@mui/material/Tooltip';
 
-type RecipeStep = Omit<RS, 'order' | 'startTime'> & { key: number };
+type RecipeStep = Pick<RS, 'instruction'> & { key: number };
 type EventHandler = (step: RecipeStep, e: SyntheticEvent) => void;
 
 interface RecipeNameInputProps {

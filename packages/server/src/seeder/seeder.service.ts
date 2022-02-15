@@ -51,12 +51,12 @@ export default class SeederService {
 
       const notEmpty: boolean = existingDocCount > 0;
 
-      if (notEmpty) {
-        console.log(
-          `${logPrefix} Collection already contains documents, exiting seeder...`,
-        );
-        return;
-      }
+      // if (notEmpty) {
+      //   console.log(
+      //     `${logPrefix} Collection already contains documents, exiting seeder...`,
+      //   );
+      //   return;
+      // }
 
       await client.dropCollection(collectionName);
 

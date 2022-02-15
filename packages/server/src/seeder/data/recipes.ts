@@ -1,8 +1,10 @@
 import { CreateRecipeInput } from 'src/recipes/dto/create-recipe.input';
+import { SPICY_SAUSAGE_GORDAN_RAMSAY } from '../constants';
 
 const data: CreateRecipeInput[] = [
   {
     name: 'Spicy Sausage Rice by Gordan Ramsay',
+    ytId: SPICY_SAUSAGE_GORDAN_RAMSAY,
     steps: [
       {
         order: 1,

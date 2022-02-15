@@ -1,8 +1,6 @@
 import { ObjectType, Field, GraphQLTimestamp } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Thumbnail } from '../../thumbnails/entities/thumbnail.entity';
-import { VideoUpload } from '../../video-uploads/entities/video-upload.entity';
 import { RecipeIngredient } from './recipe-ingredient.entity';
 import { RecipeStep } from './recipe-step.entity';
 
@@ -11,6 +9,10 @@ import { RecipeStep } from './recipe-step.entity';
 export class Recipe {
   @Field(() => String)
   _id: MongooseSchema.Types.ObjectId;
+
+  @Field(() => String)
+  @Prop({ required: true })
+  ytId: string;
 
   @Field(() => String)
   @Prop({ required: true })

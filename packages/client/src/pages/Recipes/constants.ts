@@ -5,12 +5,6 @@ export const GET_RECIPES = gql`
     recipes {
       _id
       name
-      # video {
-      #   url
-      # }
-      # thumbnail {
-      #   url
-      # }
     }
   }
 `;

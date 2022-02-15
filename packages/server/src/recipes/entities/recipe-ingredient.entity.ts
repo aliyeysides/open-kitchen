@@ -5,11 +5,13 @@ import { FDCDataType } from 'src/ingredients/entities/fdc-food.entity';
 @ObjectType()
 @InputType('RecipeIngredientInput')
 export class RecipeIngredient {
-  @Field(() => Int)
-  fdcId: number;
-
   @Field(() => String)
-  description: string;
+  name: string;
+  // @Field(() => Int)
+  // fdcId: number;
+
+  // @Field(() => String)
+  // description: string;
 
   // @Field(() => String, {
   //   description: 'unit of measurement (ounces, clove, tablespoon)',
@@ -21,8 +23,8 @@ export class RecipeIngredient {
   // })
   // quantity: number;
 
-  @Field(() => String, {
-    description: 'data type used to source foods by FDC API',
-  })
-  dataType: FDCDataType;
+  // @Field(() => String, {
+  //   description: 'data type used to source foods by FDC API',
+  // })
+  // dataType: FDCDataType;
 }

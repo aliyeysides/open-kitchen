@@ -34,12 +34,19 @@ type FDCFood {
 
 type RecipeIngredient {
   name: String!
+
+  """unit of measurement (ounces, clove, tablespoon)"""
+  unit: String
+
+  """count of units of measurement (quantity x tablespoon)"""
+  quantity: Int!
 }
 
 type RecipeStep {
   order: Int!
   instruction: String!
   startTime: Int!
+  ingredients: [RecipeIngredient!]
 }
 
 type Recipe {
@@ -81,12 +88,19 @@ type Grocer {
 
 input RecipeIngredientInput {
   name: String!
+
+  """unit of measurement (ounces, clove, tablespoon)"""
+  unit: String
+
+  """count of units of measurement (quantity x tablespoon)"""
+  quantity: Int!
 }
 
 input RecipeStepInput {
   order: Int!
   instruction: String!
   startTime: Int!
+  ingredients: [RecipeIngredientInput!]
 }
 
 type Query {

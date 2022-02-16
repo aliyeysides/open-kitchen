@@ -7,6 +7,7 @@ import { ReactNode, SyntheticEvent, useState } from 'react';
 import { Recipe, RecipeStep } from '../types';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import IngredientLineItem from './IngredientLineItem';
 interface TabPanelProps {
   children: ReactNode;
   index: number;
@@ -66,14 +67,7 @@ function StepTabPanel({ value, index, step }: StepTabPanelProps) {
         <ListItem sx={{ display: 'block' }}>
           {step.ingredients &&
             step.ingredients.map((ing) => (
-              <Box key={ing.name}>
-                <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-                  {ing.quantity} x {ing.unit ? ing.unit + ' of ' : null}
-                </Typography>
-                <Typography variant="button" color="primary">
-                  {ing.name}
-                </Typography>
-              </Box>
+              <IngredientLineItem key={ing.name} ingredient={ing} />
             ))}
         </ListItem>
       </List>

@@ -1,6 +1,7 @@
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { RecipeIngredient } from '../types';
+import IngredientLineItem from './IngredientLineItem';
 
 export interface IngredientsTableProps {
   ingredients?: RecipeIngredient[];
@@ -23,14 +24,7 @@ export default function IngredientsTable({
       >
         {ingredients &&
           ingredients.map((ing) => (
-            <Box key={ing.name}>
-              <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-                {ing.quantity} x {ing.unit ? ing.unit + ' of ' : null}
-              </Typography>
-              <Typography variant="button" color="primary">
-                {ing.name}
-              </Typography>
-            </Box>
+            <IngredientLineItem key={ing.name} ingredient={ing} />
           ))}
       </Box>
     </>

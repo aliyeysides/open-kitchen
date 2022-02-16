@@ -10,6 +10,7 @@ import VerticalTabs, {
 } from '../../components/VerticalTabs';
 import YouTubePlayer, { YouTubeOptions } from '../../components/YouTubePlayer';
 import { useRef, useState } from 'react';
+import IngredientsTable from '../../components/IngredientsTable';
 
 function ytattrs(start: number): YouTubeOptions {
   return {
@@ -94,6 +95,12 @@ export default function RecipePage() {
             <Button sx={{ ml: 3 }} color="primary" variant="contained">
               Order Now
             </Button>
+          </Box>
+          <Box>
+            <IngredientsTable
+              header="Ingredients"
+              ingredients={recipe.ingredients}
+            />
           </Box>
         </Box>
         <VerticalTabs onClick={handleTabClick} recipe={recipe} />

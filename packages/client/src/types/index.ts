@@ -5,6 +5,13 @@ export interface Recipe {
   video?: VideoUpload;
   thumbnail?: Thumbnail;
   steps: RecipeStep[];
+  ingredients: RecipeIngredient[];
+}
+
+export interface RecipeIngredient {
+  name: string;
+  quantity: number;
+  unit?: string;
 }
 
 export interface Thumbnail {
@@ -17,6 +24,7 @@ export interface RecipeStep {
   order: number;
   instruction: string;
   startTime: number;
+  ingredients?: RecipeIngredient[];
 }
 
 export interface VideoUpload {

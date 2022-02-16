@@ -5,7 +5,8 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { ReactNode, SyntheticEvent, useState } from 'react';
 import { Recipe, RecipeStep } from '../types';
-
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 interface TabPanelProps {
   children: ReactNode;
   index: number;
@@ -25,9 +26,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Container maxWidth="sm">
-            <Typography>{children}</Typography>
-          </Container>
+          <Container maxWidth="sm">{children}</Container>
         </Box>
       )}
     </div>
@@ -61,8 +60,23 @@ interface StepTabPanelProps {
 
 function StepTabPanel({ value, index, step }: StepTabPanelProps) {
   return (
-    <TabPanel value={value} index={index}>
-      {step.instruction}
+    <TabPanel key={index} value={value} index={index}>
+      <Typography>{step.instruction}</Typography>
+      <List dense>
+        <ListItem sx={{ display: 'block' }}>
+          {step.ingredients &&
+            step.ingredients.map((ing) => (
+              <Box key={ing.name}>
+                <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
+                  {ing.quantity} x {ing.unit ? ing.unit + ' of ' : null}
+                </Typography>
+                <Typography variant="button" color="primary">
+                  {ing.name}
+                </Typography>
+              </Box>
+            ))}
+        </ListItem>
+      </List>
     </TabPanel>
   );
 }
@@ -80,7 +94,7 @@ function StepTabPanels({ steps, value }: StepTabPanelsProps) {
           step={step}
           value={value}
           index={step.order - 1}
-          key={`${step.order}`}
+          key={`step-tab-panel-${step.order}`}
         />
       ))}
     </>

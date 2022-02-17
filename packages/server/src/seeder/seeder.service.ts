@@ -15,13 +15,13 @@ export default class SeederService {
     @Inject(COLLECTION_SEED_DATA) private readonly seedData: any[],
     @Inject(SEED_DB_NAME) private readonly dbName: string,
   ) {
-    try {
-      (async () => {
-        await this.seed(this.dbName);
-      })();
-    } catch (e) {
-      throw e;
-    }
+    // try {
+    //   (async () => {
+    //     await this.seed(this.dbName);
+    //   })();
+    // } catch (e) {
+    //   throw e;
+    // }
   }
 
   async seed(dbName: string) {

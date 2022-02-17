@@ -12,6 +12,7 @@ describe('AppController (e2e)', () => {
   });
 
   it('/ (GET) should serve static assets', async () => {
+    console.log(process.env.NODE_ENV, ':::::::::::::');
     try {
       const server = app.getHttpServer();
       const response = await request(server).get('/');

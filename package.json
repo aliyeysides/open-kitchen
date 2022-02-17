@@ -5,7 +5,7 @@
     "node": "14.16.1"
   },
   "scripts": {
-    "postinstall": "npm lerna bootstrap",
+    "postinstall": "npx lerna bootstrap",
     "build": "npx lerna run build",
     "clean": "npx lerna clean",
     "deploy:dev": "npm run build && eb deploy foyir-mono-development",

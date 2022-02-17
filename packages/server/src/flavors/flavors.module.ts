@@ -10,10 +10,10 @@ import seed from '../seeder/data/flavors';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Flavor.name, schema: FlavorSchema }]),
-    SeederModule.forFeature({
-      name: Flavor.name,
-      load: seed,
-    }),
+    // SeederModule.forFeature({
+    //   name: Flavor.name,
+    //   load: seed,
+    // }),
   ],
   providers: [FlavorsResolver, FlavorsService],
   exports: [MongooseModule],

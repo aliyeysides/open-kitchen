@@ -12,8 +12,12 @@ describe('AppController (e2e)', () => {
   });
 
   it('/ (GET) should serve static assets', async () => {
-    const server = app.getHttpServer();
-    const response = await request(server).get('/');
-    expect(response.statusCode).toEqual(200);
+    try {
+      const server = app.getHttpServer();
+      const response = await request(server).get('/');
+      expect(response.statusCode).toEqual(200);
+    } catch (e) {
+      throw e;
+    }
   });
 });

@@ -14,6 +14,7 @@ workflows:
     jobs:
       - node/test:
           test-results-for: jest
+          test-results-path: junit.xml
           # This is the node version to use for the `cimg/node` tag
           # Relevant tags can be found on the CircleCI Developer Hub
           # https://circleci.com/developer/images/image/cimg/node
@@ -23,19 +24,11 @@ workflows:
   tests-e2e: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
-      - node/test:
-          executor:
-            name: node/default
-            tag: '14.16'
-          steps:
-            - checkout
-            - node/install-packages
-            - run:
-              command: npm run test:e2e
-          test-results-for: jest
-          # This is the node version to use for the `cimg/node` tag
-          # Relevant tags can be found on the CircleCI Developer Hub
-          # https://circleci.com/developer/images/image/cimg/node
-          version: '14.16'
-          # If you are using yarn, change the line below from "npm" to "yarn"
-          pkg-manager: npm
+      executor:
+        name: node/default
+        tag: '14.16'
+      steps:
+        - checkout
+        - node/install-packages
+        - run:
+          command: npm run test:e2e

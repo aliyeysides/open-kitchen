@@ -2,7 +2,7 @@
   "name": "foyir-mono",
   "private": true,
   "engines": {
-    "node": "14.18.1"
+    "node": "14.16.1"
   },
   "scripts": {
     "postinstall": "npx lerna bootstrap",

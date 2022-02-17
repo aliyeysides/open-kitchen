@@ -24,11 +24,5 @@ workflows:
   tests-e2e: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
-      executor:
-        name: node/default
-        tag: '14.16'
-      steps:
-        - checkout
-        - node/install-packages
-        - run:
-          command: npm run test:e2e
+      - node/run:
+          npm-run: test:e2e

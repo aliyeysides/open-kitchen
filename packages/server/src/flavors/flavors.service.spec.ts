@@ -1,5 +1,5 @@
-import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { useMock } from '../../test/utils';
 import { Flavor } from './entities/flavor.entity';
 import { FlavorsService } from './flavors.service';
 
@@ -8,20 +8,11 @@ type ObjectId = string & { _brand: 'objectId' };
 describe('FlavorsService', () => {
   let service: FlavorsService;
 
-  const mockFlavorModel = () => {
-    return {
-      findOne: (id: ObjectId) => ({ _id: id }),
-    };
-  };
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        FlavorsService,
-        {
-          provide: getModelToken(Flavor.name),
-          useValue: mockFlavorModel,
-        },
+        { provide: FlavorsService, useValue: {} },
+        useMock({ model: Flavor }),
       ],
     }).compile();
 

@@ -8,7 +8,9 @@ describe('AppController', () => {
   beforeAll(async () => {
     app = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService],
+      providers: [
+        { provide: AppService, useValue: { healthCheck: () => 200 } },
+      ],
     }).compile();
   });
 

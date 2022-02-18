@@ -406,4 +406,4 @@ packages/*/dist/
 !.elasticbeanstalk/*.global.yml
 
 # JUnit Reporter
-**/*junit.xml
+# **/*junit.xml

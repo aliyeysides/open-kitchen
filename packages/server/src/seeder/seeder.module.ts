@@ -3,6 +3,7 @@ import {
   COLLECTION_SEED_DATA,
   SEED_MODEL_NAME,
   SEED_DB_NAME,
+  DEV_DATABASE,
 } from './constants';
 import SeederService from './seeder.service';
 
@@ -30,7 +31,7 @@ export class SeederModule {
         },
         {
           provide: SEED_DB_NAME,
-          useValue: 'development',
+          useValue: DEV_DATABASE,
         },
       ],
       exports: [SeederService],

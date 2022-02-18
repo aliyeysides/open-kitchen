@@ -1,20 +1,22 @@
 import request from 'supertest';
-// import { Test } from '@nestjs/testing';
 import { AppModule } from './../src/app.module';
 import { INestApplication } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { Test } from '@nestjs/testing';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
-    app = await NestFactory.create(AppModule);
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = await moduleRef.createNestApplication();
     await app.init();
   });
 
-  it('/ (GET) should serve static assets', async () => {
-    const server = app.getHttpServer();
-    const response = await request(server).get('/');
-    expect(response.statusCode).toEqual(200);
+  it('GET /healthcheck should return 200', async () => {
+    const server = await app.getHttpServer();
+    return request(server).get('/healthcheck').expect(200);
   });
 });

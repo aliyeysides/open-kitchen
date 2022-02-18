@@ -1,8 +1,9 @@
-import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
+import { getConnectionToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { useMock } from '../../test/utils';
 import {
   COLLECTION_SEED_DATA,
+  DEV_DATABASE,
   SEED_DB_NAME,
   SEED_MODEL_NAME,
 } from './constants';
@@ -14,11 +15,11 @@ describe('Seeder Service', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        { provide: getConnectionToken(), useValue: 'test' },
-        useMock({ provide: SeederService }),
+        { provide: getConnectionToken(), useValue: DEV_DATABASE },
+        { provide: SeederService, useValue: {} },
         useMock({ model: { name: SEED_MODEL_NAME } }),
-        useMock({ provide: COLLECTION_SEED_DATA }),
-        useMock({ provide: SEED_DB_NAME, val: 'test' }),
+        { provide: COLLECTION_SEED_DATA, useValue: [] },
+        { provide: SEED_DB_NAME, useValue: DEV_DATABASE },
       ],
     }).compile();
 

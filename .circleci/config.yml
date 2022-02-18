@@ -29,11 +29,11 @@ jobs:
         version: '14.16'
         # If you are using yarn, change the line below from "npm" to "yarn"
         pkg-manager: npm
-    - store_test_results:
-        path: ./packages/server/junit.xml
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   test-suite:
     jobs:
       - run-tests
+      - store_test_results:
+        path: ./packages/server/junit.xml

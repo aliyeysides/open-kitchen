@@ -9,7 +9,7 @@ orbs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  tests:
+  run-tests:
     jobs:
       - node/test:
           name: 'unit-tests'
@@ -32,5 +32,7 @@ workflows:
           version: '14.16'
           # If you are using yarn, change the line below from "npm" to "yarn"
           pkg-manager: npm
+  upload-results:
+    steps:
       - store_test_results:
           path: ./packages/server/junit.xml

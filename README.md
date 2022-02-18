@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-You need to have Node verion 14.18.1 installed. The easiet way to install this version is to use `nvm` tool. [nvm installation instruction](https://github.com/nvm-sh/nvm) . There is also an alternative for Windows [installation and usage](https://github.com/coreybutler/nvm-windows)
+You need to have Node verion 14.16.1 installed. The easiet way to install this version is to use `nvm` tool. [nvm installation instruction](https://github.com/nvm-sh/nvm) . There is also an alternative for Windows [installation and usage](https://github.com/coreybutler/nvm-windows)
 
 When you have `nvm` run `nvm install 14.16.1` to install the right version of the node. The command will set your default version of node as well.
 

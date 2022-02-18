@@ -404,3 +404,6 @@ packages/*/dist/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# JUnit Reporter
+**/*junit.xml

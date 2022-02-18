@@ -2,22 +2,26 @@
   "name": "foyir-mono",
   "private": true,
   "engines": {
-    "node": "14.18.1"
+    "node": "14.16.1"
   },
   "scripts": {
+    "postinstall": "npx lerna bootstrap",
     "build": "npx lerna run build",
+    "clean": "npx lerna clean",
     "deploy:dev": "npm run build && eb deploy foyir-mono-development",
-    "start": "npm run build && npx lerna run start:prod --stream",
-    "start:dev": "npx lerna run --parallel start:dev",
-    "test": "npx lerna run --parallel test && lerna run test:e2e"
+    "start": "npm run build && npx lerna run start:prod --stream --",
+    "start:dev": "npx lerna run start:dev --stream --",
+    "test": "npx lerna run test --stream --",
+    "test:e2e": "npx lerna run test:e2e --stream --"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.8",
-    "lerna": "^4.0.0"
+    "jest-junit": "^13.0.0",
+    "lerna": "^4.0.0",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
-    "axios": "^0.25.0",
-    "express-basic-auth": "^1.2.1"
+    "axios": "^0.26.0"
   }
 }

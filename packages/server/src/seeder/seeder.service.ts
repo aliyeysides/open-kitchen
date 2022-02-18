@@ -45,19 +45,6 @@ export default class SeederService {
           `${logPrefix} Attempting to drop ${client.databaseName} instead of ${dbName}, exiting seeder..`,
         );
 
-      const existingDocCount = await client
-        .collection(collectionName)
-        .countDocuments();
-
-      const notEmpty: boolean = existingDocCount > 0;
-
-      if (notEmpty) {
-        console.log(
-          `${logPrefix} Collection already contains documents, exiting seeder...`,
-        );
-        return;
-      }
-
       await client.dropCollection(collectionName);
 
       const seededItems = await model.insertMany(this.seedData);

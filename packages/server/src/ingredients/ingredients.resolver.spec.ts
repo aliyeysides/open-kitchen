@@ -10,8 +10,8 @@ describe('IngredientsResolver', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        IngredientsResolver,
-        useMock({ provide: IngredientsService }),
+        { provide: IngredientsResolver, useValue: {} },
+        { provide: IngredientsService, useValue: {} },
         useMock({ model: Ingredient }),
       ],
     }).compile();

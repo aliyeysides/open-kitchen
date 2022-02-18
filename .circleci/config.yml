@@ -7,7 +7,7 @@ orbs:
   node: circleci/node@5.0.0
 
 jobs:
-  run-tests:
+  run-unit-tests:
     - node/test:
         name: 'unit-tests'
         test-results-for: jest
@@ -18,6 +18,7 @@ jobs:
         version: '14.16'
         # If you are using yarn, change the line below from "npm" to "yarn"
         pkg-manager: npm
+  run-e2e-tests:
     - node/test:
         name: 'e2e-tests'
         run-command: test:e2e
@@ -29,11 +30,13 @@ jobs:
         version: '14.16'
         # If you are using yarn, change the line below from "npm" to "yarn"
         pkg-manager: npm
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   test-suite:
     jobs:
-      - run-tests
+      - run-unit-tests
+      - run-e2e-tests
       - store_test_results:
         path: ./packages/server/junit.xml

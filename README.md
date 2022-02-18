@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/aliyeysides/foyir-mono/tree/master.svg?style=svg&circle-token=c58371ac247a3add31bac2fffb1f597469e2f30c)](https://circleci.com/gh/aliyeysides/foyir-mono/tree/master)
+
 ## Prerequisites
 
 You need to have Node verion 14.18.1 installed. The easiet way to install this version is to use `nvm` tool. [nvm installation instruction](https://github.com/nvm-sh/nvm) . There is also an alternative for Windows [installation and usage](https://github.com/coreybutler/nvm-windows)

@@ -13,6 +13,7 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - node/test:
+          name: 'unit tests'
           test-results-for: jest
           test-results-path: junit.xml
           # This is the node version to use for the `cimg/node` tag
@@ -25,6 +26,7 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - node/test:
+          name: 'e2e tests'
           run-command: test:e2e
           test-results-for: jest
           test-results-path: junit.xml

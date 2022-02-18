@@ -33,6 +33,6 @@ workflows:
           # If you are using yarn, change the line below from "npm" to "yarn"
           pkg-manager: npm
   upload-results:
-    steps:
+    jobs:
       - store_test_results:
           path: ./packages/server/junit.xml

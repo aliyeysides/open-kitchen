@@ -1,6 +1,6 @@
 import { getConnectionToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { useMock } from '../../test/utils';
+import { Flavor } from '../flavors/entities/flavor.entity';
 import {
   COLLECTION_SEED_DATA,
   DEV_DATABASE,
@@ -16,8 +16,8 @@ describe('Seeder Service', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         { provide: getConnectionToken(), useValue: DEV_DATABASE },
+        { provide: SEED_MODEL_NAME, useValue: Flavor.name },
         { provide: SeederService, useValue: {} },
-        useMock({ model: { name: SEED_MODEL_NAME } }),
         { provide: COLLECTION_SEED_DATA, useValue: [] },
         { provide: SEED_DB_NAME, useValue: DEV_DATABASE },
       ],

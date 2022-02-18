@@ -7,11 +7,9 @@ export interface MockProviderProps {
   model?: { name: string };
 }
 
-type MockProviderUnion = 'provide' | 'model';
+// type MockProviderUnion = 'provide' | 'model';
 
-export const useMock = (
-  props: MockProviderProps,
-): Provider<MockProviderUnion> => ({
+export const useMock = (props: MockProviderProps): Provider<any> => ({
   provide: props.model ? getModelToken(props.model.name) : props.provide,
   useValue: props.val ? props.val : {},
 });

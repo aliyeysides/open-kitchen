@@ -9,10 +9,10 @@ import seed from '../seeder/data/recipes';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Recipe.name, schema: RecipeSchema }]),
-    // SeederModule.forFeature({
-    //   name: Recipe.name,
-    //   load: seed,
-    // }),
+    SeederModule.forFeature({
+      name: Recipe.name,
+      load: seed,
+    }),
   ],
   providers: [RecipesResolver, RecipesService],
 })

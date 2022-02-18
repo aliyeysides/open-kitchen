@@ -11,10 +11,10 @@ import seed from '../seeder/data/ingredients';
     MongooseModule.forFeature([
       { name: Ingredient.name, schema: IngredientSchema },
     ]),
-    // SeederModule.forFeature({
-    //   name: Ingredient.name,
-    //   load: seed,
-    // }),
+    SeederModule.forFeature({
+      name: Ingredient.name,
+      load: seed,
+    }),
   ],
   providers: [IngredientsResolver, IngredientsService],
   exports: [],

@@ -15,7 +15,6 @@ workflows:
       - node/test:
           name: 'unit tests'
           test-results-for: jest
-          test-results-path: ./packages/server/junit.xml
           # This is the node version to use for the `cimg/node` tag
           # Relevant tags can be found on the CircleCI Developer Hub
           # https://circleci.com/developer/images/image/cimg/node
@@ -29,7 +28,6 @@ workflows:
           name: 'e2e tests'
           run-command: test:e2e
           test-results-for: jest
-          test-results-path: ./packages/server/junit.xml
           # This is the node version to use for the `cimg/node` tag
           # Relevant tags can be found on the CircleCI Developer Hub
           # https://circleci.com/developer/images/image/cimg/node

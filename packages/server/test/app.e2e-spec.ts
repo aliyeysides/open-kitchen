@@ -18,7 +18,7 @@ describe('AppController (e2e)', () => {
 
   afterAll(async () => {
     await app.close();
-  }, 1000);
+  }, 5000);
 
   it('GET /healthcheck should return 200', async () => {
     const server = await app.getHttpServer();

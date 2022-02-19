@@ -20,7 +20,10 @@ export default class SeederService {
         const isTestOrProd =
           process.env.NODE_ENV === 'test' ||
           process.env.NODE_ENV === 'production';
-        !isTestOrProd && (await this.seed(this.dbName));
+        if (isTestOrProd) {
+          return;
+        }
+        await this.seed(this.dbName);
       })();
     } catch (e) {
       throw e;

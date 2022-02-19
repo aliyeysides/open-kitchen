@@ -3,6 +3,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { ConfigService } from '@nestjs/config';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -21,6 +22,7 @@ async function bootstrap() {
   }
 
   app.use(graphqlUploadExpress());
+  app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(PORT);
 }
 bootstrap();

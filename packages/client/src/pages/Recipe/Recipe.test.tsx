@@ -65,7 +65,7 @@ describe('Recipe Page', () => {
     );
 
     await waitFor(() => {
-      const step = screen.getByText(/Cut the cheese/i);
+      const step = screen.getByText(/cut the cheese/i);
       expect(step).toBeInTheDocument();
     });
   });

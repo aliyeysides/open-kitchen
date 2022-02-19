@@ -14,8 +14,12 @@ export default function TopAppBar() {
 
   useEffect(() => {
     async function fetchVersion() {
-      const { data } = await axios('/version');
-      setVersion(data);
+      try {
+        const res = await axios('/version');
+        res && setVersion(res.data);
+      } catch (e) {
+        console.error(e);
+      }
     }
     fetchVersion();
   }, []);

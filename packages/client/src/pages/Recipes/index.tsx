@@ -48,7 +48,7 @@ export default function RecipesPage() {
   const recipes: Recipe[] = data?.recipes;
 
   return (
-    <>
+    <main data-testid="recipes-page">
       <Box className={styles.section_header}>
         <Typography
           sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
@@ -87,6 +87,6 @@ export default function RecipesPage() {
         <ViewAllLink />
       </Box>
       {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
-    </>
+    </main>
   );
 }

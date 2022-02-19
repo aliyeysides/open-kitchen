@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="1" failures="0" errors="0" time="13.618">
-  <testsuite name="AppController (e2e)" errors="0" failures="0" skipped="0" timestamp="2022-02-19T18:17:03" time="13.464" tests="1">
-    <testcase classname="AppController (e2e) GET /healthcheck should return 200" name="AppController (e2e) GET /healthcheck should return 200" time="0.902">
+<testsuites name="jest tests" tests="1" failures="0" errors="0" time="12.967">
+  <testsuite name="AppController (e2e)" errors="0" failures="0" skipped="0" timestamp="2022-02-19T18:41:23" time="12.827" tests="1">
+    <testcase classname="AppController (e2e) GET /healthcheck should return 200" name="AppController (e2e) GET /healthcheck should return 200" time="0.113">
     </testcase>
   </testsuite>
 </testsuites>

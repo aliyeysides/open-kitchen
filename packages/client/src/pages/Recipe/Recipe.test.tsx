@@ -38,7 +38,7 @@ describe('Recipe Page', () => {
     };
   });
 
-  afterAll(() => cleanup);
+  afterEach(cleanup);
 
   test('renders recipe video title', async () => {
     render(

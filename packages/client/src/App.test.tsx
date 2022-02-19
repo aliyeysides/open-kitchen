@@ -6,7 +6,7 @@ import { GET_RECIPES } from './pages/Recipes/constants';
 import AppRoutes from './AppRoutes';
 
 describe('App Outlet Container', () => {
-  afterEach(() => cleanup);
+  afterEach(cleanup);
 
   test('renders "open kitchen" company name', () => {
     render(

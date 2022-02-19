@@ -2,6 +2,7 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
+import { APP_FILTER } from '@nestjs/core';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
@@ -27,6 +28,7 @@ import config from './config/config';
 
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 const isDev =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
@@ -64,7 +66,13 @@ const dbUri = isDev ? devDb : stagingDb;
     GrocersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+  ],
   exports: [MongooseModule],
 })
 export class AppModule implements NestModule {

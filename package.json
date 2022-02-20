@@ -6,7 +6,7 @@
   },
   "scripts": {
     "postinstall": "npx lerna bootstrap",
-    "build": "npx lerna run build --parallel",
+    "build": "npx lerna run build",
     "clean": "npx lerna clean",
     "deploy:dev": "eb deploy foyir-mono-development",
     "start": "npx lerna run start:prod",

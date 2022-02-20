@@ -8,10 +8,15 @@ import LinkButton from './LinkButton';
 import KitchenIcon from '@mui/icons-material/Kitchen';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
+import LoginButton from './LoginButton';
+import { useAuth0 } from './Auth0Context';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 export default function TopAppBar() {
   const [version, setVersion] = useState<string>('');
-
+  const { isLoading, user, isAuthenticated } =
+    useAuth0();
   useEffect(() => {
     async function fetchVersion() {
       const { data } = await axios('/version');
@@ -19,6 +24,13 @@ export default function TopAppBar() {
     }
     fetchVersion();
   }, []);
+
+  let navigate = useNavigate();
+
+  const openProfile = () => {
+    let path = `/profile`;
+    navigate(path);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -35,7 +47,14 @@ export default function TopAppBar() {
             Upload
           </LinkButton>
           <Box sx={{ marginLeft: 2 }}>
-            <Avatar>A</Avatar>
+            {!isLoading &&
+              (!isAuthenticated ? (
+                <LoginButton />
+              ) : (
+                <Button onClick={openProfile}>
+                  <Avatar>{user.name.slice(0, 2)}</Avatar>
+                </Button>
+              ))}
           </Box>
         </Toolbar>
       </AppBar>

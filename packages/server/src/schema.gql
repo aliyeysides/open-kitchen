@@ -83,6 +83,14 @@ type Grocer {
   updated_at: Timestamp!
 }
 
+type Nickname {
+  _id: String!
+  user_id: String!
+  nickname: String!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
 input RecipeIngredientInput {
   fdcId: Int!
   description: String!
@@ -110,6 +118,7 @@ type Query {
   thumbnail(id: Int!): Thumbnail!
   grocers: [Grocer!]!
   grocer(id: Int!): Grocer!
+  nickname: Nickname!
 }
 
 type Mutation {
@@ -129,6 +138,7 @@ type Mutation {
   createGrocer(createGrocerInput: CreateGrocerInput!): Grocer!
   updateGrocer(updateGrocerInput: UpdateGrocerInput!): Grocer!
   removeGrocer(id: Int!): Grocer!
+  editNickname(editNickname: ChangeNicknameInput!): Nickname!
 }
 
 input CreateFlavorInput {
@@ -184,4 +194,8 @@ input UpdateGrocerInput {
   zip_code: Int
   address: String
   id: Int!
+}
+
+input ChangeNicknameInput {
+  nickname: String!
 }

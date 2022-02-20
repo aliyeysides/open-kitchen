@@ -27,6 +27,8 @@ import config from './config/config';
 
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
+import { NicknameModule } from './profile/profile.module';
+import { AuthModule } from './auth/auth.module';
 
 const isDev = process.env.NODE_ENV === 'development';
 const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
@@ -43,6 +45,7 @@ const dbUri = isDev ? localDb : testDb;
       isGlobal: true,
       load: [config],
     }),
+    AuthModule,
     MongooseModule.forRoot(dbUri),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -61,6 +64,7 @@ const dbUri = isDev ? localDb : testDb;
     AwsS3UploaderModule,
     ThumbnailsModule,
     GrocersModule,
+    NicknameModule,
   ],
   controllers: [AppController],
   providers: [AppService],

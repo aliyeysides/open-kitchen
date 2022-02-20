@@ -4,6 +4,9 @@
   "version": "1.4.5-alpha.0",
   "description": "Nest TypeScript starter repository",
   "license": "MIT",
+  "engines": {
+    "node": "14.16.1"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",

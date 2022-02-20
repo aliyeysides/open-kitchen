@@ -9,8 +9,8 @@
     "prebuild": "npm rebuild node-sass --force",
     "build": "npx lerna run build --stream --",
     "clean": "npx lerna clean",
-    "deploy:dev": "npm run build && eb deploy foyir-mono-development",
-    "start": "npm run build && npx lerna run start:prod --stream --",
+    "deploy:dev": "eb deploy foyir-mono-development",
+    "start": "npx lerna run start:prod --stream --",
     "start:dev": "npx lerna run start:dev --stream --",
     "test": "npx lerna run test --stream --",
     "test:e2e": "npx lerna run test:e2e --stream --"

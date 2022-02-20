@@ -1,8 +1,11 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
-import { COLLECTION_SEED_DATA, SEED_MODEL_NAME } from './constants';
+import {
+  COLLECTION_SEED_DATA,
+  SEED_DB_NAME,
+  SEED_MODEL_NAME,
+} from './constants';
 
 @Injectable()
 export default class SeederService {
@@ -10,40 +13,52 @@ export default class SeederService {
     @InjectConnection() private readonly connection: Connection,
     @Inject(SEED_MODEL_NAME) private readonly modelName: string,
     @Inject(COLLECTION_SEED_DATA) private readonly seedData: any[],
-    private readonly config: ConfigService,
+    @Inject(SEED_DB_NAME) private readonly dbName: string,
   ) {
     try {
       (async () => {
-        await this.seed();
+        const isTestOrProd =
+          process.env.NODE_ENV === 'test' ||
+          process.env.NODE_ENV === 'production';
+        if (isTestOrProd) {
+          return;
+        }
+        await this.seed(this.dbName);
       })();
     } catch (e) {
       throw e;
     }
   }
 
-  async seed() {
-    try {
-      const isDev = this.config.get('node_env') === 'development'; // DO NOT REMOVE OR YOU WILL DROP PROD DB
+  async seed(dbName: string) {
+    const logPrefix = `SeederService::${dbName}::${this.modelName}`;
 
+    try {
       const models = this.connection.modelNames();
 
       if (!models.includes(this.modelName)) {
         throw new Error(
-          `The Model name "${this.modelName}" does not exist. Possible values are: ${models}`,
+          `${logPrefix} The Model name "${this.modelName}" does not exist. Possible values are: ${models}`,
         );
       }
 
       const model = this.connection.model(this.modelName);
       const collectionName = model.collection.name;
-      const collection = this.connection.collection(collectionName);
 
-      if (isDev && collection)
-        await this.connection.dropCollection(collectionName);
+      const client = this.connection.getClient().db(dbName);
+      if (dbName !== client.databaseName)
+        throw new Error(
+          `${logPrefix} Attempting to drop ${client.databaseName} instead of ${dbName}, exiting seeder..`,
+        );
+
+      await client.dropCollection(collectionName);
 
       const seededItems = await model.insertMany(this.seedData);
 
       console.log(
-        `Successfully Seeded Collection ${collectionName.toUpperCase()}: ${seededItems}`,
+        `Successfully Seeded Collection ${collectionName.toUpperCase()} in ${
+          client.databaseName
+        }: ${seededItems}`,
       );
     } catch (e) {
       throw e;

@@ -1,9 +1,17 @@
 export interface Recipe {
   _id: string;
+  ytId: string;
   name: string;
-  video: VideoUpload;
-  thumbnail: Thumbnail;
+  video?: VideoUpload;
+  thumbnail?: Thumbnail;
   steps: RecipeStep[];
+  ingredients: RecipeIngredient[];
+}
+
+export interface RecipeIngredient {
+  name: string;
+  quantity: number;
+  unit?: string;
 }
 
 export interface Thumbnail {
@@ -15,6 +23,8 @@ export interface Thumbnail {
 export interface RecipeStep {
   order: number;
   instruction: string;
+  startTime: number;
+  ingredients?: RecipeIngredient[];
 }
 
 export interface VideoUpload {

@@ -1,24 +1,9 @@
-import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { useMock } from '../../test/utils';
 import { AwsS3UploaderService } from '../aws-s3-uploader/aws-s3-uploader.service';
 import { Thumbnail } from './entities/thumbnail.entity';
 import { ThumbnailsResolver } from './thumbnails.resolver';
 import { ThumbnailsService } from './thumbnails.service';
-
-const mockAwsS3UploaderService = {
-  provide: AwsS3UploaderService,
-  useValue: {},
-};
-
-const mockThumbnailsResolver = {
-  provide: ThumbnailsResolver,
-  useValue: {},
-};
-
-const mockThumbnailService = {
-  provide: ThumbnailsService,
-  useValue: {},
-};
 
 describe('ThumbnailsResolver', () => {
   let resolver: ThumbnailsResolver;
@@ -26,13 +11,19 @@ describe('ThumbnailsResolver', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        mockThumbnailsResolver,
-        mockThumbnailService,
-        mockAwsS3UploaderService,
         {
-          provide: getModelToken(Thumbnail.name),
+          provide: ThumbnailsResolver,
           useValue: {},
         },
+        {
+          provide: ThumbnailsService,
+          useValue: {},
+        },
+        {
+          provide: AwsS3UploaderService,
+          useValue: {},
+        },
+        useMock({ model: Thumbnail }),
       ],
     }).compile();
 

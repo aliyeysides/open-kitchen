@@ -32,10 +32,29 @@ type FDCFood {
   dataType: String!
 }
 
-type Thumbnail {
-  _id: String!
+type RecipeIngredient {
   name: String!
-  url: String!
+
+  """unit of measurement (ounces, clove, tablespoon)"""
+  unit: String
+
+  """count of units of measurement (quantity x tablespoon)"""
+  quantity: Int!
+}
+
+type RecipeStep {
+  order: Int!
+  instruction: String!
+  startTime: Int!
+  ingredients: [RecipeIngredient!]
+}
+
+type Recipe {
+  _id: String!
+  ytId: String!
+  name: String!
+  steps: [RecipeStep!]!
+  ingredients: [RecipeIngredient!]!
   created_at: Timestamp!
   updated_at: Timestamp!
 }
@@ -48,26 +67,10 @@ type VideoUpload {
   updated_at: Timestamp!
 }
 
-type RecipeIngredient {
-  fdcId: Int!
-  description: String!
-
-  """data type used to source foods by FDC API"""
-  dataType: String!
-}
-
-type RecipeStep {
-  order: Int!
-  instruction: String!
-}
-
-type Recipe {
+type Thumbnail {
   _id: String!
   name: String!
-  video: VideoUpload!
-  thumbnail: Thumbnail!
-  steps: [RecipeStep!]!
-  ingredients: [RecipeIngredient!]!
+  url: String!
   created_at: Timestamp!
   updated_at: Timestamp!
 }
@@ -92,16 +95,20 @@ type Nickname {
 }
 
 input RecipeIngredientInput {
-  fdcId: Int!
-  description: String!
+  name: String!
 
-  """data type used to source foods by FDC API"""
-  dataType: String!
+  """unit of measurement (ounces, clove, tablespoon)"""
+  unit: String
+
+  """count of units of measurement (quantity x tablespoon)"""
+  quantity: Int!
 }
 
 input RecipeStepInput {
   order: Int!
   instruction: String!
+  startTime: Int!
+  ingredients: [RecipeIngredientInput!]
 }
 
 type Query {
@@ -162,16 +169,14 @@ input UpdateIngredientInput {
 input CreateRecipeInput {
   name: String!
   steps: [RecipeStepInput!]!
-  video: String!
-  thumbnail: String!
   ingredients: [RecipeIngredientInput!]!
+  ytId: String!
 }
 
 input UpdateRecipeInput {
+  ytId: String
   name: String
   steps: [RecipeStepInput!]
-  video: String
-  thumbnail: String
   ingredients: [RecipeIngredientInput!]
   id: Int!
 }

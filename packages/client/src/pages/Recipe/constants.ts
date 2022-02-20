@@ -4,15 +4,22 @@ export const GET_RECIPE = gql`
   query Recipe($id: String!) {
     recipe(id: $id) {
       _id
+      ytId
       name
       steps {
         order
         instruction
+        ingredients {
+          name
+          quantity
+          unit
+        }
+        startTime
       }
-      video {
-        _id
+      ingredients {
         name
-        url
+        quantity
+        unit
       }
     }
   }

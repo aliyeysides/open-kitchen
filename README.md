@@ -1,12 +1,14 @@
+[![CircleCI](https://circleci.com/gh/aliyeysides/foyir-mono/tree/master.svg?style=svg&circle-token=c58371ac247a3add31bac2fffb1f597469e2f30c)](https://circleci.com/gh/aliyeysides/foyir-mono/tree/master)
+
 ## Prerequisites
 
-You need to have Node verion 14.18.1 installed. The easiet way to install this version is to use `nvm` tool. [nvm installation instruction](https://github.com/nvm-sh/nvm) . There is also an alternative for Windows [installation and usage](https://github.com/coreybutler/nvm-windows)
+You need to have Node verion 14.16.1 installed. The easiet way to install this version is to use `nvm` tool. [nvm installation instruction](https://github.com/nvm-sh/nvm) . There is also an alternative for Windows [installation and usage](https://github.com/coreybutler/nvm-windows)
 
-When you have `nvm` run `nvm install 14.18.1` to install the right version of the node. The command will set your default version of node as well.
+When you have `nvm` run `nvm install 14.16.1` to install the right version of the node. The command will set your default version of node as well.
 
 Install `lerna` as a global package: `sudo npm install --g lerna`
 
-Make sure you have a `mongodb` instance running locally. Using docker: `docker run -d -p 27017:27017 --name ali-mongo mongo` or using CLI: [instructions](https://zellwk.com/blog/local-mongodb/)
+Make sure you have a `mongodb` instance running locally. Using docker: `docker run -d -p 27017:27017 --name local-db mongo` or using CLI: [instructions](https://zellwk.com/blog/local-mongodb/)
 
 ## Installation
 

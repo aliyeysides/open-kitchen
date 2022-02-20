@@ -1,5 +1,5 @@
-import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { useMock } from '../../test/utils';
 import { AwsS3UploaderService } from '../aws-s3-uploader/aws-s3-uploader.service';
 import { VideoUpload } from './entities/video-upload.entity';
 import { VideoUploadsService } from './video-uploads.service';
@@ -14,10 +14,7 @@ describe('VideoUploadsService', () => {
           provide: AwsS3UploaderService,
           useValue: {},
         },
-        {
-          provide: getModelToken(VideoUpload.name),
-          useValue: {},
-        },
+        useMock({ model: VideoUpload }),
         {
           provide: VideoUploadsService,
           useValue: {},

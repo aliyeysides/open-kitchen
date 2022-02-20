@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpCode } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -6,9 +6,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/healthcheck')
-  healthCheck(): number {
-    return this.appService.healthCheck();
-  }
+  @HttpCode(200)
+  healthCheck() {}
 
   @Get('/version')
   getVersion(): string {

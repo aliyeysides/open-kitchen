@@ -2,74 +2,60 @@ import { useQuery } from '@apollo/client';
 import { Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import 'video.js/dist/video-js.css';
-import { Recipe } from '../../types';
+import { Recipe, RecipeStep } from '../../types';
 import { GET_RECIPE } from './constants';
 import Box from '@mui/material/Box';
 import VerticalTabs, {
   VerticalTabsOnClick,
 } from '../../components/VerticalTabs';
 import YouTubePlayer, { YouTubeOptions } from '../../components/YouTubePlayer';
+import { useRef, useState } from 'react';
+import IngredientsTable from '../../components/IngredientsTable';
 
-// TODO: implement our own playback
-// import VideoJS from '../../components/VideoJS';
-// import videojs from 'video.js';
-
-// TODO: A/B test best "stepper"
-// import VerticalLinearStepper from "../../components/VerticalLinearStepper";
-
-interface RecipePageProps {
-  previewId?: string;
+function ytattrs(start: number): YouTubeOptions {
+  return {
+    width: '1024',
+    height: '576',
+    playerVars: {
+      autoplay: 1,
+      start,
+      origin: 'http://localhost:3000',
+    },
+  };
 }
 
-export default function RecipePage({ previewId }: RecipePageProps) {
+type Step = Pick<RecipeStep, 'order' | 'startTime'>;
+
+export default function RecipePage() {
   const params = useParams();
+  const [currentStep, setCurrentStep] = useState<Step>({
+    order: 0,
+    startTime: 0,
+  });
+  const playerRef = useRef<any>({});
+
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
-      id: previewId ? previewId : params.recipeId,
+      id: params.recipeId,
     },
   });
+
+  const handleTabClick: VerticalTabsOnClick = (step, e) => {
+    setCurrentStep({
+      order: step.order,
+      startTime: step.startTime,
+    });
+    playerRef.current.seekTo(step.startTime);
+  };
+
+  const handleReady = (e: any) => {
+    playerRef.current = e.target;
+  };
 
   if (loading) return <div>"Loading..."</div>;
   if (error) return <div>`Error! ${error.message}`</div>;
 
   const recipe: Recipe = data?.recipe;
-
-  // Commented code below is for custom VideoJS playback
-  // const videoUpload: VideoUpload = data?.recipe.video;
-
-  // const videoJsOptions: videojs.PlayerOptions = {
-  //   autoplay: true,
-  //   controls: true,
-  //   responsive: true,
-  //   fluid: false,
-  //   fill: true,
-  //   sources: [
-  //     {
-  //       src: videoUpload.url,
-  //       type: 'video/mp4',
-  //     },
-  //   ],
-  // };
-
-  // const handlePlayerReady = () => {
-  //   videojs.log('Your player is ready!');
-  // };
-
-  const handleTabClick: VerticalTabsOnClick = (step, e) => {
-    console.log('step::', step);
-  };
-
-  const gordan_ramsay_spicy_sausage_id = 'FP6E3JtmsCE';
-  const options: YouTubeOptions = {
-    width: '1024',
-    height: '576',
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-      start: 17,
-      end: 30,
-    },
-  };
 
   return (
     <main>
@@ -80,21 +66,13 @@ export default function RecipePage({ previewId }: RecipePageProps) {
         }}
       >
         <Box>
-          <YouTubePlayer
-            videoId={gordan_ramsay_spicy_sausage_id}
-            opts={options}
-          />
-          {/* <iframe
-            width="1024"
-            height="576"
-            src={`https://www.youtube.com/embed/FP6E3JtmsCE?enablejsapi=1&origin=${
-              window.location.href
-            }&autoplay=${1}&start=${17}`}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe> */}
+          {recipe.ytId ? (
+            <YouTubePlayer
+              videoId={recipe.ytId}
+              opts={{ ...ytattrs(currentStep.startTime) }}
+              onReady={handleReady}
+            />
+          ) : null}
           <Box
             sx={{
               display: 'flex',
@@ -117,6 +95,12 @@ export default function RecipePage({ previewId }: RecipePageProps) {
             <Button sx={{ ml: 3 }} color="primary" variant="contained">
               Order Now
             </Button>
+          </Box>
+          <Box>
+            <IngredientsTable
+              header="Ingredients"
+              ingredients={recipe.ingredients}
+            />
           </Box>
         </Box>
         <VerticalTabs onClick={handleTabClick} recipe={recipe} />

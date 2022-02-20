@@ -4,13 +4,8 @@ export const GET_RECIPES = gql`
   query {
     recipes {
       _id
+      ytId
       name
-      video {
-        url
-      }
-      thumbnail {
-        url
-      }
     }
   }
 `;

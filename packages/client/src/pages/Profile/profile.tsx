@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import { Button, TextField } from '@mui/material';
 import LogoutButton from '../../components/LogoutButton';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 export default function ProfilePage() {
   const [setNickname, { loading, error, data }] = useMutation(SET_NICKNAME);
   const [textValue, setTextValue] = useState<string>('');

@@ -1,11 +1,13 @@
-import { Button } from '@mui/material';
-import { useAuth0 } from './Auth0Context';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { useContext } from 'react';
+import { Auth0Context } from './Auth0Context';
 
 function LoginButton() {
-  const { isLoading, loginWithRedirect } = useAuth0();
+  const { isLoading, loginWithRedirect } = useContext(Auth0Context);
 
   return (
-    <div>
+    <Box data-testid="login-button">
       {!isLoading && (
         <>
           <Button
@@ -17,7 +19,7 @@ function LoginButton() {
           </Button>
         </>
       )}
-    </div>
+    </Box>
   );
 }
 

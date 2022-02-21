@@ -1,10 +1,10 @@
-import * as React from "react";
-import "video.js";
+import * as React from 'react';
+import 'video.js';
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "video-js": React.DetailedHTMLProps<
+      'video-js': React.DetailedHTMLProps<
         React.VideoHTMLAttributes<HTMLVideoElement>,
         HTMLVideoElement
       >;
@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-declare module "video.js" {
+declare module 'video.js' {
   const VideoTrack: any;
   interface VideoJsPlayer {
     videoTracks(): any;

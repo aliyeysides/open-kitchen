@@ -1,8 +1,9 @@
 import { Button } from '@mui/material';
-import { useAuth0 } from './Auth0Context';
+import { useContext } from 'react';
+import { Auth0Context } from './Auth0Context';
 
 function LogoutButton() {
-  const { logout } = useAuth0();
+  const { logout } = useContext(Auth0Context);
 
   return (
     <div>

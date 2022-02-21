@@ -6,11 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
-import AuthorizedApolloProvider from './components/AuthApolloProvider';
-import { Auth0Provider } from './components/Auth0Context'
+import AuthorizedApolloProvider from './components/AuthorizedApolloProvider';
+import { Auth0Provider } from './components/Auth0Context';
 
 import AppRoutes from './AppRoutes';
-
 
 console.log('REACT NODE ENV', process.env.NODE_ENV);
 
@@ -20,9 +19,9 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Auth0Provider>
-        <AuthorizedApolloProvider>
-          <AppRoutes />
-        </AuthorizedApolloProvider>
+          <AuthorizedApolloProvider>
+            <AppRoutes />
+          </AuthorizedApolloProvider>
         </Auth0Provider>
       </ThemeProvider>
     </BrowserRouter>

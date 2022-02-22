@@ -1,7 +1,7 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ChangeNicknameInput } from './inputs/change-nickname';
+import { ChangeNicknameInput } from './dto/change-nickname.input';
 import { Nickname, NicknameDocument } from './entity/nickname.entity';
 
 @Injectable()
@@ -17,6 +17,7 @@ export class NicknameService {
     });
     return newNickname;
   }
+
   async getByUserID(userID): Promise<Nickname> {
     const nickname = await this.nicknameModel
       .findOne({ user_id: userID })

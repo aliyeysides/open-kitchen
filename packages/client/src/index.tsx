@@ -7,7 +7,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import AuthorizedApolloProvider from './components/AuthorizedApolloProvider';
-// import { Auth0Provider } from './components/Auth0Context';
 import { Auth0Provider, Auth0ProviderOptions } from '@auth0/auth0-react';
 
 import AppRoutes from './AppRoutes';

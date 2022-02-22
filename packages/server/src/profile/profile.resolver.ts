@@ -3,19 +3,12 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlGuard } from '../auth/gql.guard';
 import { CurrentUser } from '../auth/user.decorator';
 import { Nickname, NicknameSchema } from './entity/nickname.entity';
-import { ChangeNicknameInput } from './inputs/change-nickname';
+import { ChangeNicknameInput } from './dto/change-nickname.input';
 import { NicknameService } from './profile.service';
 
 @Resolver()
 export class NickNameResolver {
   constructor(private readonly nicknameService: NicknameService) {}
-
-  //   @Mutation(() => BlogPostType)
-  //   async createBlogPost(
-  //     @Args('creatBlogPostInput') createBlogPostInput: CreateBlogPostInput,
-  //   ) {
-  //     return this.blogPostService.create(createBlogPostInput);
-  //   }
 
   @Query(() => Nickname, { name: 'nickname' })
   @UseGuards(GqlGuard)
@@ -27,6 +20,10 @@ export class NickNameResolver {
     }
     return nickname;
   }
+
+  @Mutation(() => Nickname)
+  @UseGuards(GqlGuard)
+  createNickname() {}
 
   @Mutation(() => Nickname)
   @UseGuards(GqlGuard)

@@ -1,4 +1,4 @@
-import { ObjectType, Field, GraphQLTimestamp, Int } from '@nestjs/graphql';
+import { ObjectType, Field, GraphQLTimestamp } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
@@ -10,16 +10,18 @@ export class Nickname {
 
   @Field(() => String)
   @Prop()
-  user_id: string
+  user_id: string;
 
   @Field(() => String)
   @Prop()
   nickname: string;
 
   @Field(() => GraphQLTimestamp)
+  @Prop()
   created_at: Date;
 
   @Field(() => GraphQLTimestamp)
+  @Prop()
   updated_at: Date;
 }
 

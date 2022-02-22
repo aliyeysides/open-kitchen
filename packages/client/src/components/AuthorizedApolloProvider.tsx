@@ -5,14 +5,14 @@ import { FC } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const AuthorizedApolloProvider: FC = ({ children }) => {
-  const { getAccessTokenWithPopup } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
 
   const httpLink = createUploadLink({
     uri: '/graphql',
   });
 
   const authLink = setContext(async () => {
-    const token = await getAccessTokenWithPopup();
+    const token = await getAccessTokenSilently();
     return {
       headers: {
         Authorization: `Bearer ${token}`,

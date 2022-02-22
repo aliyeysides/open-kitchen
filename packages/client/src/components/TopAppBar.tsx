@@ -29,7 +29,7 @@ export default function TopAppBar() {
     fetchVersion();
   }, []);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const openProfile = () => {
     let path = `/profile`;

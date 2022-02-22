@@ -13,4 +13,8 @@ export default () => ({
     videos: process.env.AWS_S3_VIDEO_UPLOAD_DESTINATION_BUCKET_NAME,
     thumbnails: process.env.AWS_S3_THUMBNAIL_UPLOAD_DESTINATION_BUCKET_NAME,
   },
+  auth0: {
+    domain: process.env.AUTH0_DOMAIN,
+    audience: process.env.AUTH0_AUDIENCE,
+  },
 });

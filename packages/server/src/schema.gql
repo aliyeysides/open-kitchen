@@ -145,6 +145,7 @@ type Mutation {
   createGrocer(createGrocerInput: CreateGrocerInput!): Grocer!
   updateGrocer(updateGrocerInput: UpdateGrocerInput!): Grocer!
   removeGrocer(id: Int!): Grocer!
+  createNickname: Nickname!
   editNickname(editNickname: ChangeNicknameInput!): Nickname!
 }
 

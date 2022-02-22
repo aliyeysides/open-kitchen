@@ -1,7 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="1" failures="0" errors="0" time="11.086">
-  <testsuite name="AppController (e2e)" errors="0" failures="0" skipped="0" timestamp="2022-02-22T02:05:47" time="10.918" tests="1">
-    <testcase classname="AppController (e2e) GET /healthcheck should return 200" name="AppController (e2e) GET /healthcheck should return 200" time="0.12">
+<testsuites name="jest tests" tests="14" failures="0" errors="0" time="20.288">
+  <testsuite name="VideoUploadsResolver" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:03:58" time="13.891" tests="1">
+    <testcase classname="VideoUploadsResolver should be defined" name="VideoUploadsResolver should be defined" time="0.017">
+    </testcase>
+  </testsuite>
+  <testsuite name="RecipesService" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:12" time="0.483" tests="1">
+    <testcase classname="RecipesService should be defined" name="RecipesService should be defined" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="Seeder Service" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:13" time="0.499" tests="1">
+    <testcase classname="Seeder Service should be defined" name="Seeder Service should be defined" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="ThumbnailsService" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:13" time="0.464" tests="1">
+    <testcase classname="ThumbnailsService should be defined" name="ThumbnailsService should be defined" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="ThumbnailsResolver" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:14" time="0.6" tests="1">
+    <testcase classname="ThumbnailsResolver should be defined" name="ThumbnailsResolver should be defined" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="RecipesResolver" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:14" time="0.427" tests="1">
+    <testcase classname="RecipesResolver should be defined" name="RecipesResolver should be defined" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="VideoUploadsService" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:15" time="0.928" tests="1">
+    <testcase classname="VideoUploadsService should be defined" name="VideoUploadsService should be defined" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="IngredientsResolver" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:16" time="0.48" tests="1">
+    <testcase classname="IngredientsResolver should be defined" name="IngredientsResolver should be defined" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="AwsS3UploaderService" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:16" time="0.241" tests="1">
+    <testcase classname="AwsS3UploaderService should be defined" name="AwsS3UploaderService should be defined" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="GrocersResolver" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:17" time="0.438" tests="1">
+    <testcase classname="GrocersResolver should be defined" name="GrocersResolver should be defined" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="FlavorsService" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:17" time="0.302" tests="1">
+    <testcase classname="FlavorsService should be defined" name="FlavorsService should be defined" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="FlavorsResolver" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:17" time="0.476" tests="1">
+    <testcase classname="FlavorsResolver should be defined" name="FlavorsResolver should be defined" time="0.012">
+    </testcase>
+  </testsuite>
+  <testsuite name="IngredientsService" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:18" time="0.447" tests="1">
+    <testcase classname="IngredientsService should be defined" name="IngredientsService should be defined" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="GrocersService" errors="0" failures="0" skipped="0" timestamp="2022-02-22T15:04:18" time="0.308" tests="1">
+    <testcase classname="GrocersService should be defined" name="GrocersService should be defined" time="0.005">
     </testcase>
   </testsuite>
 </testsuites>

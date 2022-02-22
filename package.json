@@ -11,8 +11,8 @@
     "deploy:dev": "eb deploy foyir-mono-development",
     "start": "npx lerna run start:prod",
     "start:dev": "npx lerna run start:dev --stream",
-    "test": "npx lerna run test --stream",
-    "test:e2e": "npx lerna run test:e2e --stream"
+    "test": "npx lerna run test --stream --",
+    "test:e2e": "npx lerna run test:e2e --stream --"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",

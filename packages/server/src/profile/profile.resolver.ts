@@ -1,7 +1,7 @@
 import { NotFoundException, Req, Res, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { GqlGuard } from 'src/auth/gql.guard';
-import { CurrentUser } from 'src/auth/user.decorator';
+import { GqlGuard } from '../auth/gql.guard';
+import { CurrentUser } from '../auth/user.decorator';
 import { Nickname, NicknameSchema } from './entity/nickname.entity';
 import { ChangeNicknameInput } from './inputs/change-nickname';
 import { NicknameService } from './profile.service';

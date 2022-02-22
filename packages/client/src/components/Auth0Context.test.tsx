@@ -27,4 +27,23 @@ describe('Auth Context Provider', () => {
       expect(screen.getByTestId('login-button')).toBeInTheDocument();
     });
   });
+
+  // test('provides logged on state after signing in', async () => {
+  // render(
+  //   <MemoryRouter>
+  //     <Auth0Provider value={{ user: { nickname: 'jobin' } }}>
+  //       <AuthorizedApolloProvider>
+  //         <Auth0Context.Consumer>
+  //           {(authState) =>
+  //             authState.user ? <LogoutButton /> : <LoginButton />
+  //           }
+  //         </Auth0Context.Consumer>
+  //       </AuthorizedApolloProvider>
+  //     </Auth0Provider>
+  //   </MemoryRouter>,
+  // );
+  // await waitFor(() => {
+  //   expect(screen.getByTestId('login-button')).toBeInTheDocument();
+  // });
+  // });
 });

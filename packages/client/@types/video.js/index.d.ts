@@ -14,10 +14,6 @@ declare global {
       >;
     }
   }
-
-  interface window {
-    crypto: any;
-  }
 }
 
 declare module 'video.js' {

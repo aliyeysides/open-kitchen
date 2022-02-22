@@ -6,10 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
-import AuthorizedApolloProvider from './components/AuthorizedApolloProvider';
+import AuthorizedApolloProvider from './components/providers/AuthorizedApolloProvider';
 
 import AppRoutes from './AppRoutes';
-import AuthProvider from './components/AuthProvider';
+import AuthProvider from './components/providers/AuthProvider';
 
 console.log('REACT NODE ENV', process.env.NODE_ENV);
 

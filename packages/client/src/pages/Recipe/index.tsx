@@ -7,10 +7,12 @@ import { GET_RECIPE } from './constants';
 import Box from '@mui/material/Box';
 import VerticalTabs, {
   VerticalTabsOnClick,
-} from '../../components/VerticalTabs';
-import YouTubePlayer, { YouTubeOptions } from '../../components/YouTubePlayer';
+} from '../../components/navigation/VerticalTabs';
+import YouTubePlayer, {
+  YouTubeOptions,
+} from '../../components/display/YouTubePlayer';
 import { useRef, useState } from 'react';
-import IngredientsTable from '../../components/IngredientsTable';
+import IngredientsTable from '../../components/display/IngredientsTable';
 
 function ytattrs(start: number): YouTubeOptions {
   return {

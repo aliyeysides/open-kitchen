@@ -1,7 +1,7 @@
-import IngredientAutocomplete from '../../components/IngredientAutocomplete';
+import IngredientAutocomplete from '../../components/inputs/IngredientAutocomplete';
 import Stack from '@mui/material/Stack';
 import { FDCFood } from '../../types';
-import NativeSelectDropdown from '../../components/NativeSelect';
+import NativeSelectDropdown from '../../components/inputs/NativeSelect';
 interface IngredientsTableProps {
   ingredients: FDCFood[];
 }

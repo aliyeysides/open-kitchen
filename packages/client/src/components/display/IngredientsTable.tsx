@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { RecipeIngredient } from '../types';
+import { RecipeIngredient } from '../../types';
 import IngredientLineItem from './IngredientLineItem';
 
 export interface IngredientsTableProps {

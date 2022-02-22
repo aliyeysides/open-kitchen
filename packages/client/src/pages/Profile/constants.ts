@@ -1,18 +1,18 @@
 import { gql } from '@apollo/client';
 
-export const GET_NICKNAME = gql`
+export const GET_USER_NAME = gql`
   query {
-    nickname {
-      nickname
+    user {
+      name
     }
   }
 `;
 
-export const SET_NICKNAME = gql`
-  mutation editNickname($new_nickname: String!) {
-    editNickname(editNickname: { nickname: $new_nickname }) {
+export const SET_USER_NAME = gql`
+  mutation editUserName($new_name: String!) {
+    editUserName(editUserName: { name: $new_name }) {
       _id
-      nickname
+      name
       user_id
     }
   }

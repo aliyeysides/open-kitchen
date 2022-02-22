@@ -1,31 +1,32 @@
 import { useMutation, useQuery } from '@apollo/client';
 import 'video.js/dist/video-js.css';
-import { GET_NICKNAME, SET_NICKNAME } from './constants';
+import { GET_USER_NAME, SET_USER_NAME } from './constants';
 import Box from '@mui/material/Box';
 import { Button, TextField } from '@mui/material';
-import LogoutButton from '../../components/LogoutButton';
+import LogoutButton from '../../components/inputs/LogoutButton';
 
 import { useState } from 'react';
 export default function ProfilePage() {
-  const [setNickname, { loading, error, data }] = useMutation(SET_NICKNAME);
+  const [setName, { loading, error, data }] = useMutation(SET_USER_NAME);
   const [textValue, setTextValue] = useState<string>('');
   const onTextChange = (e: any) => setTextValue(e.target.value);
 
   const handleSubmit = () => {
-    setNickname({ variables: { new_nickname: textValue } });
+    setName({ variables: { new_name: textValue } });
   };
 
   // need to find a way to populate the button value after the graphql loaded
   // useEffect(() => {
   //   setTextValue(getNicknameData?.nickname.nickname);
   // });
+
   const {
     loading: getNameLoading,
-    error: getNicknameError,
-    data: getNicknameData,
-  } = useQuery(GET_NICKNAME);
+    error: getNameError,
+    data: getNameData,
+  } = useQuery(GET_USER_NAME);
   if (getNameLoading) return <div>"Loading..."</div>;
-  if (getNicknameError) return <div>`Error! ${getNicknameError.message}`</div>;
+  if (getNameError) return <div>`Error! ${getNameError.message}`</div>;
 
   // need to figure out how to call setTextValue when the data is received
   return (
@@ -33,7 +34,7 @@ export default function ProfilePage() {
       <Box>
         <TextField
           id="outlined-basic"
-          label="Your nickname"
+          label="Your name"
           variant="outlined"
           onChange={onTextChange}
           value={textValue}

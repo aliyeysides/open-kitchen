@@ -4,7 +4,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 
 @ObjectType()
 @Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
-export class Nickname {
+export class User {
   @Field(() => String)
   _id: MongooseSchema.Types.ObjectId;
 
@@ -14,7 +14,7 @@ export class Nickname {
 
   @Field(() => String)
   @Prop()
-  nickname: string;
+  name: string;
 
   @Field(() => GraphQLTimestamp)
   @Prop()
@@ -25,5 +25,5 @@ export class Nickname {
   updated_at: Date;
 }
 
-export type NicknameDocument = Nickname & Document;
-export const NicknameSchema = SchemaFactory.createForClass(Nickname);
+export type UserDocument = User & Document;
+export const UserSchema = SchemaFactory.createForClass(User);

@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useLazyQuery, gql } from '@apollo/client';
 import debounce from 'lodash/debounce';
 import uniqBy from 'lodash/unionBy';
-import { FDCFood } from '../types';
+import { FDCFood } from '../../types';
 
 const SEARCH_FOOD = gql`
   query Search($query: String!) {

@@ -24,7 +24,7 @@ import { VideoUploadsModule } from './video-uploads/video-uploads.module';
 import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
 import { ThumbnailsModule } from './thumbnails/thumbnails.module';
 import { GrocersModule } from './grocers/grocers.module';
-import { UserModule } from './profile/user.module';
+import { UserModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
 // MIDDLEWARE

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './entity/user.entity';
-import { UserResolver } from './user.resolver';
-import { UserService } from './user.service';
+import { UserResolver } from './users.resolver';
+import { UserService } from './users.service';
 
 @Module({
   imports: [

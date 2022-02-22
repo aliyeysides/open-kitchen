@@ -1,25 +1,24 @@
 import { NotFoundException, Req, Res, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlGuard } from '../auth/gql.guard';
-import { CurrentUser } from '../auth/user.decorator';
+import { JwtPayload } from '../auth/jwt-payload.decorator';
 import { User } from './entity/user.entity';
 import { ChangeNameInput } from './dto/change-name.input';
-import { UserService } from './user.service';
+import { UserService } from './users.service';
 
 @Resolver()
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Query(() => User)
+  @Query(() => User, { name: 'user' })
   @UseGuards(GqlGuard)
-  async getUser(@CurrentUser() user) {
-    console.log('user:::::', user);
-    const u = await this.userService.getByUserID(user.sub);
+  async getUser(@JwtPayload() payload) {
+    const user = await this.userService.getByUserID(payload.sub);
 
-    if (!u) {
+    if (!user) {
       throw new NotFoundException();
     }
-    return u;
+    return user;
   }
 
   @Mutation(() => User)
@@ -33,14 +32,14 @@ export class UserResolver {
   @UseGuards(GqlGuard)
   async editUser(
     @Args('editUser') editUserInput: ChangeNameInput,
-    @CurrentUser() user,
+    @JwtPayload() payload,
   ) {
-    const u = await this.userService.getByUserID(user.sub);
+    const user = await this.userService.getByUserID(payload.sub);
     // if no user, create new one
-    if (!u) {
-      return this.userService.createUser(user.sub, editUserInput.name);
+    if (!user) {
+      return this.userService.createUser(payload.sub, editUserInput.name);
     } else {
-      return this.userService.editUser(user._id, user.sub, editUserInput);
+      return this.userService.editUser(payload._id, payload.sub, editUserInput);
     }
   }
 }

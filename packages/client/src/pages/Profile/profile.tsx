@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from '@apollo/client';
-import 'video.js/dist/video-js.css';
 import { GET_USER_NAME, SET_USER_NAME } from './constants';
 import Box from '@mui/material/Box';
-import { Button, TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import LogoutButton from '../../components/inputs/LogoutButton';
 
 import { useState } from 'react';

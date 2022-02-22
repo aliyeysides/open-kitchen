@@ -125,7 +125,7 @@ type Query {
   thumbnail(id: Int!): Thumbnail!
   grocers: [Grocer!]!
   grocer(id: Int!): Grocer!
-  getUser: User!
+  user: User!
 }
 
 type Mutation {

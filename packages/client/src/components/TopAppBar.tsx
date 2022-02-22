@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,13 +9,13 @@ import KitchenIcon from '@mui/icons-material/Kitchen';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import LoginButton from './LoginButton';
-import { Auth0Context } from './Auth0Context';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function TopAppBar() {
   const [version, setVersion] = useState<string>('');
-  const { isLoading, user, isAuthenticated } = useContext(Auth0Context);
+  const { isLoading, isAuthenticated, user } = useAuth0<{ name: string }>();
 
   useEffect(() => {
     async function fetchVersion() {
@@ -56,7 +56,7 @@ export default function TopAppBar() {
                 <LoginButton />
               ) : (
                 <Button onClick={openProfile}>
-                  <Avatar>{user.name.slice(0, 2)}</Avatar>
+                  <Avatar>{user?.name.slice(0, 2)}</Avatar>
                 </Button>
               ))}
           </Box>

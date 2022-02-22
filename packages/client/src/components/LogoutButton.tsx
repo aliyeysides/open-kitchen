@@ -1,12 +1,12 @@
-import { Button } from '@mui/material';
-import { useContext } from 'react';
-import { Auth0Context } from './Auth0Context';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function LogoutButton() {
-  const { logout } = useContext(Auth0Context);
+  const { logout } = useAuth0();
 
   return (
-    <div>
+    <Box data-testid="logout-button">
       <Button
         variant="contained"
         color="error"
@@ -18,7 +18,7 @@ function LogoutButton() {
       >
         Log Out
       </Button>
-    </div>
+    </Box>
   );
 }
 

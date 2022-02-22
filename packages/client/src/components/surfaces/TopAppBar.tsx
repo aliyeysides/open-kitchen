@@ -10,8 +10,9 @@ import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import LoginButton from '../inputs/LoginButton';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import { useAuth0 } from '@auth0/auth0-react';
+import LogoutButton from '../inputs/LogoutButton';
 
 export default function TopAppBar() {
   const [version, setVersion] = useState<string>('');
@@ -55,9 +56,10 @@ export default function TopAppBar() {
               (!isAuthenticated ? (
                 <LoginButton />
               ) : (
-                <Button onClick={openProfile}>
-                  <Avatar>{user?.name.slice(0, 2)}</Avatar>
-                </Button>
+                // <Button onClick={openProfile}>
+                //   <Avatar>{user?.name.slice(0, 2)}</Avatar>
+                // </Button>
+                <LogoutButton />
               ))}
           </Box>
         </Toolbar>

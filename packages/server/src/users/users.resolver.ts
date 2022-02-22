@@ -15,6 +15,7 @@ export class UserResolver {
   async getUser(@JwtPayload() payload) {
     const user = await this.userService.getByUserID(payload.sub);
 
+    console.log('payload::::::', payload, 'user::::::::', user);
     if (!user) {
       throw new NotFoundException();
     }

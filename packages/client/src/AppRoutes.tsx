@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import App from './App';
-import ProfilePage from './pages/Profile/profile';
 import RecipePage from './pages/Recipe';
 import RecipesPage from './pages/Recipes';
 
@@ -11,8 +10,6 @@ export default function AppRoutes(): JSX.Element {
         <Route path="/" element={<RecipesPage />} />
         <Route path="recipes" element={<RecipesPage />} />
         <Route path="recipes/:recipeId" element={<RecipePage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        {/* <Route path="recipes/upload" element={<RecipeUploadPage />} /> */}
       </Route>
     </Routes>
   );

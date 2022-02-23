@@ -29,8 +29,4 @@ export class UserService {
     );
     return editedUser;
   }
-  //   async deleteNickname(postID): Promise<any> {
-  //     const deleteNick = await this.userModel.findByIdAndDelete(postID);
-  //     return deleteNick;
-  //   }
 }

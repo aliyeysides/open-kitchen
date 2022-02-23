@@ -15,20 +15,17 @@ export class UserResolver {
   async getUser(@JwtPayload() payload) {
     const user = await this.userService.getByUserID(payload.sub);
 
-    console.log('payload::::::', payload, 'user::::::::', user);
     if (!user) {
       throw new NotFoundException();
-      // this.userService.createUser(payload);
     }
     return user;
   }
 
-  @Mutation(() => User)
-  @UseGuards(GqlGuard)
-  createUser(@Args('user_id') user_id: string, @JwtPayload() payload) {
-    console.log('HELLOOOOOO PAYLOAD:::::', payload);
-    return;
-  }
+  // @Mutation(() => User)
+  // @UseGuards(GqlGuard)
+  // createUser(@Args('user_id') user_id: string, @JwtPayload() payload) {
+  //   return;
+  // }
 
   @Mutation(() => User)
   @UseGuards(GqlGuard)

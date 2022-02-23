@@ -6,7 +6,7 @@ import {
   CREATE_THUMBNAIL,
 } from './constants';
 import { omit } from 'lodash';
-import HorizontalLinearStepper from '../../components/HorizontalLinearStepper';
+import HorizontalLinearStepper from '../../components/navigation/HorizontalLinearStepper';
 import { FDCFood, RecipeStep as RS } from '../../types';
 import AddRecipeDetailsForm, {
   AddRecipeDetailsFormProps,

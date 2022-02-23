@@ -4,7 +4,10 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 import axios from 'axios';
+import { Crypto } from '@peculiar/webcrypto';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 
 jest.mock('axios');
+
+global.crypto = new Crypto();

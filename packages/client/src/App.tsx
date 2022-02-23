@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import TopAppBar from './components/TopAppBar';
+import TopAppBar from './components/surfaces/TopAppBar';
 
 function App() {
   return (

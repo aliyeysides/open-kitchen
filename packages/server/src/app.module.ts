@@ -2,9 +2,9 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
-import { APP_FILTER } from '@nestjs/core';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import config from './config/config';
 
 require('dotenv').config({
   path: '../../.env',
@@ -24,11 +24,11 @@ import { VideoUploadsModule } from './video-uploads/video-uploads.module';
 import { AwsS3UploaderModule } from './aws-s3-uploader/aws-s3-uploader.module';
 import { ThumbnailsModule } from './thumbnails/thumbnails.module';
 import { GrocersModule } from './grocers/grocers.module';
-import config from './config/config';
+import { UserModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
-import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 const isDev =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
@@ -46,6 +46,7 @@ const dbUri = isDev ? devDb : stagingDb;
       isGlobal: true,
       load: [config],
     }),
+    AuthModule,
     MongooseModule.forRoot(dbUri),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -64,14 +65,15 @@ const dbUri = isDev ? devDb : stagingDb;
     AwsS3UploaderModule,
     ThumbnailsModule,
     GrocersModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    {
-      provide: APP_FILTER,
-      useClass: AllExceptionsFilter,
-    },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: AllExceptionsFilter,
+    // },
   ],
   exports: [MongooseModule],
 })

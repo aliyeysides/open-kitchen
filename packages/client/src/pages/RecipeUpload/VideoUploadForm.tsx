@@ -1,4 +1,4 @@
-import UploadButton from '../../components/UploadButton';
+import UploadButton from '../../components/inputs/UploadButton';
 
 interface VideoUploadFormProps {
   onChange: ({

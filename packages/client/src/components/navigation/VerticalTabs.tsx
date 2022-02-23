@@ -4,10 +4,10 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { ReactNode, SyntheticEvent, useState } from 'react';
-import { Recipe, RecipeStep } from '../types';
+import { Recipe, RecipeStep } from '../../types';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import IngredientLineItem from './IngredientLineItem';
+import IngredientLineItem from '../display/IngredientLineItem';
 interface TabPanelProps {
   children: ReactNode;
   index: number;

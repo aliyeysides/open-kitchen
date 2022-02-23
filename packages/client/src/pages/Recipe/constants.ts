@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_RECIPE = gql`
-  query Recipe($id: String!) {
+  query GetRecipe($id: String!) {
     recipe(id: $id) {
       _id
       ytId

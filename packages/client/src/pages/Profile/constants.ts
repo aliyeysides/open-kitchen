@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_USER_NAME = gql`
-  query {
+  query GetUserName {
     user {
       name
     }

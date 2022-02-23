@@ -3,7 +3,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlGuard } from '../auth/gql.guard';
 import { JwtPayload } from '../auth/jwt-payload.decorator';
 import { User } from './entity/user.entity';
-import { ChangeNameInput } from './dto/change-name.input';
+import { ChangeUserInput } from './dto/change-user.input';
 import { UserService } from './users.service';
 
 @Resolver()
@@ -18,21 +18,22 @@ export class UserResolver {
     console.log('payload::::::', payload, 'user::::::::', user);
     if (!user) {
       throw new NotFoundException();
+      // this.userService.createUser(payload);
     }
     return user;
   }
 
   @Mutation(() => User)
   @UseGuards(GqlGuard)
-  createUser() {
-    console.log('HELLOOOOOO:::::');
+  createUser(@Args('user_id') user_id: string, @JwtPayload() payload) {
+    console.log('HELLOOOOOO PAYLOAD:::::', payload);
     return;
   }
 
   @Mutation(() => User)
   @UseGuards(GqlGuard)
   async editUser(
-    @Args('editUser') editUserInput: ChangeNameInput,
+    @Args('editUser') editUserInput: ChangeUserInput,
     @JwtPayload() payload,
   ) {
     const user = await this.userService.getByUserID(payload.sub);

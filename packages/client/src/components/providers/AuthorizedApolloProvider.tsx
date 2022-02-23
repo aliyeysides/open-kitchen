@@ -1,10 +1,16 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/link-context';
 import { createUploadLink } from 'apollo-upload-client';
-import { FC } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+import { ReactNode } from 'react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 
-const AuthorizedApolloProvider: FC = ({ children }) => {
+export interface AuthorizedApolloProviderProps {
+  children: ReactNode | ReactNode[];
+}
+
+const AuthorizedApolloProvider = ({
+  children,
+}: AuthorizedApolloProviderProps): JSX.Element => {
   const { getAccessTokenSilently } = useAuth0();
 
   const httpLink = createUploadLink({
@@ -12,12 +18,16 @@ const AuthorizedApolloProvider: FC = ({ children }) => {
   });
 
   const authLink = setContext(async () => {
-    const token = await getAccessTokenSilently();
-    return {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+    try {
+      const token = await getAccessTokenSilently();
+      return {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    } catch (e) {
+      throw new Error('Error: Failed getting auth0 access token');
+    }
   });
 
   const apolloClient = new ApolloClient({
@@ -29,4 +39,4 @@ const AuthorizedApolloProvider: FC = ({ children }) => {
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 };
 
-export default AuthorizedApolloProvider;
+export default withAuthenticationRequired(AuthorizedApolloProvider);

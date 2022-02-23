@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ChangeNameInput } from './dto/change-name.input';
+import { ChangeUserInput } from './dto/change-user.input';
 import { User, UserDocument } from './entity/user.entity';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class UserService {
     return user;
   }
 
-  async editUser(id, userID, changeUserInput: ChangeNameInput): Promise<User> {
+  async editUser(id, userID, changeUserInput: ChangeUserInput): Promise<User> {
     const editedUser = await this.userModel.findByIdAndUpdate(
       id,
       { userID: userID, name: changeUserInput.name },

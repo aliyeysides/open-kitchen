@@ -4,13 +4,19 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
-import LinkButton from './LinkButton';
+import LinkButton from '../inputs/LinkButton';
 import KitchenIcon from '@mui/icons-material/Kitchen';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
+import LoginButton from '../inputs/LoginButton';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import { useAuth0 } from '@auth0/auth0-react';
+import LogoutButton from '../inputs/LogoutButton';
 
 export default function TopAppBar() {
   const [version, setVersion] = useState<string>('');
+  const { isLoading, isAuthenticated, user } = useAuth0<{ name: string }>();
 
   useEffect(() => {
     async function fetchVersion() {
@@ -23,6 +29,13 @@ export default function TopAppBar() {
     }
     fetchVersion();
   }, []);
+
+  const navigate = useNavigate();
+
+  const openProfile = () => {
+    let path = `/profile`;
+    navigate(path);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -39,7 +52,15 @@ export default function TopAppBar() {
             Upload
           </LinkButton>
           <Box sx={{ marginLeft: 2 }}>
-            <Avatar>A</Avatar>
+            {!isLoading &&
+              (!isAuthenticated ? (
+                <LoginButton />
+              ) : (
+                // <Button onClick={openProfile}>
+                //   <Avatar>{user?.name.slice(0, 2)}</Avatar>
+                // </Button>
+                <LogoutButton />
+              ))}
           </Box>
         </Toolbar>
       </AppBar>

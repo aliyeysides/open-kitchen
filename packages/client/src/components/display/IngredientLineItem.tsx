@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { RecipeIngredient } from '../types';
+import { RecipeIngredient } from '../../types';
 
 export interface IngredientLintItemProps extends JSX.IntrinsicAttributes {
   ingredient: RecipeIngredient;

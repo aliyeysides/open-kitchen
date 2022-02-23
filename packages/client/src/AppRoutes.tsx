@@ -10,7 +10,6 @@ export default function AppRoutes(): JSX.Element {
         <Route path="/" element={<RecipesPage />} />
         <Route path="recipes" element={<RecipesPage />} />
         <Route path="recipes/:recipeId" element={<RecipePage />} />
-        {/* <Route path="recipes/upload" element={<RecipeUploadPage />} /> */}
       </Route>
     </Routes>
   );

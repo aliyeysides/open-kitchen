@@ -86,6 +86,14 @@ type Grocer {
   updated_at: Timestamp!
 }
 
+type User {
+  _id: String!
+  user_id: String!
+  name: String!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
 input RecipeIngredientInput {
   name: String!
 
@@ -117,6 +125,7 @@ type Query {
   thumbnail(id: Int!): Thumbnail!
   grocers: [Grocer!]!
   grocer(id: Int!): Grocer!
+  user: User!
 }
 
 type Mutation {
@@ -136,6 +145,7 @@ type Mutation {
   createGrocer(createGrocerInput: CreateGrocerInput!): Grocer!
   updateGrocer(updateGrocerInput: UpdateGrocerInput!): Grocer!
   removeGrocer(id: Int!): Grocer!
+  editUser(editUser: ChangeUserInput!): User!
 }
 
 input CreateFlavorInput {
@@ -189,4 +199,8 @@ input UpdateGrocerInput {
   zip_code: Int
   address: String
   id: Int!
+}
+
+input ChangeUserInput {
+  name: String!
 }

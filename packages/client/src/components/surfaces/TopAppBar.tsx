@@ -9,14 +9,19 @@ import KitchenIcon from '@mui/icons-material/Kitchen';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import LoginButton from '../inputs/LoginButton';
-import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { useAuth0 } from '@auth0/auth0-react';
-import LogoutButton from '../inputs/LogoutButton';
+import { User } from '../../types';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function TopAppBar() {
   const [version, setVersion] = useState<string>('');
-  const { isLoading, isAuthenticated, user } = useAuth0<{ name: string }>();
+  const { isLoading, isAuthenticated, user, logout } = useAuth0<User>();
+
+  const settings = ['Log out'];
 
   useEffect(() => {
     async function fetchVersion() {
@@ -30,11 +35,19 @@ export default function TopAppBar() {
     fetchVersion();
   }, []);
 
-  const navigate = useNavigate();
+  const handleUploadClick = () => {
+    console.log('hello');
+  };
 
-  const openProfile = () => {
-    let path = `/profile`;
-    navigate(path);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const handleOpenUserMenu = (event: any) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = (setting: string) => {
+    if (setting === 'Log out') logout();
+    setAnchorElUser(null);
   };
 
   return (
@@ -48,18 +61,52 @@ export default function TopAppBar() {
             </LinkButton>
             <Chip label={`v${version}`} color="primary" variant="outlined" />
           </Typography>
-          <LinkButton color="primary" variant="outlined" to="/recipes/upload">
+          <Button
+            onClick={handleUploadClick}
+            color="primary"
+            variant="outlined"
+          >
             Upload
-          </LinkButton>
+          </Button>
           <Box sx={{ marginLeft: 2 }}>
             {!isLoading &&
               (!isAuthenticated ? (
                 <LoginButton />
               ) : (
-                // <Button onClick={openProfile}>
-                //   <Avatar>{user?.name.slice(0, 2)}</Avatar>
-                // </Button>
-                <LogoutButton />
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt={user?.name} src={user?.picture}>
+                        <Avatar alt={user?.name} src="fallback"></Avatar>
+                      </Avatar>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem
+                        key={setting}
+                        onClick={(e) => handleCloseUserMenu(setting)}
+                      >
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
               ))}
           </Box>
         </Toolbar>

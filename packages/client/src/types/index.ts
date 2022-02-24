@@ -45,3 +45,8 @@ export interface FDCFood {
   description: string;
   dataType: FDCDataType;
 }
+
+export interface User {
+  name: string;
+  picture: string;
+}

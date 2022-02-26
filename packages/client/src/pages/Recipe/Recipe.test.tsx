@@ -69,4 +69,18 @@ describe('Recipe Page', () => {
       expect(step).toBeInTheDocument();
     });
   });
+
+  // test('renders the correct step', async () => {
+  //   render(
+  //     <MemoryRouter initialEntries={[path]}>
+  //       <MockedProvider mocks={[mockQuery]} addTypename={false}>
+  //         <AppRoutes />
+  //       </MockedProvider>
+  //     </MemoryRouter>,
+  //   );
+
+  //   await waitFor(() => {
+  //     expect();
+  //   });
+  // });
 });

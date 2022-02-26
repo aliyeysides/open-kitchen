@@ -98,12 +98,18 @@ function StepTabPanels({ steps, value }: StepTabPanelsProps) {
 export type VerticalTabsOnClick = (step: RecipeStep, e: SyntheticEvent) => void;
 
 interface VerticalTabsProps {
-  recipe: Recipe;
+  steps: RecipeStep[];
   onClick: VerticalTabsOnClick;
+  initValue?: number;
 }
 
-export default function VerticalTabs({ recipe, onClick }: VerticalTabsProps) {
-  const [value, setValue] = useState(0);
+export default function VerticalTabs({
+  steps,
+  onClick,
+  initValue,
+}: VerticalTabsProps) {
+  const [value, setValue] = useState(initValue ? initValue : 0);
+  console.log('hi::::', value);
 
   const handleChange = (e: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -130,9 +136,9 @@ export default function VerticalTabs({ recipe, onClick }: VerticalTabsProps) {
           overflow: 'visible',
         }}
       >
-        {renderStepTabs(recipe.steps, onClick)}
+        {renderStepTabs(steps, onClick)}
       </Tabs>
-      <StepTabPanels value={value} steps={recipe.steps} />
+      <StepTabPanels value={value} steps={steps} />
     </Box>
   );
 }

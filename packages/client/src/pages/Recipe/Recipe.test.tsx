@@ -138,7 +138,7 @@ describe('Recipe Page', () => {
     expect(getStepTabIndex(99999, steps)).toBe(2);
   });
 
-  test('clicking on recipe step tab should call video player controls with correct startTime', async () => {
+  test('renders correct step panel on tab click', async () => {
     render(
       <MemoryRouter initialEntries={[path]}>
         <MockedProvider mocks={[mockQuery]} addTypename={false}>

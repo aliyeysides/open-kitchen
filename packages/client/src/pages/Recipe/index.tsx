@@ -28,7 +28,7 @@ function ytattrs(): YouTubeOptions {
 
 type Step = Pick<RecipeStep, 'order' | 'startTime'>;
 
-function getStepTabIndex(currentTime: number, data: Step[]): number {
+export function getStepTabIndex(currentTime: number, data: Step[]): number {
   return data.reduce((acc, val) => {
     if (currentTime >= val.startTime) {
       return val.order - 1;
@@ -39,10 +39,8 @@ function getStepTabIndex(currentTime: number, data: Step[]): number {
 
 export default function RecipePage() {
   const params = useParams();
-
   const [currentStep, setCurrentStep] = useState<number>(0);
-
-  const playerRef = useRef<any>(null);
+  const playerRef = useRef<any>({ seekTo: (time: number) => time });
 
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
@@ -52,7 +50,7 @@ export default function RecipePage() {
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      if (playerRef.current) {
+      if (playerRef.current.getCurrentTime) {
         const time = await playerRef.current.getCurrentTime();
         if (data) {
           setCurrentStep(getStepTabIndex(time, data.recipe.steps));

@@ -1,6 +1,13 @@
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { getStepTabIndex } from '.';
 import AppRoutes from '../../AppRoutes';
 import { GET_RECIPE } from './constants';
 
@@ -98,6 +105,51 @@ describe('Recipe Page', () => {
     await waitFor(() => {
       const steps = screen.getAllByRole('tab');
       expect(steps.length).toBe(3);
+    });
+  });
+
+  test('getStepTabIndex should return the correct recipe tab index based on given video playtime', () => {
+    const steps = [
+      {
+        order: 1,
+        instruction: 'Cut the cheese',
+        ingredients: [{ name: 'cheese', quantity: 2, unit: 'unit' }],
+        startTime: 10,
+      },
+      {
+        order: 2,
+        instruction: 'Dice the tomato',
+        ingredients: [{ name: 'tomato', quantity: 2, unit: 'unit' }],
+        startTime: 20,
+      },
+      {
+        order: 3,
+        instruction: 'Toss the salad',
+        ingredients: [{ name: 'salad', quantity: 2, unit: 'unit' }],
+        startTime: 30,
+      },
+    ];
+
+    expect(getStepTabIndex(0, steps)).toBe(0);
+    expect(getStepTabIndex(10, steps)).toBe(0);
+    expect(getStepTabIndex(19, steps)).toBe(0);
+    expect(getStepTabIndex(20, steps)).toBe(1);
+    expect(getStepTabIndex(29, steps)).toBe(1);
+    expect(getStepTabIndex(99999, steps)).toBe(2);
+  });
+
+  test('clicking on recipe step tab should call video player controls with correct startTime', async () => {
+    render(
+      <MemoryRouter initialEntries={[path]}>
+        <MockedProvider mocks={[mockQuery]} addTypename={false}>
+          <AppRoutes />
+        </MockedProvider>
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText(2));
+      expect(screen.getByText(/dice the tomato/i)).toBeInTheDocument();
     });
   });
 });

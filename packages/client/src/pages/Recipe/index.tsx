@@ -9,18 +9,18 @@ import VerticalTabs, {
   VerticalTabsOnClick,
 } from '../../components/navigation/VerticalTabs';
 import YouTubePlayer, {
+  PlayerEvent,
   YouTubeOptions,
 } from '../../components/display/YouTubePlayer';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import IngredientsTable from '../../components/display/IngredientsTable';
 
-function ytattrs(start: number): YouTubeOptions {
+function ytattrs(): YouTubeOptions {
   return {
     width: '1024',
     height: '576',
     playerVars: {
       autoplay: 1,
-      start,
       origin: 'http://localhost:3000',
     },
   };
@@ -28,13 +28,19 @@ function ytattrs(start: number): YouTubeOptions {
 
 type Step = Pick<RecipeStep, 'order' | 'startTime'>;
 
+export function getStepTabIndex(currentTime: number, data: Step[]): number {
+  return data.reduce((acc, val) => {
+    if (currentTime >= val.startTime) {
+      return val.order - 1;
+    }
+    return acc;
+  }, 0);
+}
+
 export default function RecipePage() {
   const params = useParams();
-  const [currentStep, setCurrentStep] = useState<Step>({
-    order: 0,
-    startTime: 0,
-  });
-  const playerRef = useRef<any>({});
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const playerRef = useRef<any>({ seekTo: (time: number) => time });
 
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
@@ -42,15 +48,24 @@ export default function RecipePage() {
     },
   });
 
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (playerRef.current.getCurrentTime) {
+        const time = await playerRef.current.getCurrentTime();
+        if (data) {
+          setCurrentStep(getStepTabIndex(time, data.recipe.steps));
+        }
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [playerRef, data]);
+
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
-    setCurrentStep({
-      order: step.order,
-      startTime: step.startTime,
-    });
     playerRef.current.seekTo(step.startTime);
   };
 
-  const handleReady = (e: any) => {
+  const handleOnReady = async (e: PlayerEvent) => {
     playerRef.current = e.target;
   };
 
@@ -71,8 +86,8 @@ export default function RecipePage() {
           {recipe.ytId ? (
             <YouTubePlayer
               videoId={recipe.ytId}
-              opts={{ ...ytattrs(currentStep.startTime) }}
-              onReady={handleReady}
+              opts={{ ...ytattrs() }}
+              onReady={handleOnReady}
             />
           ) : null}
           <Box
@@ -105,7 +120,11 @@ export default function RecipePage() {
             />
           </Box>
         </Box>
-        <VerticalTabs onClick={handleTabClick} recipe={recipe} />
+        <VerticalTabs
+          onClick={handleTabClick}
+          steps={recipe.steps}
+          current={currentStep}
+        />
       </Box>
     </main>
   );

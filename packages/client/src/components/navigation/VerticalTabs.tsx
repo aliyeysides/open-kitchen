@@ -3,8 +3,8 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { ReactNode, SyntheticEvent, useState } from 'react';
-import { Recipe, RecipeStep } from '../../types';
+import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
+import { RecipeStep } from '../../types';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import IngredientLineItem from '../display/IngredientLineItem';
@@ -97,19 +97,22 @@ function StepTabPanels({ steps, value }: StepTabPanelsProps) {
 
 export type VerticalTabsOnClick = (step: RecipeStep, e: SyntheticEvent) => void;
 
-interface VerticalTabsProps {
+export interface VerticalTabsProps {
   steps: RecipeStep[];
   onClick: VerticalTabsOnClick;
-  initValue?: number;
+  current?: number;
 }
 
 export default function VerticalTabs({
   steps,
   onClick,
-  initValue,
+  current,
 }: VerticalTabsProps) {
-  const [value, setValue] = useState(initValue ? initValue : 0);
-  console.log('hi::::', value);
+  const [value, setValue] = useState<number>(0);
+
+  useEffect(() => {
+    current && setValue(current);
+  }, [current]);
 
   const handleChange = (e: SyntheticEvent, newValue: number) => {
     setValue(newValue);

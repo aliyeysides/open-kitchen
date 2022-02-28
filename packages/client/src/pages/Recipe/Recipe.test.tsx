@@ -27,11 +27,27 @@ describe('Recipe Page', () => {
               {
                 order: 1,
                 instruction: 'Cut the cheese',
-                ingredients: [{ name: 'tomato', quantity: 2, unit: 'unit' }],
+                ingredients: [{ name: 'cheese', quantity: 2, unit: 'unit' }],
                 startTime: 10,
               },
+              {
+                order: 2,
+                instruction: 'Dice the tomato',
+                ingredients: [{ name: 'tomato', quantity: 2, unit: 'unit' }],
+                startTime: 20,
+              },
+              {
+                order: 3,
+                instruction: 'Toss the salad',
+                ingredients: [{ name: 'salad', quantity: 2, unit: 'unit' }],
+                startTime: 30,
+              },
             ],
-            ingredients: [{ name: 'tomato', quantity: 2, unit: 'unit' }],
+            ingredients: [
+              { name: 'tomato', quantity: 2, unit: 'unit' },
+              { name: 'cheese', quantity: 2, unit: 'unit' },
+              { name: 'salad', quantity: 2, unit: 'unit' },
+            ],
           },
         },
       },
@@ -55,7 +71,7 @@ describe('Recipe Page', () => {
     });
   });
 
-  test('renders the first recipe step', async () => {
+  test('renders the first recipe step panel by default', async () => {
     render(
       <MemoryRouter initialEntries={[path]}>
         <MockedProvider mocks={[mockQuery]} addTypename={false}>
@@ -70,17 +86,18 @@ describe('Recipe Page', () => {
     });
   });
 
-  // test('renders the correct step', async () => {
-  //   render(
-  //     <MemoryRouter initialEntries={[path]}>
-  //       <MockedProvider mocks={[mockQuery]} addTypename={false}>
-  //         <AppRoutes />
-  //       </MockedProvider>
-  //     </MemoryRouter>,
-  //   );
+  test('renders all recipe step tabs', async () => {
+    render(
+      <MemoryRouter initialEntries={[path]}>
+        <MockedProvider mocks={[mockQuery]} addTypename={false}>
+          <AppRoutes />
+        </MockedProvider>
+      </MemoryRouter>,
+    );
 
-  //   await waitFor(() => {
-  //     expect();
-  //   });
-  // });
+    await waitFor(() => {
+      const steps = screen.getAllByRole('tab');
+      expect(steps.length).toBe(3);
+    });
+  });
 });

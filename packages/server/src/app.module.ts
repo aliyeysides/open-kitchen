@@ -1,4 +1,9 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -53,7 +58,7 @@ const dbUri = isDev ? devDb : stagingDb;
       buildSchemaOptions: {
         fieldMiddleware: [LoggerMiddleware],
       },
-      // playground: isDev ? true : false, // TODO: uncommment when going live
+      playground: isDev ? true : false,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../client', 'build'),
@@ -68,19 +73,9 @@ const dbUri = isDev ? devDb : stagingDb;
     UserModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    // {
-    //   provide: APP_FILTER,
-    //   useClass: AllExceptionsFilter,
-    // },
-  ],
+  providers: [AppService],
   exports: [MongooseModule],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    // consumer
-    //   .apply(LoggerMiddleware)
-    //   .forRoutes({ path: '*', method: RequestMethod.ALL });
-  }
+  configure(consumer: MiddlewareConsumer) {}
 }

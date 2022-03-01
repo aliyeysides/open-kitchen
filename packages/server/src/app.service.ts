@@ -7,4 +7,8 @@ export class AppService {
   getVersion(): string {
     return process.env.npm_package_version;
   }
+
+  createCheckoutSession(): string {
+    return 'hello world';
+  }
 }

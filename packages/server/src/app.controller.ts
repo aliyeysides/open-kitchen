@@ -13,4 +13,9 @@ export class AppController {
   getVersion(): string {
     return this.appService.getVersion();
   }
+
+  @Get('/create-checkout-session')
+  checkout() {
+    return this.appService.createCheckoutSession();
+  }
 }

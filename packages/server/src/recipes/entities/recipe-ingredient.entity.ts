@@ -25,6 +25,12 @@ export class RecipeIngredient {
   })
   quantity: number;
 
+  @Field(() => String, {
+    description: 'stripe price id',
+    nullable: false,
+  })
+  price_id?: string;
+
   // @Field(() => String, {
   //   description: 'data type used to source foods by FDC API',
   // })

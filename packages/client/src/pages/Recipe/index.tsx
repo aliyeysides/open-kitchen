@@ -14,6 +14,7 @@ import YouTubePlayer, {
 } from '../../components/display/YouTubePlayer';
 import { useEffect, useRef, useState } from 'react';
 import IngredientsTable from '../../components/display/IngredientsTable';
+import axios from 'axios';
 
 function ytattrs(): YouTubeOptions {
   return {
@@ -69,6 +70,13 @@ export default function RecipePage() {
     playerRef.current = e.target;
   };
 
+  const handleOrder = async () => {
+    await axios
+      .post('/create-checkout-session')
+      .then((url) => (window.location = url.data))
+      .catch((e) => console.log('error:::::::', e));
+  };
+
   if (loading) return <div>"Loading..."</div>;
   if (error) return <div>`Error! ${error.message}`</div>;
 
@@ -109,9 +117,18 @@ export default function RecipePage() {
           >
             <Box sx={{ ml: 3 }}>$5 per serving</Box>
             <Box sx={{ ml: 3 }}>700 Calories per serving</Box>
-            <Button sx={{ ml: 3 }} color="primary" variant="contained">
+            {/* <form action="/create-checkout-session" method="POST"> */}
+            <Button
+              onClick={handleOrder}
+              id="checkout-button"
+              type="submit"
+              sx={{ ml: 3 }}
+              color="primary"
+              variant="contained"
+            >
               Order Now
             </Button>
+            {/* </form> */}
           </Box>
           <Box>
             <IngredientsTable

@@ -40,6 +40,9 @@ type RecipeIngredient {
 
   """count of units of measurement (quantity x tablespoon)"""
   quantity: Int!
+
+  """stripe price id"""
+  price_id: String!
 }
 
 type RecipeStep {
@@ -102,6 +105,9 @@ input RecipeIngredientInput {
 
   """count of units of measurement (quantity x tablespoon)"""
   quantity: Int!
+
+  """stripe price id"""
+  price_id: String!
 }
 
 input RecipeStepInput {

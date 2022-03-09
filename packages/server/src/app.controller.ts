@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, Req, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -14,8 +14,8 @@ export class AppController {
     return this.appService.getVersion();
   }
 
-  @Get('/create-checkout-session')
-  checkout() {
-    return this.appService.createCheckoutSession();
+  @Post('/create-checkout-session')
+  async checkout(@Req() req, @Res() res) {
+    return await this.appService.createCheckoutSession(req, res);
   }
 }

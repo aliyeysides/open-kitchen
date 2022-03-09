@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
+import { RecipesService } from './recipes/recipes.service';
 
 dotenv.config();
 
@@ -11,15 +12,23 @@ const DOMAIN =
 
 @Injectable()
 export class AppService {
-  constructor() {}
+  constructor(private readonly recipesService: RecipesService) {}
 
   getVersion(): string {
     return process.env.npm_package_version;
   }
 
   async createCheckoutSession(req, res): Promise<void> {
+    console.log('BODY::::::', req.body);
+    const recipeId = req.body.recipeId;
+    const recipe = await this.recipesService.findOne(recipeId);
     const session = await stripe.checkout.sessions.create({
-      line_items: [], // TODO: get price ids
+      line_items: [
+        ...recipe.ingredients.map(({ quantity, price_id }) => ({
+          quantity,
+          price: price_id,
+        })),
+      ],
       mode: 'payment',
       success_url: `${DOMAIN}/checkout/success`,
       cancel_url: `${DOMAIN}/checkout/cancel`,

@@ -29,6 +29,7 @@ import { AuthModule } from './auth/auth.module';
 
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
+import { RecipesService } from './recipes/recipes.service';
 
 const isDev =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
@@ -68,7 +69,7 @@ const dbUri = isDev ? devDb : stagingDb;
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, RecipesService],
   exports: [MongooseModule],
 })
 export class AppModule implements NestModule {

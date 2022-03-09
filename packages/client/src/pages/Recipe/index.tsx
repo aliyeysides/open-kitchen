@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import { useParams } from 'react-router-dom';
 import 'video.js/dist/video-js.css';
 import { Recipe, RecipeStep } from '../../types';
@@ -72,8 +72,12 @@ export default function RecipePage() {
 
   const handleOrder = async () => {
     await axios
-      .post('/create-checkout-session')
-      .then((url) => (window.location = url.data))
+      .post('/create-checkout-session', { recipeId: params.recipeId })
+      .then((url) => {
+        params.recipeId &&
+          localStorage.setItem('last-viewed-recipe', params.recipeId);
+        window.location = url.data;
+      })
       .catch((e) => console.log('error:::::::', e));
   };
 
@@ -117,7 +121,6 @@ export default function RecipePage() {
           >
             <Box sx={{ ml: 3 }}>$5 per serving</Box>
             <Box sx={{ ml: 3 }}>700 Calories per serving</Box>
-            {/* <form action="/create-checkout-session" method="POST"> */}
             <Button
               onClick={handleOrder}
               id="checkout-button"
@@ -128,7 +131,6 @@ export default function RecipePage() {
             >
               Order Now
             </Button>
-            {/* </form> */}
           </Box>
           <Box>
             <IngredientsTable

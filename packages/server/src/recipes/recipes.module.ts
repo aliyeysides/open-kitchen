@@ -15,5 +15,8 @@ import seed from '../seeder/data/recipes';
     }),
   ],
   providers: [RecipesResolver, RecipesService],
+  exports: [
+    MongooseModule.forFeature([{ name: Recipe.name, schema: RecipeSchema }]),
+  ],
 })
 export class RecipesModule {}

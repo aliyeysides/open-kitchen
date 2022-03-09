@@ -1,9 +1,16 @@
+import { Navigate, Route, Routes } from 'react-router-dom';
+
 export default function CancelPage() {
   return (
-    <section>
-      <p>
-        Forgot to add something to your cart? Shop around then come back to pay!
-      </p>
-    </section>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Navigate
+            to={`/recipes/${localStorage.getItem('last-viewed-recipe')}`}
+          />
+        }
+      />
+    </Routes>
   );
 }

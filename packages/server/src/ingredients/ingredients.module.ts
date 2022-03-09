@@ -6,6 +6,7 @@ import { Ingredient, IngredientSchema } from './entities/ingredient.entity';
 import { SeederModule } from '../seeder/seeder.module';
 import seed from '../seeder/data/ingredients';
 
+const isDev = process.env.NODE_ENV === 'development';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -13,7 +14,7 @@ import seed from '../seeder/data/ingredients';
     ]),
     SeederModule.forFeature({
       name: Ingredient.name,
-      load: seed,
+      load: isDev ? seed : [],
     }),
   ],
   providers: [IngredientsResolver, IngredientsService],

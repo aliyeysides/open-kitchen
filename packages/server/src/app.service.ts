@@ -19,7 +19,6 @@ export class AppService {
   }
 
   async createCheckoutSession(req, res): Promise<void> {
-    console.log('BODY::::::', req.body);
     const recipeId = req.body.recipeId;
     const recipe = await this.recipesService.findOne(recipeId);
     const session = await stripe.checkout.sessions.create({
@@ -32,6 +31,7 @@ export class AppService {
       mode: 'payment',
       success_url: `${DOMAIN}/checkout/success`,
       cancel_url: `${DOMAIN}/checkout/cancel`,
+      shipping_address_collection: { allowed_countries: ['US'] },
     });
 
     res.send(session.url);

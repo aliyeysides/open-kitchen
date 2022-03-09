@@ -7,12 +7,13 @@ import { Flavor, FlavorSchema } from './entities/flavor.entity';
 import { SeederModule } from '../seeder/seeder.module';
 import seed from '../seeder/data/flavors';
 
+const isDev = process.env.NODE_ENV === 'development';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Flavor.name, schema: FlavorSchema }]),
     SeederModule.forFeature({
       name: Flavor.name,
-      load: seed,
+      load: isDev ? seed : [],
     }),
   ],
   providers: [FlavorsResolver, FlavorsService],

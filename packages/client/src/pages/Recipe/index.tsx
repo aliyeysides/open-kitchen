@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 import { useParams } from 'react-router-dom';
 import 'video.js/dist/video-js.css';
 import { Recipe, RecipeStep } from '../../types';
@@ -41,6 +42,7 @@ export function getStepTabIndex(currentTime: number, data: Step[]): number {
 export default function RecipePage() {
   const params = useParams();
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [orderModal, setOrderModal] = useState<boolean>(false);
   const playerRef = useRef<any>({ seekTo: (time: number) => time });
 
   const { loading, error, data } = useQuery(GET_RECIPE, {
@@ -71,12 +73,14 @@ export default function RecipePage() {
   };
 
   const handleOrder = async () => {
+    // setOrderModal(true);
     await axios
       .post('/create-checkout-session', { recipeId: params.recipeId })
-      .then((url) => {
+      .then(({ data }) => {
         params.recipeId &&
           localStorage.setItem('last-viewed-recipe', params.recipeId);
-        window.location = url.data;
+        console.log('url:::', data.url, 'items::::', data.items);
+        window.location = data.url;
       })
       .catch((e) => console.log('error:::::::', e));
   };
@@ -131,6 +135,9 @@ export default function RecipePage() {
             >
               Order Now
             </Button>
+            <Modal open={orderModal} onClose={() => setOrderModal(false)}>
+              <Box>hello world</Box>
+            </Modal>
           </Box>
           <Box>
             <IngredientsTable

@@ -26,6 +26,7 @@ export class AppService {
         ...recipe.ingredients.map(({ quantity, price_id }) => ({
           quantity,
           price: price_id,
+          adjustable_quantity: { enabled: true },
         })),
       ],
       mode: 'payment',
@@ -34,6 +35,13 @@ export class AppService {
       shipping_address_collection: { allowed_countries: ['US'] },
     });
 
-    res.send(session.url);
+    await stripe.checkout.sessions.listLineItems(
+      session.id,
+      function (err, lineItems) {
+        if (err) console.log('error::::::::', err);
+        console.log('lineitems:::::::::', lineItems.data);
+        res.send({ url: session.url, items: lineItems.data });
+      },
+    );
   }
 }

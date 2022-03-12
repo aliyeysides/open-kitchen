@@ -7,7 +7,9 @@ import NotAuthorized from '../../pages/NotAuthorized';
 export interface WithRoleBasedRedirectOptions {
   role: string;
 }
-const roleClaimType = `${process.env.REACT_APP_ROLE_CLAIM_URL};
+
+const roleClaimType = `${process.env.REACT_APP_ROLE_CLAIM_URL}`;
+
 export const withRoleBasedRedirect =
   <P extends object>(
     Component: ComponentType<P>,
@@ -19,14 +21,15 @@ export const withRoleBasedRedirect =
     useEffect(() => {
       async function getRoles(): Promise<Array<string>> {
         const claims = await getIdTokenClaims();
-        if (claims === undefined)
-        {
-            return [];
+        console.log('CLAIMS::::', claims);
+        if (claims === undefined) {
+          return [];
         }
         return claims[roleClaimType] || [];
       }
       async function checkRoles(role: string) {
         const roles = await getRoles();
+        console.log('ROLES::::', roles);
         const isAuthorized = roles.includes(role);
         if (!isAuthorized) {
           console.log('NOT AUTHORIZED;');
@@ -37,6 +40,6 @@ export const withRoleBasedRedirect =
       checkRoles(options.role);
     }, [getIdTokenClaims]);
     // add a nicer page or component to tell people they don't have access to the beta-test
-    // or <Redirect to='/not-authorized'/, but then you need a component 
-    return isAuthorized ? <Component {...props} /> : <NotAuthorized/>;
+    // or <Redirect to='/not-authorized'/, but then you need a component
+    return isAuthorized ? <Component {...props} /> : <NotAuthorized />;
   };

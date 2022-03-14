@@ -21,7 +21,6 @@ export const withRoleBasedRedirect =
     useEffect(() => {
       async function getRoles(): Promise<Array<string>> {
         const claims = await getIdTokenClaims();
-        console.log('CLAIMS::::', claims);
         if (claims === undefined) {
           return [];
         }
@@ -31,7 +30,6 @@ export const withRoleBasedRedirect =
 
       async function checkRoles(role: string) {
         const roles = await getRoles();
-        console.log('ROLES::::', roles);
         const isAuthorized = roles.includes(role);
         if (!isAuthorized) {
           console.log('NOT AUTHORIZED;');
@@ -39,7 +37,6 @@ export const withRoleBasedRedirect =
           setIsAuthorized(true);
         }
       }
-      console.log('OPTIONS::::', options);
       checkRoles(options.role);
     }, [getIdTokenClaims]);
 

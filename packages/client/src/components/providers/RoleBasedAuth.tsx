@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { ComponentType, useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Navigate } from 'react-router-dom';
 import NotAuthorized from '../../pages/NotAuthorized';
 
 export interface WithRoleBasedRedirectOptions {
@@ -24,7 +23,6 @@ export const withRoleBasedRedirect =
         if (claims === undefined) {
           return [];
         }
-        console.log('returning claims:', claims[roleClaimType]);
         return claims[roleClaimType] || [];
       }
 

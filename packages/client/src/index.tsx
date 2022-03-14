@@ -15,10 +15,11 @@ import NotAuthorized from './pages/NotAuthorized';
 import mixpanel from 'mixpanel-browser';
 
 dotenv.config();
-
-const mixpanelSecret = process.env.REACT_APP_MIXPANEL_SECRET as string;
 const isDev = process.env.NODE_ENV === 'development';
-mixpanel.init(mixpanelSecret, { debug: isDev });
+const mixpanelSecret = process.env.REACT_APP_MIXPANEL_SECRET as string;
+
+mixpanel.init(mixpanelSecret);
+
 if (isDev) {
   mixpanel.opt_out_tracking();
 }

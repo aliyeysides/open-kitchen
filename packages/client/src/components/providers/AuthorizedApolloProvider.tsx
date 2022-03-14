@@ -39,6 +39,6 @@ const AuthorizedApolloProvider = ({
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 };
 
-
-
-export default withAuthenticationRequired(withRoleBasedRedirect(AuthorizedApolloProvider, {role:'menu-admin'}));
+export default withAuthenticationRequired(
+  withRoleBasedRedirect(AuthorizedApolloProvider, { role: 'beta-user' }),
+);

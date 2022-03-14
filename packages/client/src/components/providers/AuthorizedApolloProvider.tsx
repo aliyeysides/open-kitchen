@@ -3,7 +3,7 @@ import { setContext } from '@apollo/link-context';
 import { createUploadLink } from 'apollo-upload-client';
 import { ReactNode } from 'react';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
-import { withRoleBasedRedirect } from './RoleBasedAuth';
+// import { withRoleBasedRedirect } from './RoleBasedAuth';
 
 export interface AuthorizedApolloProviderProps {
   children: ReactNode | ReactNode[];
@@ -39,6 +39,4 @@ const AuthorizedApolloProvider = ({
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 };
 
-export default withAuthenticationRequired(
-  withRoleBasedRedirect(AuthorizedApolloProvider, { role: 'beta-user' }),
-);
+export default withAuthenticationRequired(AuthorizedApolloProvider);

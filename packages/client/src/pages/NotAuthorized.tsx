@@ -1,12 +1,9 @@
-import { Box } from "@mui/system";
+import { Box } from '@mui/system';
 
 export default function NotAuthorized() {
-
-    return (
-        <>
-          <Box>
-            Contact Ali@gmail.com to get access!
-          </Box>
-        </>
-      );
+  return (
+    <>
+      <Box>Contact ali.yeysides@gmail.com to get access!</Box>
+    </>
+  );
 }

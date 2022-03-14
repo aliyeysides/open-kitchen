@@ -29,6 +29,9 @@ import { AuthModule } from './auth/auth.module';
 
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
+import { PermissionsGuard } from './auth/permissions.guard';
+import { APP_GUARD } from '@nestjs/core';
+import { GqlGuard } from './auth/gql.guard';
 
 const isDev =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
@@ -68,13 +71,7 @@ const dbUri = isDev ? devDb : stagingDb;
     UserModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    // {
-    //   provide: APP_FILTER,
-    //   useClass: AllExceptionsFilter,
-    // },
-  ],
+  providers: [AppService],
   exports: [MongooseModule],
 })
 export class AppModule implements NestModule {

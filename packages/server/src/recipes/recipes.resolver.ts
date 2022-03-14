@@ -3,6 +3,7 @@ import { RecipesService } from './recipes.service';
 import { Recipe } from './entities/recipe.entity';
 import { CreateRecipeInput } from './dto/create-recipe.input';
 import { UpdateRecipeInput } from './dto/update-recipe.input';
+import { Permissions } from '../auth/permissions.decorator';
 
 @Resolver(() => Recipe)
 export class RecipesResolver {

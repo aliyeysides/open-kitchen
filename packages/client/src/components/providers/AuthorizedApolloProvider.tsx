@@ -17,7 +17,11 @@ const AuthorizedApolloProvider = ({
 
   if (user) {
     mixpanel.identify(user.email);
-    mixpanel.people.set({ Plan: 'beta-user', Email: user.email });
+    mixpanel.people.set({
+      Plan: 'beta-user',
+      Email: user.email,
+      Name: user.name,
+    });
     mixpanel.track('User Authenticated', { ...user });
   }
 

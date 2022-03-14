@@ -19,6 +19,9 @@ dotenv.config();
 const mixpanelSecret = process.env.REACT_APP_MIXPANEL_SECRET as string;
 const isDev = process.env.NODE_ENV === 'development';
 mixpanel.init(mixpanelSecret, { debug: isDev });
+if (isDev) {
+  mixpanel.opt_out_tracking();
+}
 
 ReactDOM.render(
   <React.StrictMode>

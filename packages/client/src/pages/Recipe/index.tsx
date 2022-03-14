@@ -63,11 +63,16 @@ export default function RecipePage() {
   }, [playerRef, data]);
 
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
+    mixpanel.track('Vertical Tab Clicked', { step, ...data });
     playerRef.current.seekTo(step.startTime);
   };
 
   const handleOnReady = async (e: PlayerEvent) => {
     playerRef.current = e.target;
+  };
+
+  const handleOrder = () => {
+    mixpanel.track('Order Clicked', { ...data });
   };
 
   if (loading) return <div>"Loading..."</div>;
@@ -110,7 +115,12 @@ export default function RecipePage() {
           >
             <Box sx={{ ml: 3 }}>$5 per serving</Box>
             <Box sx={{ ml: 3 }}>700 Calories per serving</Box>
-            <Button sx={{ ml: 3 }} color="primary" variant="contained">
+            <Button
+              onClick={handleOrder}
+              sx={{ ml: 3 }}
+              color="primary"
+              variant="contained"
+            >
               Order Now
             </Button>
           </Box>

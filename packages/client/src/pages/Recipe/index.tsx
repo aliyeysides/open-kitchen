@@ -14,6 +14,7 @@ import YouTubePlayer, {
 } from '../../components/display/YouTubePlayer';
 import { useEffect, useRef, useState } from 'react';
 import IngredientsTable from '../../components/display/IngredientsTable';
+import mixpanel from 'mixpanel-browser';
 
 function ytattrs(): YouTubeOptions {
   return {

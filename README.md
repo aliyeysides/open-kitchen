@@ -30,14 +30,33 @@ lerna bootstrap
 You will need to create a `.env` file in the root directory with the following values provided:
 
 ```.env
+# root .env
 PORT=8080
 NODE_ENV=development
+
 AWS_ACCESS_KEY_ID=XXX
 AWS_SECRET_ACCESS_KEY=XXX
 AWS_S3_VIDEO_UPLOAD_DESTINATION_BUCKET_NAME=foyir-videos
 AWS_S3_THUMBNAIL_UPLOAD_DESTINATION_BUCKET_NAME=foyir-thumbnails
+
 FDC_API_KEY=XXX
 FDC_API_URL=https://api.nal.usda.gov/fdc
+
+AUTH0_DOMAIN=https://openkitchen.us.auth0.com/
+AUTH0_AUDIENCE=https://api.openkitchen.io/
+
+STRIPE_KEY=XXX
+
+# client .env
+PORT=3000
+
+REACT_APP_AUTH0_CLIENT_ID=XXX
+REACT_APP_AUTH0_DOMAIN=https://openkitchen.us.auth0.com
+REACT_APP_AUTH0_AUDIENCE=https://api.openkitchen.io/
+REACT_APP_ROLE_CLAIM_URL=https://openkitchen-api.demo.com
+REACT_APP_AUTH0_REDIRECT_URI=http://localhost:3000
+
+REACT_APP_STRIPE_KEY=XXX
 ```
 
 ## Local Development

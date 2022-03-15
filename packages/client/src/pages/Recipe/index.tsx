@@ -16,6 +16,7 @@ import YouTubePlayer, {
 import { useEffect, useRef, useState } from 'react';
 import IngredientsTable from '../../components/display/IngredientsTable';
 import axios from 'axios';
+import mixpanel from 'mixpanel-browser';
 
 function ytattrs(): YouTubeOptions {
   return {
@@ -65,13 +66,14 @@ export default function RecipePage() {
   }, [playerRef, data]);
 
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
+    mixpanel.track('Vertical Tab Clicked', { step, ...data });
     playerRef.current.seekTo(step.startTime);
   };
 
   const handleOnReady = async (e: PlayerEvent) => {
     playerRef.current = e.target;
   };
-
+  
   const handleOrder = async () => {
     // setOrderModal(true);
     await axios
@@ -82,7 +84,8 @@ export default function RecipePage() {
         console.log('url:::', data.url, 'items::::', data.items);
         window.location = data.url;
       })
-      .catch((e) => console.log('error:::::::', e));
+      .catch((e) => console.log('error:::::::', e))
+      .finally(() => mixpanel.track('Order Clicked', { ...data }));
   };
 
   if (loading) return <div>"Loading..."</div>;

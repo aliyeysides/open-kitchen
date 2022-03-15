@@ -12,10 +12,18 @@ import AppRoutes from './AppRoutes';
 import AuthProvider from './components/providers/AuthProvider';
 import * as dotenv from 'dotenv';
 import NotAuthorized from './pages/NotAuthorized';
+import mixpanel from 'mixpanel-browser';
 
 dotenv.config();
+const isDev =
+  process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+const mixpanelSecret = process.env.REACT_APP_MIXPANEL_SECRET as string;
 
-console.log('REACT NODE ENV', process.env.NODE_ENV);
+mixpanel.init(mixpanelSecret);
+
+if (isDev) {
+  mixpanel.opt_out_tracking();
+}
 
 ReactDOM.render(
   <React.StrictMode>

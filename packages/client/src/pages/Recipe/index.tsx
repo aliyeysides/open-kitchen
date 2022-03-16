@@ -13,10 +13,18 @@ import YouTubePlayer, {
   PlayerEvent,
   YouTubeOptions,
 } from '../../components/display/YouTubePlayer';
+import CheckoutForm from '../../pages/Checkout';
 import { useEffect, useRef, useState } from 'react';
 import IngredientsTable from '../../components/display/IngredientsTable';
 import axios from 'axios';
 import mixpanel from 'mixpanel-browser';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePublicKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY as string;
+const stripePromise = loadStripe(stripePublicKey);
 
 function ytattrs(): YouTubeOptions {
   return {
@@ -42,6 +50,7 @@ export function getStepTabIndex(currentTime: number, data: Step[]): number {
 
 export default function RecipePage() {
   const params = useParams();
+  const [clientSecret, setClientSecret] = useState('');
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [orderModal, setOrderModal] = useState<boolean>(false);
   const playerRef = useRef<any>({ seekTo: (time: number) => time });
@@ -65,6 +74,31 @@ export default function RecipePage() {
     return () => clearInterval(interval);
   }, [playerRef, data]);
 
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+    async function createPaymentIntent() {
+      await axios
+        .post('/create-payment-intent', { recipeId: params.recipeId })
+        .then(({ data }) => {
+          params.recipeId &&
+            localStorage.setItem('last-viewed-recipe', params.recipeId);
+          setClientSecret(data.clientSecret);
+        })
+        .catch((e) => console.log('error:::::::', e))
+        .finally(() => mixpanel.track('Order Clicked', { ...data }));
+    }
+    createPaymentIntent();
+  }, []);
+
+  const appearance = {
+    theme: 'stripe' as 'stripe',
+  };
+
+  const options = {
+    clientSecret,
+    appearance,
+  };
+
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
     mixpanel.track('Vertical Tab Clicked', { step, ...data });
     playerRef.current.seekTo(step.startTime);
@@ -73,19 +107,18 @@ export default function RecipePage() {
   const handleOnReady = async (e: PlayerEvent) => {
     playerRef.current = e.target;
   };
-  
+
   const handleOrder = async () => {
-    // setOrderModal(true);
-    await axios
-      .post('/create-checkout-session', { recipeId: params.recipeId })
-      .then(({ data }) => {
-        params.recipeId &&
-          localStorage.setItem('last-viewed-recipe', params.recipeId);
-        console.log('url:::', data.url, 'items::::', data.items);
-        window.location = data.url;
-      })
-      .catch((e) => console.log('error:::::::', e))
-      .finally(() => mixpanel.track('Order Clicked', { ...data }));
+    setOrderModal(true);
+    // await axios
+    //   .post('/create-payment-intent', { recipeId: params.recipeId })
+    //   .then(({ data }) => {
+    //     params.recipeId &&
+    //       localStorage.setItem('last-viewed-recipe', params.recipeId);
+    //     setClientSecret(data.clientSecret);
+    //   })
+    //   .catch((e) => console.log('error:::::::', e))
+    //   .finally(() => mixpanel.track('Order Clicked', { ...data }));
   };
 
   if (loading) return <div>"Loading..."</div>;
@@ -138,9 +171,13 @@ export default function RecipePage() {
             >
               Order Now
             </Button>
-            <Modal open={orderModal} onClose={() => setOrderModal(false)}>
-              <Box>hello world</Box>
-            </Modal>
+            {clientSecret && (
+              <Elements options={options} stripe={stripePromise}>
+                <Modal open={orderModal} onClose={() => setOrderModal(false)}>
+                  <CheckoutForm />
+                </Modal>
+              </Elements>
+            )}
           </Box>
           <Box>
             <IngredientsTable

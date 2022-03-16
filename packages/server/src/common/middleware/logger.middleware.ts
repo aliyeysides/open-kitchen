@@ -5,7 +5,6 @@ const loggerMiddleware: FieldMiddleware = async (
   next: NextFn,
 ) => {
   const value = await next();
-  console.log('logger:', value);
   return value;
 };
 

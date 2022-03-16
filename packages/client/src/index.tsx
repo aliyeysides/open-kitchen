@@ -15,10 +15,11 @@ import NotAuthorized from './pages/NotAuthorized';
 import mixpanel from 'mixpanel-browser';
 
 dotenv.config();
+
 const isDev =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
-const mixpanelSecret = process.env.REACT_APP_MIXPANEL_SECRET as string;
 
+const mixpanelSecret = process.env.REACT_APP_MIXPANEL_SECRET as string;
 mixpanel.init(mixpanelSecret);
 
 if (isDev) {

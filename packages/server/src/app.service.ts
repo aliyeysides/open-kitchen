@@ -5,10 +5,6 @@ import { RecipesService } from './recipes/recipes.service';
 dotenv.config();
 
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-const DOMAIN =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'http://localhost:8080';
 
 @Injectable()
 export class AppService {
@@ -18,30 +14,23 @@ export class AppService {
     return process.env.npm_package_version;
   }
 
-  async createCheckoutSession(req, res): Promise<void> {
-    const recipeId = req.body.recipeId;
-    const recipe = await this.recipesService.findOne(recipeId);
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        ...recipe.ingredients.map(({ quantity, price_id }) => ({
-          quantity,
-          price: price_id,
-          adjustable_quantity: { enabled: true },
-        })),
-      ],
-      mode: 'payment',
-      success_url: `${DOMAIN}/checkout/success`,
-      cancel_url: `${DOMAIN}/checkout/cancel`,
-      shipping_address_collection: { allowed_countries: ['US'] },
+  calculateOrderAmount(id: string): number {
+    return 100;
+  }
+
+  async createPaymentIntent(req, res): Promise<void> {
+    const { recipeId } = req.body;
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: this.calculateOrderAmount(recipeId),
+      currency: 'usd',
+      automatic_payment_methods: {
+        enabled: true,
+      },
     });
 
-    await stripe.checkout.sessions.listLineItems(
-      session.id,
-      function (err, lineItems) {
-        if (err) console.log('error::::::::', err);
-        console.log('lineitems:::::::::', lineItems.data);
-        res.send({ url: session.url, items: lineItems.data });
-      },
-    );
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
   }
 }

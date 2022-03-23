@@ -16,9 +16,11 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import CustomDialog from '../feedback/CustomDialog';
 
 export default function TopAppBar() {
   const [version, setVersion] = useState<string>('');
+  const [dialog, setDialog] = useState<boolean>(false);
   const { isLoading, isAuthenticated, user, logout } = useAuth0<User>();
 
   const settings = ['Log out'];
@@ -36,7 +38,7 @@ export default function TopAppBar() {
   }, []);
 
   const handleUploadClick = () => {
-    console.log('hello');
+    setDialog(!dialog);
   };
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -68,6 +70,18 @@ export default function TopAppBar() {
           >
             Upload
           </Button>
+          <CustomDialog
+            open={dialog}
+            onClose={handleUploadClick}
+            title="Coming soon!"
+            btnLabel="Back"
+          >
+            <Typography gutterBottom>
+              This feature is not yet available but is coming soon! If you have
+              any questions or feedback, please reach out to us:
+              ali.yeysides@gmail.com
+            </Typography>
+          </CustomDialog>
           <Box sx={{ marginLeft: 2 }}>
             {!isLoading &&
               (!isAuthenticated ? (

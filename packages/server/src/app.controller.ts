@@ -15,7 +15,12 @@ export class AppController {
   }
 
   @Post('/create-payment-intent')
-  async checkout(@Req() req, @Res() res) {
+  async checkoutIntent(@Req() req, @Res() res) {
     return await this.appService.createPaymentIntent(req, res);
+  }
+
+  @Post('/create-checkout-session')
+  async checkoutSession(@Req() req, @Res() res) {
+    return await this.appService.createCheckoutSession(req, res);
   }
 }

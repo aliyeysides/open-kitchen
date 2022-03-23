@@ -6,10 +6,14 @@ import Box from '@mui/material/Box';
 import styles from './recipes.module.scss';
 import { Typography } from '@mui/material';
 
-function ViewAllLink() {
+export interface ViewAllLinkProps {
+  tag: string;
+}
+
+function ViewAllLink({ tag }: ViewAllLinkProps) {
   return (
     <Box className={styles.view_all_link}>
-      <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
+      <Link className={styles.view_all_link_text} to={`/recipes/tags/${tag}`}>
         view all
       </Link>
     </Box>
@@ -58,7 +62,7 @@ export default function RecipesPage() {
             #trending
           </Link>
         </Typography>
-        <ViewAllLink />
+        <ViewAllLink tag="trending" />
       </Box>
       {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
 
@@ -71,7 +75,7 @@ export default function RecipesPage() {
             #vegan
           </Link>
         </Typography>
-        <ViewAllLink />
+        <ViewAllLink tag="vegan" />
       </Box>
       {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
 
@@ -84,7 +88,7 @@ export default function RecipesPage() {
             #onepot
           </Link>
         </Typography>
-        <ViewAllLink />
+        <ViewAllLink tag="onepot" />
       </Box>
       {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
     </main>

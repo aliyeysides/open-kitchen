@@ -4,6 +4,7 @@ import CancelPage from './pages/Checkout/Cancel';
 import SuccessPage from './pages/Checkout/Success';
 import RecipePage from './pages/Recipe';
 import RecipesPage from './pages/Recipes';
+import TagPage from './pages/Tag';
 
 export default function AppRoutes(): JSX.Element {
   return (
@@ -12,6 +13,7 @@ export default function AppRoutes(): JSX.Element {
         <Route path="/" element={<RecipesPage />} />
         <Route path="recipes" element={<RecipesPage />} />
         <Route path="recipes/:recipeId" element={<RecipePage />} />
+        <Route path="recipes/tags/:tag" element={<TagPage />} />
         <Route path="checkout/success" element={<SuccessPage />} />
         <Route path="checkout/cancel" element={<CancelPage />} />
       </Route>

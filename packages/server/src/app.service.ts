@@ -6,6 +6,11 @@ dotenv.config();
 
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
+const DOMAIN =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'http://localhost:8080';
+
 @Injectable()
 export class AppService {
   constructor(private readonly recipesService: RecipesService) {}
@@ -32,5 +37,28 @@ export class AppService {
     res.send({
       clientSecret: paymentIntent.client_secret,
     });
+  }
+
+  async createCheckoutSession(req, res): Promise<void> {
+    const { items } = req.body;
+    console.log('ITEMS:::::', items);
+
+    const prices = await stripe.prices.list();
+    console.log('PRICES:::::', prices);
+
+    const item_prices = prices.data.map(({ id }) => ({
+      price: id,
+      quantity: 1,
+    }));
+    console.log('ITEMS PRICES::::', item_prices);
+
+    const session = await stripe.checkout.sessions.create({
+      line_items: item_prices,
+      mode: 'payment',
+      success_url: `${DOMAIN}/checkout/success`,
+      cancel_url: `${DOMAIN}/checkout/cancel`,
+    });
+
+    res.send(session.url);
   }
 }

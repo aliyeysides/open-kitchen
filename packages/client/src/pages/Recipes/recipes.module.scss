@@ -4,7 +4,6 @@ $bright_teal: #1de9b6;
   max-height: 300px;
   display: flex;
   justify-content: space-around;
-  // border: 1px solid white;
   margin-bottom: 50px;
 }
 
@@ -12,8 +11,6 @@ $bright_teal: #1de9b6;
   height: auto;
   width: 100%;
   max-height: 100%;
-  // border: 1px solid $bright_teal;
-  // margin-right: 5px;
 
   .thumbnail {
     width: 100%;

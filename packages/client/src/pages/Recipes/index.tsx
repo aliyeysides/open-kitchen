@@ -36,7 +36,7 @@ function RecipesSection({ recipes }: RecipesSectionProps) {
             sx={{ cursor: 'pointer' }}
           >
             <Link to={`/recipes/${recipe._id}`}>
-              <img src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`} />
+              <img alt="" src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`} />
             </Link>
           </Box>
         ))}

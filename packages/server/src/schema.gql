@@ -28,6 +28,7 @@ type Recipe {
   name: String!
   steps: [RecipeStep!]!
   ingredients: [RecipeIngredient!]!
+  tags: [String!]!
   created_at: Timestamp!
   updated_at: Timestamp!
 }
@@ -125,6 +126,7 @@ type Query {
   search(query: String!): [FDCFood!]!
   recipes: [Recipe!]!
   recipe(id: String!): Recipe!
+  recipesByTag(tag: String!): [Recipe!]!
   videoUploads: [VideoUpload!]!
   videoUpload(id: String!): VideoUpload!
   thumbnails: [Thumbnail!]!

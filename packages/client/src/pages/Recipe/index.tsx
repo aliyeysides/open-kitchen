@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
 import Button from '@mui/material/Button';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import 'video.js/dist/video-js.css';
-import { Recipe, RecipeIngredient, RecipeStep } from '../../types';
+import { Recipe, RecipeStep } from '../../types';
 import { GET_RECIPE } from './constants';
 import Box from '@mui/material/Box';
 import VerticalTabs, {
@@ -18,6 +18,7 @@ import axios from 'axios';
 import mixpanel from 'mixpanel-browser';
 import { loadStripe } from '@stripe/stripe-js';
 import FullScreenDialog from '../../components/feedback/FullScreenDialog';
+import styles from './recipe.module.scss';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -125,17 +126,28 @@ export default function RecipePage() {
           <Box
             sx={{
               display: 'flex',
-              justifyContent: 'flex-end',
               alignItems: 'center',
             }}
           >
-            <Box sx={{ ml: 3 }}>$5 per serving</Box>
-            <Box sx={{ ml: 3 }}>700 Calories per serving</Box>
+            <Box>
+              {recipe.tags.length &&
+                recipe.tags.map((tag) => (
+                  <Link
+                    key={tag}
+                    className={styles.tag_link_text}
+                    to={`/recipes/tags/${tag}`}
+                  >
+                    {`#${tag}`}
+                  </Link>
+                ))}
+            </Box>
+            {/* <Box sx={{ ml: 3 }}>$5 per serving</Box>
+            <Box sx={{ ml: 3 }}>700 Calories per serving</Box> */}
             <Button
               onClick={handleOrder}
               id="checkout-button"
               type="submit"
-              sx={{ ml: 3 }}
+              sx={{ ml: 'auto' }}
               color="primary"
               variant="contained"
             >
@@ -148,7 +160,7 @@ export default function RecipePage() {
               onCheckout={handleCheckout}
             />
           </Box>
-          <Box>
+          <Box sx={{ my: 3, marginBottom: 7 }}>
             <IngredientsTable
               header="Ingredients"
               ingredients={recipe.ingredients}

@@ -6,6 +6,7 @@ export const GET_RECIPE = gql`
       _id
       ytId
       name
+      tags
       steps {
         order
         instruction

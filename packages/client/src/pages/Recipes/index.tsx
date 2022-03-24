@@ -22,13 +22,16 @@ function ViewAllLink({ tag }: ViewAllLinkProps) {
 
 interface RecipesSectionProps {
   recipes: Recipe[];
+  tag: string;
 }
 
-function RecipesSection({ recipes }: RecipesSectionProps) {
+function RecipesSection({ recipes, tag }: RecipesSectionProps) {
+  console.log('recipes:::', recipes, 'tag::::', tag);
   return (
     <Box className={styles.section_container}>
       {recipes
-        .slice(recipes.length - 4, recipes.length)
+        .slice(0, 3)
+        .filter((recipe) => recipe.tags.includes(tag))
         .map((recipe: Recipe) => (
           <Box
             className={styles.section_item}
@@ -67,7 +70,11 @@ export default function RecipesPage() {
         </Typography>
         <ViewAllLink tag="trending" />
       </Box>
-      {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <RecipesSection recipes={recipes} tag="trending" />
+      )}
 
       <Box className={styles.section_header}>
         <Typography
@@ -83,7 +90,11 @@ export default function RecipesPage() {
         </Typography>
         <ViewAllLink tag="vegan" />
       </Box>
-      {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <RecipesSection recipes={recipes} tag="vegan" />
+      )}
 
       <Box className={styles.section_header}>
         <Typography
@@ -99,7 +110,11 @@ export default function RecipesPage() {
         </Typography>
         <ViewAllLink tag="onepot" />
       </Box>
-      {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <RecipesSection recipes={recipes} tag="onepot" />
+      )}
     </main>
   );
 }

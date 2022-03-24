@@ -58,7 +58,10 @@ export default function RecipesPage() {
           sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
         >
-          <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
+          <Link
+            className={styles.view_all_link_text}
+            to={`/recipes/tags/trending`}
+          >
             #trending
           </Link>
         </Typography>
@@ -71,7 +74,10 @@ export default function RecipesPage() {
           sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
         >
-          <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
+          <Link
+            className={styles.view_all_link_text}
+            to={`/recipes/tags/vegan`}
+          >
             #vegan
           </Link>
         </Typography>
@@ -84,7 +90,10 @@ export default function RecipesPage() {
           sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
         >
-          <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
+          <Link
+            className={styles.view_all_link_text}
+            to={`/recipes/tags/onepot`}
+          >
             #onepot
           </Link>
         </Typography>

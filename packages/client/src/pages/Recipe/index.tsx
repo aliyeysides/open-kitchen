@@ -130,7 +130,7 @@ export default function RecipePage() {
             }}
           >
             <Box>
-              {recipe.tags.length &&
+              {recipe.tags.length > 0 &&
                 recipe.tags.map((tag) => (
                   <Link
                     key={tag}

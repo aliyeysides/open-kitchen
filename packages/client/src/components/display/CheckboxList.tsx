@@ -1,16 +1,10 @@
-import { useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import { Avatar, Input } from '@mui/material';
-
-export type CheckboxListItem = { name: string; quantity: number };
-export type OrderMap = {
-  [key: string]: CheckboxListItem & { checked: boolean; unit_price: number };
-};
+import { OrderItem } from '../../pages/Recipe';
 
 interface CheckboxListProps {
   items: {
@@ -20,15 +14,18 @@ interface CheckboxListProps {
     unit: string;
     image: string;
   }[];
-  onChange: (order: OrderMap) => void;
+  onChange: (newItems: OrderItem[]) => void;
 }
 
 export default function CheckboxList({ items, onChange }: CheckboxListProps) {
-  const onQuantityChange = ({ target: { value, name } }: any) => {
-    // setOrderMap({
-    //   ...orderMap,
-    //   [name]: { ...orderMap[name], quantity: +value },
-    // });
+  const handleChange = ({ target: { value, name } }: any): void => {
+    const adjustedItems = items.map((item) => {
+      if (item.name === name) {
+        return { ...item, quantity: value };
+      }
+      return item;
+    });
+    onChange(adjustedItems);
   };
 
   return (
@@ -47,13 +44,14 @@ export default function CheckboxList({ items, onChange }: CheckboxListProps) {
               </IconButton>
             }
           >
-            <ListItemIcon>
+            <ListItemIcon sx={{ textAlign: 'center' }}>
               <Input
-                sx={{ width: '50px' }}
+                sx={{ width: '40px' }}
                 name={value.name}
                 type="number"
                 value={value.quantity}
-                onChange={onQuantityChange}
+                onChange={handleChange}
+                margin="dense"
               />
             </ListItemIcon>
             <ListItemText

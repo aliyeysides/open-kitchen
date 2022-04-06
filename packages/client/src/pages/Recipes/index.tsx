@@ -26,7 +26,6 @@ interface RecipesSectionProps {
 }
 
 function RecipesSection({ recipes, tag }: RecipesSectionProps) {
-  console.log('recipes:::', recipes, 'tag::::', tag);
   return (
     <Box className={styles.section_container}>
       {recipes

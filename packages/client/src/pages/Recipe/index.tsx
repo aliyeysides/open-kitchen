@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import Button from '@mui/material/Button';
 import { Link, useParams } from 'react-router-dom';
 import 'video.js/dist/video-js.css';
-import { Recipe, RecipeIngredient, RecipeStep } from '../../types';
+import { Recipe, RecipeStep } from '../../types';
 import { GET_RECIPE } from './constants';
 import Box from '@mui/material/Box';
 import VerticalTabs, {
@@ -17,7 +17,6 @@ import IngredientsTable from '../../components/display/IngredientsTable';
 import axios from 'axios';
 import mixpanel from 'mixpanel-browser';
 import styles from './recipe.module.scss';
-import { OrderMap } from '../../components/display/CheckboxList';
 import PreCheckoutForm from '../Checkout/PreCheckoutForm';
 
 function ytattrs(): YouTubeOptions {
@@ -33,7 +32,7 @@ function ytattrs(): YouTubeOptions {
 
 type Step = Pick<RecipeStep, 'order' | 'startTime'>;
 
-export interface OrderItems {
+export interface OrderItem {
   name: string;
   quantity: number;
   unit_price: number;
@@ -59,10 +58,8 @@ export default function RecipePage() {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [orderModal, setOrderModal] = useState<boolean>(false);
   const playerRef = useRef<any>({ seekTo: (time: number) => time });
-  const [selectedItems, setSelectedItems] = useState<OrderMap>();
   const [totalCost, setTotalCost] = useState<number | null>(null);
-  const [allPrices, setAllPrices] = useState<any>();
-  const [items, setItems] = useState<OrderItems[]>([]);
+  const [items, setItems] = useState<OrderItem[]>([]);
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
       id: params.recipeId,
@@ -85,19 +82,15 @@ export default function RecipePage() {
   useEffect(() => {
     async function getIngredients() {
       const {
-        data: { items, prices, total },
+        data: { items, total },
       } = await axios.get('/get-recipe-ingredients', {
         params: { recipeId: params.recipeId },
       });
       setTotalCost(total);
-      setAllPrices(prices);
       setItems(items);
     }
     getIngredients();
-  }, [totalCost, params.recipeId]);
-
-  const getPrice = (price_id: string) =>
-    allPrices.find((price: any) => price.id === price_id).unit_price;
+  }, [params.recipeId]);
 
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
     mixpanel.track('Vertical Tab Clicked', { step, ...data });
@@ -106,21 +99,6 @@ export default function RecipePage() {
 
   const handleOnReady = async (e: PlayerEvent) => {
     playerRef.current = e.target;
-  };
-
-  const handleCheckout = async () => {
-    let items = [];
-    for (const item in selectedItems) {
-      items.push(selectedItems[item]);
-    }
-    await axios
-      .post('/create-checkout-session', { items })
-      .then((url) => (window.location = url.data))
-      .catch((e) => console.log('error:::::::', e));
-  };
-
-  const handleOrderChange = (value: OrderMap) => {
-    setSelectedItems(value);
   };
 
   const handleOrder = async () => {
@@ -176,34 +154,25 @@ export default function RecipePage() {
                   </Link>
                 ))}
             </Box>
-            <Button
-              onClick={handleOrder}
-              id="checkout-button"
-              type="submit"
-              sx={{ ml: 'auto' }}
-              color="primary"
-              variant="contained"
-            >
-              Order Now: {totalCost ? formatCurrency(totalCost) : null}
-            </Button>
-            {items && (
-              <PreCheckoutForm
-                items={items}
-                open={orderModal}
-                onClose={() => setOrderModal(false)}
-                onCheckout={handleCheckout}
-                onChange={() => handleOrderChange}
-                cost={0}
-              />
-              // <FullScreenDialog
-              //   open={orderModal}
-              //   onClose={() => setOrderModal(false)}
-              //   onCheckout={handleCheckout}
-              //   cost={totalCost}
-              // >
-              //   <CheckboxList data={orderMap} onChange={handleOrderChange} />
-              // </FullScreenDialog>
-            )}
+            {items.length ? (
+              <>
+                <Button
+                  onClick={handleOrder}
+                  id="checkout-button"
+                  type="submit"
+                  sx={{ ml: 'auto' }}
+                  color="primary"
+                  variant="contained"
+                >
+                  Order Now: {totalCost ? formatCurrency(totalCost) : null}
+                </Button>
+                <PreCheckoutForm
+                  items={items}
+                  open={orderModal}
+                  onClose={() => setOrderModal(false)}
+                />
+              </>
+            ) : null}
           </Box>
           <Box sx={{ my: 3, marginBottom: 7 }}>
             <IngredientsTable

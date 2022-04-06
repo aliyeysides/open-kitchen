@@ -42,17 +42,13 @@ export class AppService {
 
   async createCheckoutSession(req, res): Promise<void> {
     const { items } = req.body;
-    console.log('ITEMS:::::', items);
 
     const prices = await stripe.prices.list();
-    console.log('PRICES:::::', prices);
 
     const item_prices = items.map(({ price_id, quantity }) => ({
       price: price_id,
       quantity,
     }));
-
-    console.log('ITEMS PRICES::::', item_prices);
 
     const session = await stripe.checkout.sessions.create({
       line_items: item_prices,
@@ -64,6 +60,7 @@ export class AppService {
     res.send(session.url);
   }
 
+  // TODO: move this REST endpoint to GRAPHQL resolver
   async getRecipeIngredients(req, res): Promise<void> {
     const { recipeId } = req.query;
 

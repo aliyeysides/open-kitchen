@@ -40,7 +40,7 @@ export default function PreCheckoutForm({
 
   const handleCheckout = async () => {
     await axios
-      .post('/create-checkout-session', { selectedItems })
+      .post('/create-checkout-session', { items: selectedItems })
       .then((url) => (window.location = url.data))
       .catch((e) => console.log('Error creating checkout session:', e));
   };

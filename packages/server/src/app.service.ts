@@ -42,13 +42,19 @@ export class AppService {
 
   async createCheckoutSession(req, res): Promise<void> {
     const { items } = req.body;
+    console.log('items:::::', items);
 
-    const prices = await stripe.prices.list();
+    let item_prices = [];
+    for (const { id, quantity } of items) {
+      if (quantity > 0) {
+        item_prices.push({
+          price: id,
+          quantity,
+        });
+      }
+    }
 
-    const item_prices = items.map(({ price_id, quantity }) => ({
-      price: price_id,
-      quantity,
-    }));
+    console.log('item_prices:::::', item_prices);
 
     const session = await stripe.checkout.sessions.create({
       line_items: item_prices,
@@ -90,6 +96,7 @@ export class AppService {
 
     const items = prices.map((item) => {
       return {
+        id: item.id,
         name: item.product.name,
         quantity: getIngredientByPriceId(item.id).quantity,
         unit_price: item.unit_amount,
@@ -98,6 +105,6 @@ export class AppService {
       };
     });
 
-    res.send({ items, prices, total });
+    res.send({ items, total });
   }
 }

@@ -19,6 +19,7 @@ interface CheckboxListProps {
 
 export default function CheckboxList({ items, onChange }: CheckboxListProps) {
   const handleChange = ({ target: { value, name } }: any): void => {
+    if (value < 0) return;
     const adjustedItems = items.map((item) => {
       if (item.name === name) {
         return { ...item, quantity: value };
@@ -49,6 +50,9 @@ export default function CheckboxList({ items, onChange }: CheckboxListProps) {
                 sx={{ width: '40px' }}
                 name={value.name}
                 type="number"
+                inputProps={{
+                  inputprops: { min: 0 },
+                }}
                 value={value.quantity}
                 onChange={handleChange}
                 margin="dense"

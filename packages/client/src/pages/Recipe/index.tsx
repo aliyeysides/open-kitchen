@@ -90,6 +90,8 @@ export default function RecipePage() {
       setItems(items);
     }
     getIngredients();
+    const lastViewedId = params.recipeId as string;
+    localStorage.setItem('last-viewed-recipe', lastViewedId);
   }, [params.recipeId]);
 
   const handleTabClick: VerticalTabsOnClick = (step, e) => {

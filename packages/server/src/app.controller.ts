@@ -14,9 +14,9 @@ export class AppController {
     return this.appService.getVersion();
   }
 
-  @Get('/get-prices')
-  async getPrices(@Req() req, @Res() res) {
-    return await this.appService.getPrices(req, res);
+  @Get('/get-recipe-ingredients')
+  async getRecipeIngredients(@Req() req, @Res() res) {
+    return await this.appService.getRecipeIngredients(req, res);
   }
 
   @Post('/create-payment-intent')

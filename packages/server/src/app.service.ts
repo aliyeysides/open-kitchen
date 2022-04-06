@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
+import { RecipeIngredient } from './recipes/entities/recipe-ingredient.entity';
 import { RecipesService } from './recipes/recipes.service';
 
 dotenv.config();
@@ -63,12 +64,15 @@ export class AppService {
     res.send(session.url);
   }
 
-  async getPrices(req, res): Promise<void> {
+  async getRecipeIngredients(req, res): Promise<void> {
     const { recipeId } = req.query;
 
     const recipe = await this.recipesService.findOne(recipeId);
 
     const item_ids = recipe.ingredients.map((item) => item.prod_id);
+
+    const getIngredientByPriceId = (priceId: string): RecipeIngredient =>
+      recipe.ingredients.find((item) => item.price_id === priceId);
 
     const allPrices = await stripe.prices.list({
       limit: 100,
@@ -87,6 +91,16 @@ export class AppService {
       total += item.unit_amount * multiple;
     });
 
-    res.send({ prices, total });
+    const items = prices.map((item) => {
+      return {
+        name: item.product.name,
+        quantity: getIngredientByPriceId(item.id).quantity,
+        unit_price: item.unit_amount,
+        unit: getIngredientByPriceId(item.id).unit,
+        image: item.product.images[0],
+      };
+    });
+
+    res.send({ items, prices, total });
   }
 }

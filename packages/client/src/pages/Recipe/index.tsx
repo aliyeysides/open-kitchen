@@ -33,6 +33,14 @@ function ytattrs(): YouTubeOptions {
 
 type Step = Pick<RecipeStep, 'order' | 'startTime'>;
 
+export interface OrderItems {
+  name: string;
+  quantity: number;
+  unit_price: number;
+  unit: string;
+  image: string;
+}
+
 export function getStepTabIndex(currentTime: number, data: Step[]): number {
   return data.reduce((acc, val) => {
     if (currentTime >= val.startTime) {
@@ -54,6 +62,7 @@ export default function RecipePage() {
   const [selectedItems, setSelectedItems] = useState<OrderMap>();
   const [totalCost, setTotalCost] = useState<number | null>(null);
   const [allPrices, setAllPrices] = useState<any>();
+  const [items, setItems] = useState<OrderItems[]>([]);
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
       id: params.recipeId,
@@ -74,46 +83,21 @@ export default function RecipePage() {
   }, [playerRef, data]);
 
   useEffect(() => {
-    async function getAllPrices() {
+    async function getIngredients() {
       const {
-        data: { prices, total },
-      } = await axios.get('/get-prices', {
+        data: { items, prices, total },
+      } = await axios.get('/get-recipe-ingredients', {
         params: { recipeId: params.recipeId },
       });
       setTotalCost(total);
       setAllPrices(prices);
+      setItems(items);
     }
-    getAllPrices();
+    getIngredients();
   }, [totalCost, params.recipeId]);
-
-  useEffect(() => {
-    console.log('allPrices::::', allPrices);
-    if (allPrices) {
-      let total = 0;
-      allPrices.forEach((item: any) => {
-        // console.log('SELECTED::::', selectedItems);
-        // console.log('ITEM::::', item);
-        // let multiple = data.recipe.ingredients.find(
-        //   (ing: RecipeIngredient) => ing.price_id === item.id,
-        // ).quantity;
-        // total += item.unit_amount * multiple;
-      });
-      // setAdjustedCost(total);
-      // console.log('ADJUSTED TOTAL::::::', total);
-    }
-  }, [selectedItems, allPrices, data]);
 
   const getPrice = (price_id: string) =>
     allPrices.find((price: any) => price.id === price_id).unit_price;
-
-  const getOrderMap = (data: RecipeIngredient[]): OrderMap => {
-    let map: OrderMap = {};
-    data.forEach((val) => {
-      const unit_price = getPrice(val.price_id);
-      map[val.name] = { ...val, checked: true, unit_price };
-    });
-    return map;
-  };
 
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
     mixpanel.track('Vertical Tab Clicked', { step, ...data });
@@ -147,25 +131,6 @@ export default function RecipePage() {
   if (error) return <div>`Error! ${error.message}`</div>;
 
   const recipe: Recipe = data?.recipe;
-
-  const items = [
-    {
-      name: 'plum tomato',
-      quantity: 2,
-      unit_price: 200,
-      unit: 'unit',
-      image:
-        'https://files.stripe.com/links/MDB8YWNjdF8xS1lZb0lCSzdZcFlIcXgzfGZsX3Rlc3RfMEE4b2ZQM05zR0REeTg3RGU2NUpZZHd500Ngjjute8',
-    },
-    { name: 'sausage', quantity: 2, unit_price: 500, unit: 'unit', image: '' },
-    {
-      name: 'red onion',
-      quantity: 1,
-      unit_price: 100,
-      unit: 'unit',
-      image: '',
-    },
-  ];
 
   return (
     <main>
@@ -221,14 +186,14 @@ export default function RecipePage() {
             >
               Order Now: {totalCost ? formatCurrency(totalCost) : null}
             </Button>
-            {totalCost && (
+            {items && (
               <PreCheckoutForm
                 items={items}
                 open={orderModal}
                 onClose={() => setOrderModal(false)}
                 onCheckout={handleCheckout}
                 onChange={() => handleOrderChange}
-                cost={totalCost}
+                cost={0}
               />
               // <FullScreenDialog
               //   open={orderModal}

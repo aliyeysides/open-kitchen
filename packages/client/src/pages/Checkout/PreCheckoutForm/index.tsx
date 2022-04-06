@@ -1,6 +1,4 @@
-import CheckboxList, {
-  OrderMap,
-} from '../../../components/display/CheckboxList';
+import CheckboxList from '../../../components/display/CheckboxList';
 import FullScreenDialog from '../../../components/feedback/FullScreenDialog';
 
 export interface PreCheckoutFormProps {

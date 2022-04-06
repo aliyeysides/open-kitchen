@@ -59,9 +59,7 @@ export default function CheckboxList({ items, onChange }: CheckboxListProps) {
             <ListItemText
               id={labelId}
               primary={`${value.name}`}
-              secondary={`$${(value.unit_price / 100).toFixed(2)} /  ${
-                value.unit
-              }`}
+              secondary={`$${(value.unit_price / 100).toFixed(2)}`}
             />
           </ListItem>
         );

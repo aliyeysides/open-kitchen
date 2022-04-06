@@ -46,10 +46,11 @@ export class AppService {
     const prices = await stripe.prices.list();
     console.log('PRICES:::::', prices);
 
-    const item_prices = prices.data.map(({ id }) => ({
-      price: id,
-      quantity: 1,
+    const item_prices = items.map(({ price_id, quantity }) => ({
+      price: price_id,
+      quantity,
     }));
+
     console.log('ITEMS PRICES::::', item_prices);
 
     const session = await stripe.checkout.sessions.create({
@@ -60,5 +61,32 @@ export class AppService {
     });
 
     res.send(session.url);
+  }
+
+  async getPrices(req, res): Promise<void> {
+    const { recipeId } = req.query;
+
+    const recipe = await this.recipesService.findOne(recipeId);
+
+    const item_ids = recipe.ingredients.map((item) => item.prod_id);
+
+    const allPrices = await stripe.prices.list({
+      limit: 100,
+      expand: ['data.product'],
+    });
+
+    const prices = allPrices.data.filter((price) =>
+      item_ids.includes(price.product.id),
+    );
+
+    let total = 0;
+    prices.forEach((item) => {
+      let multiple = recipe.ingredients.find(
+        (ing) => ing.price_id === item.id,
+      ).quantity;
+      total += item.unit_amount * multiple;
+    });
+
+    res.send({ prices, total });
   }
 }

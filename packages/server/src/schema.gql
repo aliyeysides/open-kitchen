@@ -13,6 +13,9 @@ type RecipeIngredient {
 
   """stripe price id"""
   price_id: String!
+
+  """stripe product id"""
+  prod_id: String!
 }
 
 type RecipeStep {
@@ -109,6 +112,9 @@ input RecipeIngredientInput {
 
   """stripe price id"""
   price_id: String!
+
+  """stripe product id"""
+  prod_id: String!
 }
 
 input RecipeStepInput {

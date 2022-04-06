@@ -14,6 +14,11 @@ export class AppController {
     return this.appService.getVersion();
   }
 
+  @Get('/get-prices')
+  async getPrices(@Req() req, @Res() res) {
+    return await this.appService.getPrices(req, res);
+  }
+
   @Post('/create-payment-intent')
   async checkoutIntent(@Req() req, @Res() res) {
     return await this.appService.createPaymentIntent(req, res);

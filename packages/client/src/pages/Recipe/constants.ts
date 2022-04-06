@@ -21,6 +21,8 @@ export const GET_RECIPE = gql`
         name
         quantity
         unit
+        price_id
+        prod_id
       }
     }
   }

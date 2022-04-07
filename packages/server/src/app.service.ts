@@ -57,6 +57,31 @@ export class AppService {
     console.log('item_prices:::::', item_prices);
 
     const session = await stripe.checkout.sessions.create({
+      shipping_address_collection: {
+        allowed_countries: ['US'],
+      },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            display_name: 'ASAP',
+            type: 'fixed_amount',
+            fixed_amount: {
+              amount: 200,
+              currency: 'usd',
+            },
+            delivery_estimate: {
+              minimum: {
+                unit: 'hour',
+                value: 1,
+              },
+              maximum: {
+                unit: 'hour',
+                value: 2,
+              },
+            },
+          },
+        },
+      ],
       line_items: item_prices,
       mode: 'payment',
       success_url: `${DOMAIN}/checkout/success`,

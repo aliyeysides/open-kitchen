@@ -10,7 +10,7 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 const DOMAIN =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://www.openkitchenphl.com/';
+    : 'https://www.openkitchenphl.com';
 
 @Injectable()
 export class AppService {

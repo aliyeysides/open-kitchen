@@ -1,7 +1,7 @@
 {
   "name": "foyir-server",
   "private": true,
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Nest TypeScript starter repository",
   "license": "MIT",
   "engines": {

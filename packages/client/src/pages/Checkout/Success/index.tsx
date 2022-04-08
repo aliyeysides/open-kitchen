@@ -1,12 +1,62 @@
+import { Box, Typography } from '@mui/material';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
 export default function SuccessPage() {
+  const [search] = useSearchParams();
+  const [customer, setCustomer] = useState<any>();
+
+  useEffect(() => {
+    function getSessionId(): string {
+      return search.get('session_id') as string;
+    }
+    async function getData() {
+      try {
+        const {
+          data: { customer },
+        } = await axios.get('/get-checkout-session', {
+          params: { session_id: getSessionId() },
+        });
+        setCustomer(customer);
+      } catch (e) {
+        console.error('Error fetching session:', e);
+      }
+    }
+    getData();
+    console.log('CUSTOMER:::::', customer);
+  }, [search]);
+
   return (
-    <section>
-      <p>
-        Your order has been placed! Our shopper will pickup your ingredients and
-        deliver it to XXX. If you have any questions, please call XXX-XXX-XXXX
-        or email xxx@gmail.com
-        <a href="mailto:orders@example.com">orders@example.com</a>.
-      </p>
-    </section>
+    <main>
+      {customer ? (
+        <section>
+          <Typography
+            sx={{ fontWeight: 'bold' }}
+            variant="h5"
+          >{`Thank you, your order has been placed.`}</Typography>
+          <Typography sx={{ my: 2 }}>
+            Your items will be delivered to the following address:
+          </Typography>
+          <Typography sx={{ my: 2 }} color="primary">
+            {customer.address.line1} {customer.address.line2},
+            {customer.address.city}, {customer.address.state}{' '}
+            {customer.address.postal_code}
+          </Typography>
+          <Typography sx={{ my: 2 }}>
+            Estimated delivery:
+            <Typography color="primary">1-2 hours</Typography>
+          </Typography>
+          <Typography sx={{ my: 2 }}>
+            Please check your email for order confirmation and detailed delivery
+            information.
+          </Typography>
+          <Typography sx={{ my: 2 }}>
+            If you have any questions or see a mistake, please call (215)
+            920-0814 or email support at ali.yeysides@gmail.com
+          </Typography>
+        </section>
+      ) : null}
+    </main>
   );
 }

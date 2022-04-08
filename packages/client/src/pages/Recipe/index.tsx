@@ -81,17 +81,22 @@ export default function RecipePage() {
 
   useEffect(() => {
     async function getIngredients() {
-      const {
-        data: { items, total },
-      } = await axios.get('/get-recipe-ingredients', {
-        params: { recipeId: params.recipeId },
-      });
-      setTotalCost(total);
-      setItems(items);
+      try {
+        const {
+          data: { items, total },
+        } = await axios.get('/get-recipe-ingredients', {
+          params: { recipeId: params.recipeId },
+        });
+        setTotalCost(total);
+        setItems(items);
+      } catch (e) {
+        console.error('Error fetching ingredients:', e);
+      }
     }
     getIngredients();
     const lastViewedId = params.recipeId as string;
     localStorage.setItem('last-viewed-recipe', lastViewedId);
+    console.log('test');
   }, [params.recipeId]);
 
   const handleTabClick: VerticalTabsOnClick = (step, e) => {

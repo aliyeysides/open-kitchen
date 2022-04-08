@@ -19,9 +19,9 @@ export class AppController {
     return await this.appService.getRecipeIngredients(req, res);
   }
 
-  @Post('/create-payment-intent')
-  async checkoutIntent(@Req() req, @Res() res) {
-    return await this.appService.createPaymentIntent(req, res);
+  @Get('/get-checkout-session')
+  async getCheckoutSession(@Req() req, @Res() res) {
+    return await this.appService.getCheckoutSession(req, res);
   }
 
   @Post('/create-checkout-session')

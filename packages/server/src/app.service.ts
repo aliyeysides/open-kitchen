@@ -20,29 +20,8 @@ export class AppService {
     return process.env.npm_package_version;
   }
 
-  calculateOrderAmount(id: string): number {
-    return 100;
-  }
-
-  async createPaymentIntent(req, res): Promise<void> {
-    const { recipeId } = req.body;
-    // Create a PaymentIntent with the order amount and currency
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: this.calculateOrderAmount(recipeId),
-      currency: 'usd',
-      automatic_payment_methods: {
-        enabled: true,
-      },
-    });
-
-    res.send({
-      clientSecret: paymentIntent.client_secret,
-    });
-  }
-
   async createCheckoutSession(req, res): Promise<void> {
     const { items } = req.body;
-    console.log('items:::::', items);
 
     let item_prices = [];
     for (const { id, quantity } of items) {
@@ -53,8 +32,6 @@ export class AppService {
         });
       }
     }
-
-    console.log('item_prices:::::', item_prices);
 
     const session = await stripe.checkout.sessions.create({
       shipping_address_collection: {
@@ -84,11 +61,20 @@ export class AppService {
       ],
       line_items: item_prices,
       mode: 'payment',
-      success_url: `${DOMAIN}/checkout/success`,
+      success_url: `${DOMAIN}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${DOMAIN}/checkout/cancel`,
     });
 
     res.send(session.url);
+  }
+
+  async getCheckoutSession(req, res): Promise<void> {
+    const session = await stripe.checkout.sessions.retrieve(
+      req.query.session_id,
+    );
+    const customer = await stripe.customers.retrieve(session.customer);
+
+    res.send({ session, customer });
   }
 
   // TODO: move this REST endpoint to GRAPHQL resolver

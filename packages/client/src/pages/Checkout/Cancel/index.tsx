@@ -1,5 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+// TODO: use a diff approach than localStorage, maybe useLocation?
+
 export default function CancelPage() {
   return (
     <Routes>

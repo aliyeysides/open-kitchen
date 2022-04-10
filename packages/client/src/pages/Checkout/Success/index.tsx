@@ -24,7 +24,6 @@ export default function SuccessPage() {
       }
     }
     getData();
-    console.log('CUSTOMER:::::', customer);
   }, [search]);
 
   return (
@@ -43,17 +42,15 @@ export default function SuccessPage() {
             {customer.address.city}, {customer.address.state}{' '}
             {customer.address.postal_code}
           </Typography>
-          <Typography sx={{ my: 2 }}>
-            Estimated delivery:
-            <Typography color="primary">1-2 hours</Typography>
-          </Typography>
+          <Typography sx={{ my: 2 }}>Estimated delivery:</Typography>
+          <Typography color="primary">1-2 hours</Typography>
           <Typography sx={{ my: 2 }}>
             Please check your email for order confirmation and detailed delivery
             information.
           </Typography>
           <Typography sx={{ my: 2 }}>
             If you have any questions or see a mistake, please call (215)
-            920-0814 or email support at ali.yeysides@gmail.com
+            920-0814 or email support at support@openkitchenphl.com
           </Typography>
         </section>
       ) : null}

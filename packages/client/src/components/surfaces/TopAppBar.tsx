@@ -81,7 +81,7 @@ export default function TopAppBar() {
             <Typography gutterBottom>
               This feature is not yet available but is coming soon! If you have
               any questions or feedback, please reach out to us via email at
-              ali.yeysides@gmail.com
+              support@openkitchenphl.com
             </Typography>
           </CustomDialog>
           <Box sx={{ marginLeft: 2 }}>

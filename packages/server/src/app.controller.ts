@@ -28,4 +28,9 @@ export class AppController {
   async checkoutSession(@Req() req, @Res() res) {
     return await this.appService.createCheckoutSession(req, res);
   }
+
+  // @Post('/send-email')
+  // async sendEmail(@Req() req, @Res() res) {
+  //   return await this.appService.sendEmail(req, res);
+  // }
 }

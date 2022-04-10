@@ -6,6 +6,8 @@ import { RecipesService } from './recipes/recipes.service';
 dotenv.config();
 
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+// const sgMail = require('@sendgrid/mail');
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const DOMAIN =
   process.env.NODE_ENV === 'development'
@@ -59,6 +61,9 @@ export class AppService {
           },
         },
       ],
+      phone_number_collection: {
+        enabled: true,
+      },
       line_items: item_prices,
       mode: 'payment',
       success_url: `${DOMAIN}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -74,7 +79,7 @@ export class AppService {
     );
     const customer = await stripe.customers.retrieve(session.customer);
 
-    res.send({ session, customer });
+    res.send({ customer });
   }
 
   // TODO: move this REST endpoint to GRAPHQL resolver
@@ -118,4 +123,20 @@ export class AppService {
 
     res.send({ items, total });
   }
+
+  // TODO: uncomment for custom sendgrid email
+  // async sendEmail(req, res): Promise<void> {
+  //   const { msg } = req.body;
+
+  //   sgMail
+  //     .send(msg)
+  //     .then(() => {
+  //       console.log('Email sent');
+  //       res.send(200);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       res.send(error);
+  //     });
+  // }
 }

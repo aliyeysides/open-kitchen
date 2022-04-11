@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
-// import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { createUploadLink } from 'apollo-upload-client';
 import AuthorizedApolloProvider from './components/providers/AuthorizedApolloProvider';
 
 import AppRoutes from './AppRoutes';
 import AuthProvider from './components/providers/AuthProvider';
 import * as dotenv from 'dotenv';
-import NotAuthorized from './pages/NotAuthorized';
 import mixpanel from 'mixpanel-browser';
 
 dotenv.config();
@@ -28,31 +25,15 @@ if (isDev) {
   mixpanel.opt_out_tracking();
 }
 
-// const httpLink = createUploadLink({
-//   uri: '/graphql',
-// });
-
-// const apolloClient = new ApolloClient({
-//   cache: new InMemoryCache(),
-//   link: httpLink,
-//   connectToDevTools: true,
-// });
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {/* <ApolloProvider client={apolloClient}>
-          <AppRoutes />
-        </ApolloProvider> */}
         <AuthProvider>
           <AuthorizedApolloProvider>
             <AppRoutes />
           </AuthorizedApolloProvider>
-          <Routes>
-            <Route path="/not-authorized" element={<NotAuthorized />} />
-          </Routes>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

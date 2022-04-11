@@ -6,8 +6,6 @@ import { RecipesService } from './recipes/recipes.service';
 dotenv.config();
 
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-// const sgMail = require('@sendgrid/mail');
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const DOMAIN =
   process.env.NODE_ENV === 'development'
@@ -123,20 +121,4 @@ export class AppService {
 
     res.send({ items, total });
   }
-
-  // TODO: uncomment for custom sendgrid email
-  // async sendEmail(req, res): Promise<void> {
-  //   const { msg } = req.body;
-
-  //   sgMail
-  //     .send(msg)
-  //     .then(() => {
-  //       console.log('Email sent');
-  //       res.send(200);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       res.send(error);
-  //     });
-  // }
 }

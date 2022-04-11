@@ -7,7 +7,7 @@ export interface WithRoleBasedRedirectOptions {
   role: string;
 }
 
-const roleClaimType = `${process.env.REACT_APP_ROLE_CLAIM_URL}/roles`;
+const roleClaimType = `${process.env.REACT_APP_AUTH0_ROLE_CLAIM_URL}/roles`;
 
 export const withRoleBasedRedirect =
   <P extends object>(

@@ -18,8 +18,8 @@ dotenv.config();
 const isDev =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 
-const mixpanelSecret = process.env.REACT_APP_MIXPANEL_SECRET as string;
-mixpanel.init(mixpanelSecret);
+const mixpanel_token = process.env.REACT_APP_MIXPANEL_TOKEN as string;
+mixpanel.init(mixpanel_token);
 
 if (isDev) {
   mixpanel.opt_out_tracking();

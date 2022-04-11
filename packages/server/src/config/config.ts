@@ -16,9 +16,6 @@ export default () => ({
   auth0: {
     domain: process.env.AUTH0_DOMAIN,
     audience: process.env.AUTH0_AUDIENCE,
-    client_id: process.env.AUTH0_CLIENT_ID,
-    role_claim_url: process.env.AUTH0_ROLE_CLAIM_URL,
-    redirect_uri: process.env.AUTH0_REDIRECT_URI,
   },
   stripe: {
     public_key: process.env.STRIPE_PUBLIC_KEY,

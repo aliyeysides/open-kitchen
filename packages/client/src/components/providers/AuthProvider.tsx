@@ -3,7 +3,7 @@ import { Auth0Provider, Auth0ProviderOptions } from '@auth0/auth0-react';
 const config: Auth0ProviderOptions = {
   domain: `${process.env.REACT_APP_AUTH0_DOMAIN}`,
   clientId: `${process.env.REACT_APP_AUTH0_CLIENT_ID}`,
-  redirectUri: window.location.origin,
+  redirectUri: `${process.env.REACT_APP_AUTH0_REDIRECT_URI}`,
   useRefreshTokens: true,
   cacheLocation: 'localstorage',
 };

@@ -19,13 +19,18 @@ import mixpanel from 'mixpanel-browser';
 import styles from './recipe.module.scss';
 import PreCheckoutForm from '../Checkout/PreCheckoutForm';
 
+const DOMAIN =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'https://www.openkitchenphl.com';
+
 function ytattrs(): YouTubeOptions {
   return {
     width: '1024',
     height: '576',
     playerVars: {
       autoplay: 1,
-      origin: 'http://localhost:3000',
+      origin: DOMAIN,
     },
   };
 }

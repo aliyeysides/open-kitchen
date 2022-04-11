@@ -12,7 +12,7 @@ function LogoutButton() {
         color="error"
         onClick={() =>
           logout({
-            returnTo: window.location.origin,
+            returnTo: process.env.REACT_APP_AUTH0_REDIRECT_URI,
           })
         }
       >

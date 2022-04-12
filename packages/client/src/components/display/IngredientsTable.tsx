@@ -2,6 +2,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { RecipeIngredient } from '../../types';
 import IngredientLineItem from './IngredientLineItem';
+import { Chip } from '@mui/material';
 
 export interface IngredientsTableProps {
   ingredients?: RecipeIngredient[];
@@ -10,11 +11,18 @@ export interface IngredientsTableProps {
 
 export default function IngredientsTable({
   ingredients,
-  header,
+  header = 'Ingredients',
 }: IngredientsTableProps) {
   return (
     <>
-      {header ? <Typography variant="h6">{header}</Typography> : null}
+      <Box sx={{ display: 'flex' }}>
+        <Typography variant="h6">{header}</Typography>
+        <Chip
+          sx={{ marginLeft: 'auto' }}
+          label={`servings: 4`}
+          variant="outlined"
+        />
+      </Box>
       <Box
         sx={{
           display: 'grid',

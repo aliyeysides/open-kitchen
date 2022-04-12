@@ -18,6 +18,7 @@ import axios from 'axios';
 import mixpanel from 'mixpanel-browser';
 import styles from './recipe.module.scss';
 import PreCheckoutForm from '../Checkout/PreCheckoutForm';
+import { Divider, Typography } from '@mui/material';
 
 const DOMAIN =
   process.env.NODE_ENV === 'development'
@@ -151,6 +152,7 @@ export default function RecipePage() {
             sx={{
               display: 'flex',
               alignItems: 'center',
+              marginBottom: 2,
             }}
           >
             <Box>
@@ -185,6 +187,7 @@ export default function RecipePage() {
               </>
             ) : null}
           </Box>
+          <Divider />
           <Box sx={{ my: 3, marginBottom: 7 }}>
             <IngredientsTable
               header="Ingredients"

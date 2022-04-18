@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { Recipe } from '../../types';
 import Box from '@mui/material/Box';
 import styles from './recipes.module.scss';
-import { Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import LinkButton from '../../components/inputs/LinkButton';
 
 export interface ViewAllLinkProps {
   tag: string;
@@ -25,24 +26,43 @@ interface RecipesSectionProps {
   tag: string;
 }
 
-function RecipesSection({ recipes, tag }: RecipesSectionProps) {
+export function RecipesSection({ recipes, tag }: RecipesSectionProps) {
   return (
-    <Box className={styles.section_container}>
+    <Grid container spacing={4}>
       {recipes
         .slice(0, 3)
         .filter((recipe) => recipe.tags.includes(tag))
         .map((recipe: Recipe) => (
-          <Box
-            className={styles.section_item}
-            key={recipe._id}
-            sx={{ cursor: 'pointer' }}
-          >
-            <Link to={`/recipes/${recipe._id}`}>
-              <img alt="" src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`} />
-            </Link>
-          </Box>
+          <Grid item key={recipe._id} xs={12} sm={6} md={4}>
+            <LinkButton to={`/recipes/${recipe._id}`}>
+              <Card
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  sx={
+                    {
+                      // 16:9
+                      // pt: '56.25%',
+                    }
+                  }
+                  src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`}
+                  alt={recipe.name}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography color="primary" variant="subtitle1">
+                    {recipe.name}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </LinkButton>
+          </Grid>
         ))}
-    </Box>
+    </Grid>
   );
 }
 
@@ -75,7 +95,7 @@ export default function RecipesPage() {
         <RecipesSection recipes={recipes} tag="trending" />
       )}
 
-      <Box className={styles.section_header}>
+      {/* <Box className={styles.section_header}>
         <Typography
           sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
@@ -93,9 +113,9 @@ export default function RecipesPage() {
         <p>Loading...</p>
       ) : (
         <RecipesSection recipes={recipes} tag="vegan" />
-      )}
+      )} */}
 
-      <Box className={styles.section_header}>
+      {/* <Box className={styles.section_header}>
         <Typography
           sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
@@ -113,7 +133,7 @@ export default function RecipesPage() {
         <p>Loading...</p>
       ) : (
         <RecipesSection recipes={recipes} tag="onepot" />
-      )}
+      )} */}
     </main>
   );
 }

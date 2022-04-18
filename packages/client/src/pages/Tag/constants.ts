@@ -6,6 +6,7 @@ export const GET_RECIPES_BY_TAG = gql`
       _id
       ytId
       name
+      tags
     }
   }
 `;

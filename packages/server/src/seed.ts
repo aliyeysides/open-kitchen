@@ -9,10 +9,16 @@ const data = [
   {
     ingredients: [
       {
+        name: 'olive oil',
+        quantity: 1,
+        prod_id: 'prod_LWzc1aRwhyrvgT',
+        price_id: 'price_1KpvdSBK7YpYHqx3sHF6DSmw',
+      },
+      {
         name: 'plum tomato',
         quantity: 2,
-        prod_id: 'prod_LHjNIIL7HgISUo',
-        price_id: 'price_1Kb9uoBK7YpYHqx36Iyb9Lrm',
+        prod_id: 'prod_LU60N5WXYSOz6S',
+        price_id: 'price_1Kn7oxBK7YpYHqx3q5Nc0Iwa',
       },
       {
         name: 'garlic',
@@ -95,7 +101,10 @@ const data = [
         instruction:
           'Slice red onion and toss into pan. Cook onions until translucent (5-6 minutes).',
         startTime: 30,
-        ingredients: [{ name: 'red onion', quantity: 1 }],
+        ingredients: [
+          { name: 'red onion', quantity: 1 },
+          { name: 'olive oil', quantity: 2, unit: 'tablespoon' },
+        ],
       },
       {
         order: 3,
@@ -154,147 +163,134 @@ const data = [
   {
     ingredients: [
       {
-        name: 'plum tomato',
-        quantity: 2,
-        prod_id: 'prod_LHjNIIL7HgISUo',
-        price_id: 'price_1Kb9uoBK7YpYHqx36Iyb9Lrm',
-      },
-      {
-        name: 'garlic',
-        quantity: 2,
-        unit: 'clove',
-        prod_id: 'prod_LU62ZKzGFdnVry',
-        price_id: 'price_1Kn7qqBK7YpYHqx3zBI3Gnva',
-      },
-      {
-        name: 'hot italian sausage',
-        quantity: 2,
-        prod_id: 'prod_LU64ien3MhWkBj',
-        price_id: 'price_1Kn7skBK7YpYHqx3v8JN5WrC',
-      },
-      {
-        name: 'red bell pepper',
+        name: 'Chicken Breast - Boneless & Skinless (pack of 3)',
         quantity: 1,
-        prod_id: 'prod_LU66NemzI0Eyxa',
-        price_id: 'price_1Kn7uJBK7YpYHqx3lQlfDRSU',
+        prod_id: 'prod_LWzPSMQjFSmGCY',
+        price_id: 'price_1KpvR6BK7YpYHqx30R3Q47p2',
       },
       {
-        name: 'white rice',
+        name: 'Cayenne Pepper',
         quantity: 1,
-        unit: 'cup',
-        prod_id: 'prod_LU68bDaB4y340B',
-        price_id: 'price_1Kn7vwBK7YpYHqx3DF8IZnTp',
+        prod_id: 'prod_LWzWntk9QlE63L',
+        price_id: 'price_1KpvXCBK7YpYHqx3hegZz6CK',
       },
       {
-        name: 'red onion',
+        name: 'Flour',
         quantity: 1,
-        prod_id: 'prod_LU69NStMdG1SAO',
-        price_id: 'price_1Kn7xKBK7YpYHqx3aervWSzo',
+        prod_id: 'prod_LWzZiAbBaehBXu',
+        price_id: 'price_1KpvaNBK7YpYHqx3omQ3xJ2T',
       },
       {
-        name: 'spring onion',
+        name: 'Olive Oil',
         quantity: 1,
-        unit: 'bunch',
-        prod_id: 'prod_LU6AeEIkDXTWe0',
-        price_id: 'price_1Kn7yCBK7YpYHqx3kR5Brheg',
+        prod_id: 'prod_LWzc1aRwhyrvgT',
+        price_id: 'price_1KpvdSBK7YpYHqx3sHF6DSmw',
       },
       {
-        name: 'italian parsley',
+        name: 'Non-Pareil Capers',
         quantity: 1,
-        unit: 'bunch',
-        prod_id: 'prod_LU6CNRvnqlftVu',
-        price_id: 'price_1Kn80JBK7YpYHqx3jWi62Uvt',
+        prod_id: 'prod_LWzisFpZSGEQEL',
+        price_id: 'price_1Kpvj5BK7YpYHqx3r6XcfKBH',
       },
       {
-        name: 'smoked paprika',
+        name: 'White Cooking Wine',
         quantity: 1,
-        unit: 'tablespoon',
-        prod_id: 'prod_LU6EJBn3SS7jUz',
-        price_id: 'price_1Kn81ZBK7YpYHqx3KWBWAfMj',
-      },
-      {
-        name: 'white cooking wine',
-        quantity: 1,
-        unit: 'cup',
         prod_id: 'prod_LU6FpS8Drty2Fz',
         price_id: 'price_1Kn82kBK7YpYHqx3oUTS77Zw',
       },
       {
-        name: 'chicken stock',
-        quantity: 2,
-        unit: 'cup',
-        prod_id: 'prod_LU6H7QhbQFJ1ZL',
-        price_id: 'price_1Kn84mBK7YpYHqx3ByHypTm3',
+        name: 'Lemon',
+        quantity: 1,
+        prod_id: 'prod_LWzsbMwO1HB0Pj',
+        price_id: 'price_1KpvsIBK7YpYHqx3qvGhgkdR',
+      },
+      {
+        name: 'Butter',
+        quantity: 1,
+        prod_id: 'prod_LWzu2gUScluGbd',
+        price_id: 'price_1KpvuiBK7YpYHqx3XgHocVx4',
+      },
+      {
+        name: 'Italian Parsley',
+        quantity: 1,
+        unit: 'bunch',
+        prod_id: 'prod_LU6CNRvnqlftVu',
+        price_id: 'price_1Kn80JBK7YpYHqx3jWi62Uvt',
       },
     ],
     steps: [
       {
         order: 1,
         instruction:
-          'Prepare the sausages by piercing the casing and removing the contents. Begin heating a deep pan on low-medium heat and add a tablespoon of olive oil.',
-        startTime: 17,
-        ingredients: [{ name: 'hot italian sausage', quantity: 2 }],
+          'Prepare the chicken breasts by tenderizing (pounding) them.',
+        startTime: 30,
+        ingredients: [{ name: 'chicken breast', quantity: 2 }],
       },
       {
         order: 2,
         instruction:
-          'Slice red onion and toss into pan. Cook onions until translucent (5-6 minutes).',
-        startTime: 30,
-        ingredients: [{ name: 'red onion', quantity: 1 }],
+          'Season the chicken with cayenne pepper, salt, and black pepper.',
+        startTime: 38,
+        ingredients: [{ name: 'cayenne pepper', quantity: 1, unit: 'pinch' }],
       },
       {
         order: 3,
-        instruction: 'Dice red bell pepper and toss into pan.',
-        startTime: 60,
-        ingredients: [{ name: 'red bell pepper', quantity: 1 }],
+        instruction: 'Lightly dredge (coat) the chicken in flour',
+        startTime: 50,
+        ingredients: [{ name: 'flour', quantity: 1, unit: 'cup' }],
       },
       {
         order: 4,
         instruction:
-          'Crush and peel two cloves of garlic. Chop peeled cloves and toss into pan.',
+          'Heat skillet to high. Add olive oil to heated skillet. Add chicken breasts and turn heat down to medium. Cook until both sides of chicken are browned, and then remove chicken from skillet on to a separate plate.',
         startTime: 75,
-        ingredients: [{ name: 'garlic', quantity: 2, unit: 'clove' }],
+        ingredients: [
+          { name: 'olive oil', quantity: 2, unit: 'tablespoon' },
+          { name: 'chicken breast', quantity: 2 },
+        ],
       },
       {
         order: 5,
         instruction:
-          'Turn up the heat on the pan to high and create an empty space in the center by moving contents to the edges of the pan.',
-        startTime: 90,
+          "Add 1 tablespoon of the capers onto the same skillet on medium heat. Crush half of the capers with a fork to release it's liquids. Cook for about 30 seconds.",
+        startTime: 120,
+        ingredients: [
+          { name: 'non-pereil capers', quantity: 1, unit: 'tablespoon' },
+        ],
       },
       {
         order: 6,
         instruction:
-          'Break the sausage contents into small chunks and toss into the center of the pan. Continuously stir contents and cook the sausage until browned (2-3 minutes). ',
-        startTime: 115,
-        ingredients: [{ name: 'hot italian sausage', quantity: 2 }],
+          'Add 1/2 cup of the white cooking wine and deglaze the skillet and boil until wine is reduced by half (2 minutes).',
+        startTime: 135,
+        ingredients: [
+          { name: 'white cooking wine', quantity: 1, unit: 'half cup' },
+        ],
       },
       {
         order: 7,
         instruction:
-          'Add 1 tablespoon of paprika, 1 cup of white rice, and 1 cup of white wine. Stir thoroughly for 30 seconds before adding 2 cups of chicken stock. Reduce heat to low-medium and simmer for 15 minutes. Stir occasionally.',
-        startTime: 130,
+          'Slice lemon in half and squeeze both halves into skillet along with a tablespoon of water. Add 3 tablespoons of butter and turn heat to low. Continously stir and allow butter to melt.',
+        startTime: 149,
         ingredients: [
-          { name: 'paprika', quantity: 1, unit: 'tablespoon' },
-          { name: 'white rice', quantity: 1, unit: 'cup' },
-          { name: 'white wine', quantity: 1, unit: 'cup' },
-          { name: 'chicken stock', quantity: 2, unit: 'cup' },
+          { name: 'lemon', quantity: 1 },
+          { name: 'butter', quantity: 3, unit: 'tablespoon' },
         ],
       },
       {
         order: 8,
         instruction:
-          'Slice 3 spring onions, dice 2 tomatoes, and chop 1 bunch of fresh Italian parsley. Add all three into pan and turn heat off. Stir thoroughly and enjoy!',
-        startTime: 180,
+          'Add diced italian parsely to the skillet. Add cooked chicken breast back into skillet. Cook for 1 minute.',
+        startTime: 170,
         ingredients: [
-          { name: 'spring onions', quantity: 1, unit: 'bunch' },
-          { name: 'italian parsley', quantity: 1, unit: 'bunch' },
-          { name: 'plum tomato', quantity: 2 },
+          { name: 'italian parsley', quantity: 1, unit: 'pinch' },
+          { name: 'chicken breast', quantity: 2 },
         ],
       },
     ],
     name: 'Chicken Piccata Recipe - How to Make Chicken Piccata - Chicken with Lemon Caper Sauce',
     ytId: 'e0CoVPJz2H8',
-    tags: ['trending', 'onepot'],
+    tags: ['trending'],
   },
   {
     ingredients: [

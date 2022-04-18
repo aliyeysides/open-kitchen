@@ -25,6 +25,10 @@ export class RecipesService {
     return this.recipesModel.findOne({ _id: id });
   }
 
+  findByTag(tag: string) {
+    return this.recipesModel.find({ tags: tag });
+  }
+
   update(id: number, updateRecipeInput: UpdateRecipeInput) {
     return `This action updates a #${id} recipe`;
   }

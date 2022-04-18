@@ -6,10 +6,14 @@ import Box from '@mui/material/Box';
 import styles from './recipes.module.scss';
 import { Typography } from '@mui/material';
 
-function ViewAllLink() {
+export interface ViewAllLinkProps {
+  tag: string;
+}
+
+function ViewAllLink({ tag }: ViewAllLinkProps) {
   return (
     <Box className={styles.view_all_link}>
-      <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
+      <Link className={styles.view_all_link_text} to={`/recipes/tags/${tag}`}>
         view all
       </Link>
     </Box>
@@ -18,13 +22,15 @@ function ViewAllLink() {
 
 interface RecipesSectionProps {
   recipes: Recipe[];
+  tag: string;
 }
 
-function RecipesSection({ recipes }: RecipesSectionProps) {
+function RecipesSection({ recipes, tag }: RecipesSectionProps) {
   return (
     <Box className={styles.section_container}>
       {recipes
-        .slice(recipes.length - 4, recipes.length)
+        .slice(0, 3)
+        .filter((recipe) => recipe.tags.includes(tag))
         .map((recipe: Recipe) => (
           <Box
             className={styles.section_item}
@@ -32,7 +38,7 @@ function RecipesSection({ recipes }: RecipesSectionProps) {
             sx={{ cursor: 'pointer' }}
           >
             <Link to={`/recipes/${recipe._id}`}>
-              <img src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`} />
+              <img alt="" src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`} />
             </Link>
           </Box>
         ))}
@@ -54,39 +60,60 @@ export default function RecipesPage() {
           sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
         >
-          <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
+          <Link
+            className={styles.view_all_link_text}
+            to={`/recipes/tags/trending`}
+          >
             #trending
           </Link>
         </Typography>
-        <ViewAllLink />
+        <ViewAllLink tag="trending" />
       </Box>
-      {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <RecipesSection recipes={recipes} tag="trending" />
+      )}
 
       <Box className={styles.section_header}>
         <Typography
           sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
         >
-          <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
+          <Link
+            className={styles.view_all_link_text}
+            to={`/recipes/tags/vegan`}
+          >
             #vegan
           </Link>
         </Typography>
-        <ViewAllLink />
+        <ViewAllLink tag="vegan" />
       </Box>
-      {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <RecipesSection recipes={recipes} tag="vegan" />
+      )}
 
       <Box className={styles.section_header}>
         <Typography
           sx={{ color: '#1de9b6', my: 2, cursor: 'pointer' }}
           variant="h4"
         >
-          <Link className={styles.view_all_link_text} to={`/recipes/upload`}>
+          <Link
+            className={styles.view_all_link_text}
+            to={`/recipes/tags/onepot`}
+          >
             #onepot
           </Link>
         </Typography>
-        <ViewAllLink />
+        <ViewAllLink tag="onepot" />
       </Box>
-      {loading ? <p>Loading...</p> : <RecipesSection recipes={recipes} />}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <RecipesSection recipes={recipes} tag="onepot" />
+      )}
     </main>
   );
 }

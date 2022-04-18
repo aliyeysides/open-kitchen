@@ -42,6 +42,10 @@ export class Recipe {
   @Prop({ required: true })
   ingredients: RecipeIngredient[];
 
+  @Field(() => [String])
+  @Prop()
+  tags: string[];
+
   @Field(() => GraphQLTimestamp)
   @Prop()
   created_at: Date;

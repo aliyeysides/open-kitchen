@@ -6,6 +6,7 @@ export const GET_RECIPE = gql`
       _id
       ytId
       name
+      tags
       steps {
         order
         instruction
@@ -20,6 +21,8 @@ export const GET_RECIPE = gql`
         name
         quantity
         unit
+        price_id
+        prod_id
       }
     }
   }

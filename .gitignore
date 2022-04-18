@@ -407,3 +407,6 @@ packages/*/dist/
 
 # JUnit Reporter
 # **/*junit.xml
+
+# Seed Data
+packages/server/src/seeder/data/*

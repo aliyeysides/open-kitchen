@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { ComponentType, useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import NotAuthorized from '../../pages/NotAuthorized';
+import NotFound from '../../pages/NotFound';
 
 export interface WithRoleBasedRedirectOptions {
   role: string;
 }
 
-const roleClaimType = `${process.env.REACT_APP_ROLE_CLAIM_URL}/roles`;
+const roleClaimType = `${process.env.REACT_APP_AUTH0_ROLE_CLAIM_URL}/roles`;
 
 export const withRoleBasedRedirect =
   <P extends object>(
@@ -40,5 +40,5 @@ export const withRoleBasedRedirect =
 
     // add a nicer page or component to tell people they don't have access to the beta-test
     // or <Redirect to='/not-authorized'/, but then you need a component
-    return isAuthorized ? <Component {...props} /> : <NotAuthorized />;
+    return isAuthorized ? <Component {...props} /> : <NotFound />;
   };

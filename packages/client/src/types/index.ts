@@ -2,6 +2,7 @@ export interface Recipe {
   _id: string;
   ytId: string;
   name: string;
+  tags: string[];
   video?: VideoUpload;
   thumbnail?: Thumbnail;
   steps: RecipeStep[];
@@ -12,6 +13,7 @@ export interface RecipeIngredient {
   name: string;
   quantity: number;
   unit?: string;
+  price_id: string;
 }
 
 export interface Thumbnail {

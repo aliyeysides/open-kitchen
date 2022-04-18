@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
-import { Button } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import { Link, useParams } from 'react-router-dom';
 import 'video.js/dist/video-js.css';
 import { Recipe, RecipeStep } from '../../types';
 import { GET_RECIPE } from './constants';
@@ -14,7 +14,16 @@ import YouTubePlayer, {
 } from '../../components/display/YouTubePlayer';
 import { useEffect, useRef, useState } from 'react';
 import IngredientsTable from '../../components/display/IngredientsTable';
+import axios from 'axios';
 import mixpanel from 'mixpanel-browser';
+import styles from './recipe.module.scss';
+import PreCheckoutForm from '../Checkout/PreCheckoutForm';
+import { Divider, Typography } from '@mui/material';
+
+const DOMAIN =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'https://www.openkitchenphl.com';
 
 function ytattrs(): YouTubeOptions {
   return {
@@ -22,12 +31,20 @@ function ytattrs(): YouTubeOptions {
     height: '576',
     playerVars: {
       autoplay: 1,
-      origin: 'http://localhost:3000',
+      origin: DOMAIN,
     },
   };
 }
 
 type Step = Pick<RecipeStep, 'order' | 'startTime'>;
+
+export interface OrderItem {
+  name: string;
+  quantity: number;
+  unit_price: number;
+  unit: string;
+  image: string;
+}
 
 export function getStepTabIndex(currentTime: number, data: Step[]): number {
   return data.reduce((acc, val) => {
@@ -38,11 +55,17 @@ export function getStepTabIndex(currentTime: number, data: Step[]): number {
   }, 0);
 }
 
+export function formatCurrency(num: number): string {
+  return `$${num / 100}`;
+}
+
 export default function RecipePage() {
   const params = useParams();
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [orderModal, setOrderModal] = useState<boolean>(false);
   const playerRef = useRef<any>({ seekTo: (time: number) => time });
-
+  const [totalCost, setTotalCost] = useState<number | null>(null);
+  const [items, setItems] = useState<OrderItem[]>([]);
   const { loading, error, data } = useQuery(GET_RECIPE, {
     variables: {
       id: params.recipeId,
@@ -62,6 +85,25 @@ export default function RecipePage() {
     return () => clearInterval(interval);
   }, [playerRef, data]);
 
+  useEffect(() => {
+    async function getIngredients() {
+      try {
+        const {
+          data: { items, total },
+        } = await axios.get('/get-recipe-ingredients', {
+          params: { recipeId: params.recipeId },
+        });
+        setTotalCost(total);
+        setItems(items);
+      } catch (e) {
+        console.error('Error fetching ingredients:', e);
+      }
+    }
+    getIngredients();
+    const lastViewedId = params.recipeId as string;
+    localStorage.setItem('last-viewed-recipe', lastViewedId);
+  }, [params.recipeId]);
+
   const handleTabClick: VerticalTabsOnClick = (step, e) => {
     mixpanel.track('Vertical Tab Clicked', { step, ...data });
     playerRef.current.seekTo(step.startTime);
@@ -71,8 +113,8 @@ export default function RecipePage() {
     playerRef.current = e.target;
   };
 
-  const handleOrder = () => {
-    mixpanel.track('Order Clicked', { ...data });
+  const handleOrder = async () => {
+    setOrderModal(true);
   };
 
   if (loading) return <div>"Loading..."</div>;
@@ -109,22 +151,44 @@ export default function RecipePage() {
           <Box
             sx={{
               display: 'flex',
-              justifyContent: 'flex-end',
               alignItems: 'center',
+              marginBottom: 2,
             }}
           >
-            <Box sx={{ ml: 3 }}>$5 per serving</Box>
-            <Box sx={{ ml: 3 }}>700 Calories per serving</Box>
-            <Button
-              onClick={handleOrder}
-              sx={{ ml: 3 }}
-              color="primary"
-              variant="contained"
-            >
-              Order Now
-            </Button>
+            <Box>
+              {recipe.tags.length > 0 &&
+                recipe.tags.map((tag) => (
+                  <Link
+                    key={tag}
+                    className={styles.tag_link_text}
+                    to={`/recipes/tags/${tag}`}
+                  >
+                    {`#${tag}`}
+                  </Link>
+                ))}
+            </Box>
+            {items.length ? (
+              <>
+                <Button
+                  onClick={handleOrder}
+                  id="checkout-button"
+                  type="submit"
+                  sx={{ ml: 'auto' }}
+                  color="primary"
+                  variant="contained"
+                >
+                  Order Now: {totalCost ? formatCurrency(totalCost) : null}
+                </Button>
+                <PreCheckoutForm
+                  items={items}
+                  open={orderModal}
+                  onClose={() => setOrderModal(false)}
+                />
+              </>
+            ) : null}
           </Box>
-          <Box>
+          <Divider />
+          <Box sx={{ my: 3, marginBottom: 7 }}>
             <IngredientsTable
               header="Ingredients"
               ingredients={recipe.ingredients}

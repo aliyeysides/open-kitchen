@@ -2,36 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Flavor {
-  _id: String!
-  name: String!
-
-  """created at timestamp"""
-  created_at: Timestamp!
-
-  """updated at timestamp"""
-  updated_at: Timestamp!
-}
-
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
-
-type Ingredient {
-  _id: String!
-  name: String!
-  image: String!
-  created_at: Timestamp!
-  updated_at: Timestamp!
-}
-
-type FDCFood {
-  fdcId: Int!
-  description: String!
-  dataType: String!
-}
-
 type RecipeIngredient {
   name: String!
 
@@ -40,6 +10,12 @@ type RecipeIngredient {
 
   """count of units of measurement (quantity x tablespoon)"""
   quantity: Int!
+
+  """stripe price id"""
+  price_id: String!
+
+  """stripe product id"""
+  prod_id: String!
 }
 
 type RecipeStep {
@@ -55,8 +31,39 @@ type Recipe {
   name: String!
   steps: [RecipeStep!]!
   ingredients: [RecipeIngredient!]!
+  tags: [String!]!
   created_at: Timestamp!
   updated_at: Timestamp!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type Flavor {
+  _id: String!
+  name: String!
+
+  """created at timestamp"""
+  created_at: Timestamp!
+
+  """updated at timestamp"""
+  updated_at: Timestamp!
+}
+
+type Ingredient {
+  _id: String!
+  name: String!
+  image: String!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+type FDCFood {
+  fdcId: Int!
+  description: String!
+  dataType: String!
 }
 
 type VideoUpload {
@@ -102,6 +109,12 @@ input RecipeIngredientInput {
 
   """count of units of measurement (quantity x tablespoon)"""
   quantity: Int!
+
+  """stripe price id"""
+  price_id: String!
+
+  """stripe product id"""
+  prod_id: String!
 }
 
 input RecipeStepInput {
@@ -119,6 +132,7 @@ type Query {
   search(query: String!): [FDCFood!]!
   recipes: [Recipe!]!
   recipe(id: String!): Recipe!
+  recipesByTag(tag: String!): [Recipe!]!
   videoUploads: [VideoUpload!]!
   videoUpload(id: String!): VideoUpload!
   thumbnails: [Thumbnail!]!

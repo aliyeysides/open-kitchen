@@ -1,11 +1,10 @@
 import { useQuery } from '@apollo/client';
 import { GET_RECIPES } from './constants';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Recipe } from '../../types';
 import Box from '@mui/material/Box';
 import styles from './recipes.module.scss';
 import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import LinkButton from '../../components/inputs/LinkButton';
 
 export interface ViewAllLinkProps {
   tag: string;
@@ -27,39 +26,46 @@ interface RecipesSectionProps {
 }
 
 export function RecipesSection({ recipes, tag }: RecipesSectionProps) {
+  const navigate = useNavigate();
+
+  const handleClick = (id: string) => {
+    navigate(`/recipes/${id}`);
+  };
+
   return (
     <Grid container spacing={4}>
       {recipes
         .slice(0, 3)
         .filter((recipe) => recipe.tags.includes(tag))
         .map((recipe: Recipe) => (
-          <Grid item key={recipe._id} xs={12} sm={6} md={4}>
-            <LinkButton to={`/recipes/${recipe._id}`}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  sx={
-                    {
-                      // 16:9
-                      // pt: '56.25%',
-                    }
+          <Grid item key={recipe._id} xs={12} sm={6} md={4} lg={4} xl={4}>
+            <Card
+              raised
+              onClick={(e) => handleClick(recipe._id)}
+              sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                cursor: 'pointer',
+              }}
+            >
+              <CardMedia
+                component="img"
+                sx={
+                  {
+                    // 16:9
+                    // pt: '56.25%',
                   }
-                  src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`}
-                  alt={recipe.name}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography color="primary" variant="subtitle1">
-                    {recipe.name}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </LinkButton>
+                }
+                src={`//img.youtube.com/vi/${recipe.ytId}/0.jpg`}
+                alt={recipe.name}
+              />
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography color="primary" variant="h6">
+                  {recipe.name}
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
         ))}
     </Grid>

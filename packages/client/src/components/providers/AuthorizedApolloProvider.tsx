@@ -2,9 +2,8 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/link-context';
 import { createUploadLink } from 'apollo-upload-client';
 import { ReactNode } from 'react';
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import mixpanel from 'mixpanel-browser';
-// import { withRoleBasedRedirect } from './RoleBasedAuth';
 
 export interface AuthorizedApolloProviderProps {
   children: ReactNode | ReactNode[];
@@ -30,15 +29,15 @@ const AuthorizedApolloProvider = ({
   });
 
   const authLink = setContext(async () => {
-    try {
+    if (user) {
       const token = await getAccessTokenSilently();
-      return {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-    } catch (e) {
-      throw new Error('Error: Failed getting auth0 access token');
+      if (token) {
+        return {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      }
     }
   });
 
@@ -47,7 +46,8 @@ const AuthorizedApolloProvider = ({
     link: authLink.concat(httpLink),
     connectToDevTools: true,
   });
+
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 };
 
-export default withAuthenticationRequired(AuthorizedApolloProvider);
+export default AuthorizedApolloProvider;

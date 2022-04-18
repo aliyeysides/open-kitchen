@@ -29,6 +29,8 @@ import { AuthModule } from './auth/auth.module';
 
 // MIDDLEWARE
 import LoggerMiddleware from './common/middleware/logger.middleware';
+import { RecipesService } from './recipes/recipes.service';
+import { SeederModule } from './seeder/seeder.module';
 
 const isDev =
   process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
@@ -46,6 +48,7 @@ const dbUri = isDev ? devDb : stagingDb;
       isGlobal: true,
       load: [config],
     }),
+    SeederModule.forRoot(),
     AuthModule,
     MongooseModule.forRoot(dbUri),
     GraphQLModule.forRoot({
@@ -53,7 +56,7 @@ const dbUri = isDev ? devDb : stagingDb;
       buildSchemaOptions: {
         fieldMiddleware: [LoggerMiddleware],
       },
-      // playground: isDev ? true : false, // TODO: uncommment when going live
+      playground: isDev ? true : false,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../client', 'build'),
@@ -68,19 +71,9 @@ const dbUri = isDev ? devDb : stagingDb;
     UserModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    // {
-    //   provide: APP_FILTER,
-    //   useClass: AllExceptionsFilter,
-    // },
-  ],
+  providers: [AppService, RecipesService],
   exports: [MongooseModule],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    // consumer
-    //   .apply(LoggerMiddleware)
-    //   .forRoutes({ path: '*', method: RequestMethod.ALL });
-  }
+  configure(consumer: MiddlewareConsumer) {}
 }

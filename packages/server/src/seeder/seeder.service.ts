@@ -1,48 +1,24 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
-import {
-  COLLECTION_SEED_DATA,
-  SEED_DB_NAME,
-  SEED_MODEL_NAME,
-} from './constants';
 
 @Injectable()
 export default class SeederService {
-  constructor(
-    @InjectConnection() private readonly connection: Connection,
-    @Inject(SEED_MODEL_NAME) private readonly modelName: string,
-    @Inject(COLLECTION_SEED_DATA) private readonly seedData: any[],
-    @Inject(SEED_DB_NAME) private readonly dbName: string,
-  ) {
-    try {
-      (async () => {
-        const isTestOrProd =
-          process.env.NODE_ENV === 'test' ||
-          process.env.NODE_ENV === 'production';
-        if (isTestOrProd) {
-          return;
-        }
-        await this.seed(this.dbName);
-      })();
-    } catch (e) {
-      throw e;
-    }
-  }
+  constructor(@InjectConnection() private readonly connection: Connection) {}
 
-  async seed(dbName: string) {
-    const logPrefix = `SeederService::${dbName}::${this.modelName}`;
+  async seed(dbName: string, modelName: string, seedData: any[]) {
+    const logPrefix = `SeederService::${dbName}::${modelName}`;
 
     try {
       const models = this.connection.modelNames();
 
-      if (!models.includes(this.modelName)) {
+      if (!models.includes(modelName)) {
         throw new Error(
-          `${logPrefix} The Model name "${this.modelName}" does not exist. Possible values are: ${models}`,
+          `${logPrefix} The Model name "${modelName}" does not exist. Possible values are: ${models}`,
         );
       }
 
-      const model = this.connection.model(this.modelName);
+      const model = this.connection.model(modelName);
       const collectionName = model.collection.name;
 
       const client = this.connection.getClient().db(dbName);
@@ -53,7 +29,7 @@ export default class SeederService {
 
       await client.dropCollection(collectionName);
 
-      const seededItems = await model.insertMany(this.seedData);
+      const seededItems = await model.insertMany(seedData);
 
       console.log(
         `Successfully Seeded Collection ${collectionName.toUpperCase()} in ${

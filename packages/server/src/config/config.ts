@@ -17,4 +17,8 @@ export default () => ({
     domain: process.env.AUTH0_DOMAIN,
     audience: process.env.AUTH0_AUDIENCE,
   },
+  stripe: {
+    public_key: process.env.STRIPE_PUBLIC_KEY,
+    key: process.env.STRIPE_KEY,
+  },
 });

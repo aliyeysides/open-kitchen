@@ -25,6 +25,11 @@ export class RecipesResolver {
     return this.recipesService.findOne(id);
   }
 
+  @Query(() => [Recipe], { name: 'recipesByTag' })
+  findByTag(@Args('tag') tag: string) {
+    return this.recipesService.findByTag(tag);
+  }
+
   @Mutation(() => Recipe)
   updateRecipe(
     @Args('updateRecipeInput') updateRecipeInput: UpdateRecipeInput,

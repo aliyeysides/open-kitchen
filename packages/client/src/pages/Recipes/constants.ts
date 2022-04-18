@@ -6,6 +6,8 @@ export const GET_RECIPES = gql`
       _id
       ytId
       name
+      tags
+      created_at
     }
   }
 `;

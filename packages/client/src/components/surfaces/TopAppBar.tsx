@@ -79,9 +79,9 @@ export default function TopAppBar() {
             btnLabel="Back"
           >
             <Typography gutterBottom>
-              This feature is not yet available but is coming soon! If you have
-              any questions or feedback, please reach out to us via email at
-              support@openkitchenphl.com
+              This feature is not yet available but is coming soon! If you want
+              to signup to be a content creator and upload your videos, please
+              reach out to us via email at support@openkitchenphl.com
             </Typography>
           </CustomDialog>
           <Box sx={{ marginLeft: 2 }}>
